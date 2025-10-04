@@ -1,0 +1,90 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.evolver'
+version = '1.0.0'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+
+    // JSON processing for experiences
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'com.evolver.QuickStart'
+}
+
+// ============ FRAMEWORK TASKS ============
+
+tasks.register('quickStart', JavaExec) {
+    group = 'evolver'
+    description = 'Quick start - inject framework and begin learning'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.QuickStart'
+}
+
+tasks.register('inject', JavaExec) {
+    group = 'evolver'
+    description = 'Inject Evolver framework into existing project'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.injection.FrameworkInjector'
+}
+
+tasks.register('agentDemo', JavaExec) {
+    group = 'evolver'
+    description = 'Demo: Autonomous agents learning and sharing experiences'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.demo.AgentDemo'
+}
+
+tasks.register('shareExperience', JavaExec) {
+    group = 'evolver'
+    description = 'Demo: AI agents sharing learning experiences'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.experiences.SimpleDBDemo'
+}
+
+tasks.register('agentWorkflow', JavaExec) {
+    group = 'evolver'
+    description = 'Demo: Complete agent workflow using experience database'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.experiences.SimpleAgentInterface'
+}
+
+// Build standalone JAR for easy distribution
+tasks.register('frameworkJar', Jar) {
+    group = 'evolver'
+    description = 'Create standalone Evolver framework JAR'
+    archiveBaseName = 'evolver-framework'
+    from sourceSets.main.output
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes(
+            'Main-Class': 'com.evolver.QuickStart',
+            'Implementation-Title': 'Evolver Context Engineering Framework',
+            'Implementation-Version': project.version
+        )
+    }
+}

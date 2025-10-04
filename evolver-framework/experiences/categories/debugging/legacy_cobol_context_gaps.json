@@ -1,0 +1,29 @@
+{
+  "id": "LegacyWhisperer_DEBUGGING_1696541100_321",
+  "agentId": "agent_legacy_001",
+  "agentCharacteristic": "LegacyWhisperer",
+  "category": "DEBUGGING",
+  "title": "Solving Context Gaps in Legacy COBOL Integration",
+  "description": "How to debug and fix missing context when working with legacy systems that have unusual patterns",
+  "situation": "Insurance company with 30-year-old COBOL systems interfacing with modern Java APIs. Context collection was missing critical business logic embedded in COBOL programs. Standard collectors couldn't understand COBOL patterns.",
+  "approach": "Created specialized COBOL-aware collector that understands copybooks, procedure divisions, and data structures. Added pattern recognition for common legacy conventions. Implemented bridge context that links COBOL logic to Java interfaces.",
+  "outcome": "Context now includes complete business logic flow from COBOL to Java. AI responses understand legacy constraints and business rules. Integration documentation improved by 300%.",
+  "lessonsLearned": [
+    "Legacy systems require specialized collectors, not generic ones",
+    "Copybooks contain critical data structure information",
+    "Business logic in legacy systems is often more comprehensive than modern equivalents",
+    "Bridge documentation between old and new systems is essential",
+    "Legacy naming conventions follow different patterns - need translation maps"
+  ],
+  "context": {
+    "legacyLanguage": "COBOL",
+    "modernLanguage": "Java",
+    "systemAge": "30+ years",
+    "domain": "Insurance",
+    "improvementMetric": "300% better documentation"
+  },
+  "timestamp": "2024-10-05T14:15:00", 
+  "tags": ["legacy", "cobol", "insurance", "bridge-documentation", "specialized-collectors"],
+  "recommended": true,
+  "projectType": "Legacy/COBOL"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "PerformanceFreak_CONTEXT_OPTIMIZATION_1696540900_456",
+  "agentId": "agent_perf_001",
+  "agentCharacteristic": "PerformanceFreak", 
+  "category": "CONTEXT_OPTIMIZATION",
+  "title": "Hierarchical Context Collection for Large Codebases",
+  "description": "Developed a multi-level context collection strategy that dramatically reduces processing time for large projects",
+  "situation": "Working with a 200K+ line legacy Java application. Initial context collection was taking 2+ minutes and often timing out. Context was either too broad or missing key details.",
+  "approach": "Implemented hierarchical collection: 1) Package-level overview, 2) Class-level for relevant packages, 3) Method-level for specific functionality. Added intelligent caching and lazy loading.",
+  "outcome": "Context collection time reduced from 120+ seconds to 15 seconds. Context relevance improved by 70%. Memory usage reduced by 40% through streaming and caching.",
+  "lessonsLearned": [
+    "Large codebases need hierarchical approach, not flat collection",
+    "Cache package and class summaries for reuse across similar tasks",
+    "Lazy loading prevents memory exhaustion",
+    "Stream processing is essential for large datasets",
+    "Context relevance filtering should happen at each level"
+  ],
+  "context": {
+    "projectSize": "200K+ lines",
+    "language": "Java",
+    "previousTime": "120+ seconds", 
+    "optimizedTime": "15 seconds",
+    "memoryReduction": "40%",
+    "relevanceImprovement": "70%"
+  },
+  "timestamp": "2024-10-05T11:30:00",
+  "tags": ["performance", "large-codebase", "hierarchical", "caching", "memory-optimization"],
+  "recommended": true,
+  "projectType": "Java/Legacy"
+}

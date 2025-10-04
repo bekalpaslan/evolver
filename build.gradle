@@ -1,0 +1,100 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.evolver'
+version = '1.0.0'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'com.evolver.context.examples.ContextEngineExample'
+}
+
+tasks.register('runExample', JavaExec) {
+    group = 'application'
+    description = 'Run the Context Engine example'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.context.examples.ContextEngineExample'
+}
+
+tasks.register('quickStart', JavaExec) {
+    group = 'application'
+    description = 'Run the Quick Start example - your first AI agent with context'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.context.examples.QuickStartExample'
+}
+
+tasks.register('selfReference', JavaExec) {
+    group = 'application'
+    description = 'Run the Self-Referencing example - framework using itself'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.context.examples.SelfReferencingExample'
+}
+
+tasks.register('selfBootstrap', JavaExec) {
+    group = 'application'
+    description = 'Run the Self-Bootstrap - framework improving itself'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.context.bootstrap.SelfBootstrap'
+}
+
+// ============ AUTONOMOUS AGENT TASKS ============
+
+tasks.register('agentBootstrap', JavaExec) {
+    group = 'agent'
+    description = '[AGENT] Auto-bootstrap - Agent learns framework automatically'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.AgentBootstrap'
+}
+
+tasks.register('agentDemo', JavaExec) {
+    group = 'agent'
+    description = '[ZERO-CONFIG] Demo showing agents work without human setup'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.demo.AgentDemo'
+}
+
+tasks.register('injectionDemo', JavaExec) {
+    group = 'injection'
+    description = '[INJECTION] Demo framework injection into existing projects'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.injection.demo.InjectionDemo'
+}
+
+// Build JAR for easy agent deployment
+tasks.register('agentJar', Jar) {
+    group = 'agent'
+    description = 'Create standalone JAR for autonomous agents'
+    archiveBaseName = 'evolver-agent'
+    from sourceSets.main.output
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes(
+            'Main-Class': 'com.evolver.agent.AgentBootstrap',
+            'Implementation-Title': 'Context Engineering Framework - Autonomous Agent',
+            'Implementation-Version': project.version
+        )
+    }
+}

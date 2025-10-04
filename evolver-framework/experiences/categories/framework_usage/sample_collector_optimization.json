@@ -1,0 +1,28 @@
+{
+  "id": "DocumentationObsessed_FRAMEWORK_USAGE_1696540800_123",
+  "agentId": "agent_docs_001", 
+  "agentCharacteristic": "DocumentationObsessed",
+  "category": "FRAMEWORK_USAGE",
+  "title": "Discovering Optimal Collector Combinations",
+  "description": "Found the most effective combination of collectors for comprehensive context generation",
+  "situation": "Working on a Java Spring Boot project with microservices architecture. Initial context was missing important service interactions and configuration details.",
+  "approach": "Systematically tested different collector combinations. Started with basic CodeStructureCollector, then added DependencyCollector for service relationships, and DocumentationCollector for configuration context.",
+  "outcome": "Context quality improved by 85%. AI responses became much more accurate for architecture-related questions. Context generation time only increased by 12%.",
+  "lessonsLearned": [
+    "DependencyCollector is crucial for microservices projects",
+    "DocumentationCollector adds context that code analysis misses",
+    "Order of collectors matters - structure first, then dependencies, then docs",
+    "Three collectors is often the sweet spot for quality vs performance"
+  ],
+  "context": {
+    "projectType": "Java/Spring Boot",
+    "architecture": "Microservices",
+    "teamSize": "8 developers",
+    "contextQualityImprovement": "85%",
+    "performanceImpact": "+12%"
+  },
+  "timestamp": "2024-10-05T10:00:00",
+  "tags": ["collectors", "optimization", "microservices", "spring-boot"],
+  "recommended": true,
+  "projectType": "Java/Spring"
+}
