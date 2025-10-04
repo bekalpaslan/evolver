@@ -145,7 +145,7 @@ public class IntelligentAgentInterface {
      * Shows characteristic-based behavior
      */
     public void improveDocumentation(String docIssue) {
-        System.out.println("\n📚 " + agentId + " improving documentation");
+        System.out.println("\n[LEARN] " + agentId + " improving documentation");
         
         // Documentation-obsessed agents always take initiative
         if (myCharacteristic == AgentCharacteristic.DOCUMENTATION_OBSESSED) {
@@ -227,7 +227,7 @@ public class IntelligentAgentInterface {
     
     // Implementation stubs for demonstration
     private void implementPerformanceFix() {
-        System.out.println("  🔧 Adding composite index: CREATE INDEX idx_user_date ON table(user_id, created_date)");
+        System.out.println("  [TOOL] Adding composite index: CREATE INDEX idx_user_date ON table(user_id, created_date)");
         System.out.println("  ⚡ Query performance improved: 3000ms → 50ms");
     }
     
@@ -250,7 +250,7 @@ public class IntelligentAgentInterface {
      * Main demo method showing intelligent agent behavior
      */
     public static void main(String[] args) {
-        System.out.println("🚀 Intelligent Agent Behavior Demo\n");
+        System.out.println("[ROCKET] Intelligent Agent Behavior Demo\n");
         
         // Create agents with different characteristics
         IntelligentAgentInterface performanceAgent = new IntelligentAgentInterface(

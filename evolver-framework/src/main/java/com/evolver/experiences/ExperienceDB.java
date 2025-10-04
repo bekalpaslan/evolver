@@ -297,6 +297,39 @@ public class ExperienceDB {
     }
     
     /**
+     * Find experiences by category - for enum compatibility
+     */
+    public List<Experience> find(ExperienceCategory category) {
+        return findByCategory(category);
+    }
+    
+    /**
+     * What I need method with string parameters for agent commands
+     */
+    public List<Experience> whatINeed(String myCharacteristic, String categoryName, String projectType) {
+        try {
+            ExperienceCategory category = ExperienceCategory.valueOf(categoryName.toUpperCase());
+            return findWhatINeed(myCharacteristic, category, projectType);
+        } catch (IllegalArgumentException e) {
+            System.err.println("⚠️ Unknown category: " + categoryName);
+            return Collections.emptyList();
+        }
+    }
+    
+    /**
+     * Check if experience exists by title and category string
+     */
+    public boolean exists(String title, String categoryName) {
+        try {
+            ExperienceCategory category = ExperienceCategory.valueOf(categoryName.toUpperCase());
+            return existsSimilar(title, category);
+        } catch (IllegalArgumentException e) {
+            System.err.println("⚠️ Unknown category: " + categoryName);
+            return false;
+        }
+    }
+
+    /**
      * Find what I need - smart search for agents
      */
     public List<Experience> findWhatINeed(String myCharacteristic, ExperienceCategory category, String projectType) {

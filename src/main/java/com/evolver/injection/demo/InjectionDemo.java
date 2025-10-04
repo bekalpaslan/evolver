@@ -100,7 +100,7 @@ public class InjectionDemo {
             "DocumentationObsessed - Creates comprehensive docs, focuses on clarity",
             "PerformanceFreak - Optimizes for speed, measures everything", 
             "SecurityParanoid - Validates inputs, checks vulnerabilities",
-            "ArchitectureNazi - Enforces patterns, maintains structure",
+            "ArchitectureEnforcer - Enforces patterns, maintains structure",
             "TestingEvangelist - Writes tests first, ensures coverage",
             "LegacyWhisperer - Understands old code, preserves stability"
         };

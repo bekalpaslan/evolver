@@ -258,7 +258,7 @@ public class AgentCommands {
      * Show example usage patterns for agents
      */
     public static void examples() {
-        System.out.println("🎯 Example Usage for AI Agents:");
+        System.out.println("[TARGET] Example Usage for AI Agents:");
         System.out.println("===============================");
         System.out.println();
         

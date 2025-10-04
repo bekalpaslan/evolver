@@ -209,12 +209,12 @@ public class AgentCommands {
             .collect(Collectors.toList()));
         
         if (!learnings.isEmpty()) {
-            System.out.println("📚 Agent: Found " + learnings.size() + " relevant experiences from other agents");
+            System.out.println("[LEARN] Agent: Found " + learnings.size() + " relevant experiences from other agents");
             for (Experience exp : learnings.subList(0, Math.min(3, learnings.size()))) {
                 System.out.println("  - " + exp.getTitle() + " (by " + exp.getAgentCharacteristic() + ")");
             }
         } else {
-            System.out.println("🔍 Agent: No similar experiences found - proceeding with caution");
+            System.out.println("[DISCOVER] Agent: No similar experiences found - proceeding with caution");
         }
         
         return learnings;

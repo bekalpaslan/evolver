@@ -90,7 +90,7 @@ public class ExperienceRepository {
         ensureDirectoryExists();
         createReadmeIfNeeded();
 
-        System.out.println("📚 Loading agent experiences...");
+        System.out.println("[LEARN] Loading agent experiences...");
 
         try {
             long count = Files.walk(EXPERIENCE_DIR)

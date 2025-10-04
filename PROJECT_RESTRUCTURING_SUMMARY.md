@@ -67,7 +67,7 @@ AI agents now have **distinct personalities** that determine how they approach p
 | `DocumentationObsessed` | Comprehensive docs, clarity | Prioritizes documentation patterns |
 | `PerformanceFreak` | Speed, efficiency, metrics | Focuses on optimization opportunities |
 | `SecurityParanoid` | Validation, security, compliance | Emphasizes security patterns |
-| `ArchitectureNazi` | Clean patterns, structure | Enforces architectural principles |
+| `ArchitectureEnforcer` | Clean patterns, structure | Enforces architectural principles |
 | `TestingEvangelist` | Test coverage, quality | Learns through test patterns |
 | `LegacyWhisperer` | Legacy understanding, stability | Specializes in legacy integration |
 
@@ -222,7 +222,7 @@ cp -r evolver-framework/src/ /your/project/src/
 
 ### Backend Teams
 ```java
-.withAgentCharacteristic("ArchitectureNazi")
+.withAgentCharacteristic("ArchitectureEnforcer")
 .withAgentCharacteristic("SecurityParanoid")
 ```
 

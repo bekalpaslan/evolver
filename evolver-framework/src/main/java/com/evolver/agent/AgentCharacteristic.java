@@ -19,9 +19,9 @@ import java.util.function.BiFunction;
  */
 public class AgentCharacteristic {
     
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // PREDEFINED CHARACTERISTICS
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     public static final AgentCharacteristic DOCUMENTATION_OBSESSIVE = new AgentCharacteristic(
         "DocBot",
@@ -127,9 +127,9 @@ public class AgentCharacteristic {
         )
     );
     
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // CHARACTERISTIC DEFINITION
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     private final String name;
     private final String personality;
@@ -152,9 +152,90 @@ public class AgentCharacteristic {
         return new AgentCharacteristic(name, personality, traits);
     }
     
-    // ═══════════════════════════════════════════════════════════════
+    /**
+     * EVOLUTION: Agents can now create hybrid characteristics by combining existing ones
+     */
+    public static AgentCharacteristic hybrid(String name, AgentCharacteristic parent1, AgentCharacteristic parent2, double blendRatio) {
+        Map<String, Object> hybridTraits = new HashMap<>();
+        
+        // Blend numerical traits
+        hybridTraits.put("tokenBudgetPreference", 
+            parent1.getTokenBudgetPreference() * blendRatio + parent2.getTokenBudgetPreference() * (1 - blendRatio));
+        hybridTraits.put("relevanceThreshold", 
+            parent1.getRelevanceThreshold() * blendRatio + parent2.getRelevanceThreshold() * (1 - blendRatio));
+        
+        // Combine focus areas
+        List<String> combinedFocus = new ArrayList<>(parent1.getFocusAreas());
+        parent2.getFocusAreas().forEach(area -> {
+            if (!combinedFocus.contains(area)) combinedFocus.add(area);
+        });
+        hybridTraits.put("focusAreas", combinedFocus);
+        
+        // Combine priority collectors
+        List<String> combinedCollectors = new ArrayList<>(parent1.getPriorityCollectors());
+        parent2.getPriorityCollectors().forEach(collector -> {
+            if (!combinedCollectors.contains(collector)) combinedCollectors.add(collector);
+        });
+        hybridTraits.put("priorityCollectors", combinedCollectors);
+        
+        hybridTraits.put("evolutionStrategy", "hybrid-" + parent1.getEvolutionStrategy() + "-" + parent2.getEvolutionStrategy());
+        hybridTraits.put("catchphrase", "Best of both worlds: " + parent1.name + " + " + parent2.name);
+        
+        return new AgentCharacteristic(name, 
+            "Hybrid of " + parent1.personality + " and " + parent2.personality, hybridTraits);
+    }
+    
+    /**
+     * EVOLUTION: Agents can evolve characteristics based on success metrics
+     */
+    public AgentCharacteristic evolve(String evolutionReason, Map<String, Double> successMetrics) {
+        Map<String, Object> evolvedTraits = new HashMap<>(this.traits);
+        
+        // Adapt based on success metrics
+        if (successMetrics.getOrDefault("context_quality", 0.0) < 0.5) {
+            // Increase relevance threshold if context quality is low
+            double currentThreshold = getRelevanceThreshold();
+            evolvedTraits.put("relevanceThreshold", Math.min(0.9, currentThreshold + 0.1));
+        }
+        
+        if (successMetrics.getOrDefault("token_efficiency", 0.0) < 0.5) {
+            // Reduce token budget if efficiency is low
+            double currentBudget = getTokenBudgetPreference();
+            evolvedTraits.put("tokenBudgetPreference", Math.max(0.1, currentBudget - 0.05));
+        }
+        
+        // Record evolution history
+        String evolutionId = "evolution_" + System.currentTimeMillis();
+        Map<String, Object> evolution = Map.of(
+            "reason", evolutionReason,
+            "timestamp", java.time.LocalDateTime.now().toString(),
+            "metrics", successMetrics,
+            "changes", findTraitChanges(this.traits, evolvedTraits)
+        );
+        
+        AgentCharacteristic evolved = new AgentCharacteristic(
+            this.name + "_evolved", 
+            this.personality + " (evolved: " + evolutionReason + ")", 
+            evolvedTraits
+        );
+        evolved.evolutionHistory.put(evolutionId, evolution);
+        
+        return evolved;
+    }
+    
+    private Map<String, Object> findTraitChanges(Map<String, Object> oldTraits, Map<String, Object> newTraits) {
+        Map<String, Object> changes = new HashMap<>();
+        for (String key : newTraits.keySet()) {
+            if (!Objects.equals(oldTraits.get(key), newTraits.get(key))) {
+                changes.put(key, Map.of("from", oldTraits.get(key), "to", newTraits.get(key)));
+            }
+        }
+        return changes;
+    }
+    
+    // ===============================================================
     // CHARACTERISTIC BEHAVIORS
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     /**
      * How this characteristic prioritizes collectors
@@ -229,14 +310,14 @@ public class AgentCharacteristic {
         }
     }
     
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // EVOLUTION & LEARNING
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     /**
-     * Agent can evolve its characteristics based on experience
+     * Agent can evolve its characteristics based on experience with Object traits
      */
-    public AgentCharacteristic evolve(String reason, Map<String, Object> newTraits) {
+    public AgentCharacteristic evolveWithObjects(String reason, Map<String, Object> newTraits) {
         Map<String, Object> evolvedTraits = new HashMap<>(this.traits);
         evolvedTraits.putAll(newTraits);
         
@@ -286,11 +367,56 @@ public class AgentCharacteristic {
         return new AgentCharacteristic(name, hybridPersonality, hybridTraits);
     }
     
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
+    // ENUM-STYLE ACCESS (for compatibility)
+    // ===============================================================
+    
+    // Add aliases for enum-style access
+    public static final AgentCharacteristic DOCUMENTATION_OBSESSED = DOCUMENTATION_OBSESSIVE;
+    public static final AgentCharacteristic PERFORMANCE_FREAK = PERFORMANCE_MANIAC;
+    public static final AgentCharacteristic CLEAN_CODE_FANATIC = CLEAN_CODE_FREAK;
+    public static final AgentCharacteristic TEST_OBSESSED = CHAOS_MONKEY; // Similar testing focus
+    public static final AgentCharacteristic CAUTIOUS_REVIEWER = STEALTH_LEARNER; // Similar careful approach
+    public static final AgentCharacteristic AGGRESSIVE_OPTIMIZER = PERFORMANCE_MANIAC; // Same as performance freak
+    
+    /**
+     * Enum-style valueOf method for compatibility
+     */
+    public static AgentCharacteristic valueOf(String name) {
+        switch (name.toUpperCase()) {
+            case "DOCUMENTATION_OBSESSED":
+            case "DOCUMENTATION_OBSESSIVE":
+                return DOCUMENTATION_OBSESSIVE;
+            case "PERFORMANCE_FREAK":
+            case "PERFORMANCE_MANIAC":
+                return PERFORMANCE_MANIAC;
+            case "CLEAN_CODE_FANATIC":
+            case "CLEAN_CODE_FREAK":
+                return CLEAN_CODE_FREAK;
+            case "SECURITY_PARANOID":
+                return SECURITY_PARANOID;
+            case "CHAOS_MONKEY":
+            case "TEST_OBSESSED":
+                return CHAOS_MONKEY;
+            case "MINIMALIST_ZEN":
+                return MINIMALIST_ZEN;
+            case "STEALTH_LEARNER":
+            case "CAUTIOUS_REVIEWER":
+                return STEALTH_LEARNER;
+            case "EXPERIMENTAL_MAD_SCIENTIST":
+            case "AGGRESSIVE_OPTIMIZER":
+                return EXPERIMENTAL_MAD_SCIENTIST;
+            default:
+                throw new IllegalArgumentException("Unknown characteristic: " + name);
+        }
+    }
+    
+    // ===============================================================
     // GETTERS
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     public String getName() { return name; }
+    public String name() { return name; } // For compatibility with enum-style access
     public String getPersonality() { return personality; }
     public Map<String, Object> getTraits() { return new HashMap<>(traits); }
     public Map<String, Object> getEvolutionHistory() { return new HashMap<>(evolutionHistory); }

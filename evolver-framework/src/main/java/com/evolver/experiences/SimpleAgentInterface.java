@@ -26,12 +26,12 @@ public class SimpleAgentInterface {
      * Before making any decision, check what others learned
      */
     public List<Experience> learnFromOthers(ExperienceCategory category) {
-        System.out.println("🧠 Learning from other agents about " + category.getDisplayName() + "...");
+        System.out.println("[BRAIN] Learning from other agents about " + category.getDisplayName() + "...");
         
         // Get experiences relevant to my situation
         List<Experience> relevant = AgentCommands.whatINeed(characteristic, category.name(), projectType);
         
-        System.out.println("📚 Found " + relevant.size() + " relevant experiences:");
+        System.out.println("[LEARN] Found " + relevant.size() + " relevant experiences:");
         relevant.forEach(exp -> 
             System.out.println("  - " + exp.getTitle() + " by " + exp.getAgentCharacteristic())
         );
@@ -49,11 +49,11 @@ public class SimpleAgentInterface {
         
         if (exists) {
             System.out.println("⚠️ Similar experience already exists: " + title);
-            System.out.println("💡 Consider updating existing one or adding a variation");
+            System.out.println("[IDEA] Consider updating existing one or adding a variation");
             return false;
         } else {
             System.out.println("✨ New discovery detected: " + title);
-            System.out.println("🎯 This will help other agents!");
+            System.out.println("[TARGET] This will help other agents!");
             return true;
         }
     }
@@ -118,11 +118,11 @@ public class SimpleAgentInterface {
      * Search for solutions to a specific problem
      */
     public List<Experience> findSolutions(String problem) {
-        System.out.println("🔍 Searching for solutions to: " + problem);
+        System.out.println("[DISCOVER] Searching for solutions to: " + problem);
         
         List<Experience> solutions = AgentCommands.search(problem);
         
-        System.out.println("💡 Found " + solutions.size() + " potential solutions:");
+        System.out.println("[IDEA] Found " + solutions.size() + " potential solutions:");
         solutions.stream().limit(5).forEach(exp -> 
             System.out.println("  - " + exp.getTitle() + " (Category: " + exp.getCategory().getDisplayName() + ")")
         );
@@ -172,7 +172,7 @@ public class SimpleAgentInterface {
      * Complete workflow: Learn, decide, share
      */
     public void solveContextOptimizationProblem() {
-        System.out.println("🎯 Agent Workflow: Solving Context Optimization Problem");
+        System.out.println("[TARGET] Agent Workflow: Solving Context Optimization Problem");
         System.out.println("======================================================");
         System.out.println();
         

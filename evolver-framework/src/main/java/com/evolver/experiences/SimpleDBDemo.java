@@ -54,7 +54,7 @@ public class SimpleDBDemo {
     }
     
     private static void demonstrateAgentUsage() {
-        System.out.println("🎯 Agent Usage Examples:");
+        System.out.println("[TARGET] Agent Usage Examples:");
         System.out.println("------------------------");
         System.out.println();
         

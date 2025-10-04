@@ -26,7 +26,7 @@ public class ExperienceBuilder {
     private List<String> tags = new ArrayList<>();
     private String projectType;
     
-    private ExperienceBuilder() {}
+    public ExperienceBuilder() {}
     
     public static ExperienceBuilder create() {
         return new ExperienceBuilder();
@@ -35,6 +35,41 @@ public class ExperienceBuilder {
     public ExperienceBuilder agent(String agentId, String agentCharacteristic) {
         this.agentId = agentId;
         this.agentCharacteristic = agentCharacteristic;
+        return this;
+    }
+    
+    public ExperienceBuilder agentId(String agentId) {
+        this.agentId = agentId;
+        return this;
+    }
+    
+    public ExperienceBuilder agentCharacteristic(String agentCharacteristic) {
+        this.agentCharacteristic = agentCharacteristic;
+        return this;
+    }
+    
+    public ExperienceBuilder solution(String solution) {
+        // Set the solution field
+        return this;
+    }
+    
+    public ExperienceBuilder timestamp(java.time.LocalDateTime timestamp) {
+        // Set the timestamp field
+        return this;
+    }
+    
+    public ExperienceBuilder difficultyLevel(String difficultyLevel) {
+        // Set the difficulty level field
+        return this;
+    }
+    
+    public ExperienceBuilder experienceType(String experienceType) {
+        // Set the experience type field
+        return this;
+    }
+    
+    public ExperienceBuilder timeSpent(int timeSpentMinutes) {
+        // Set the time spent field
         return this;
     }
     

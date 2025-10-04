@@ -31,14 +31,14 @@ public class InjectionDemo {
         
         System.out.println("✅ Injection Demo Complete!");
         System.out.println();
-        System.out.println("📚 Next Steps:");
+        System.out.println("[LEARN] Next Steps:");
         System.out.println("  • Read INJECTION_GUIDE.md for detailed instructions");
         System.out.println("  • Try injecting into your own project");
         System.out.println("  • Watch agents learn and evolve your framework");
     }
     
     private static void demonstrateProjectDetection() {
-        System.out.println("🔍 1. Project Detection");
+        System.out.println("[DISCOVER] 1. Project Detection");
         System.out.println("----------------------");
         
         // Simulate project detection (would use ProjectDetector in real implementation)
@@ -58,7 +58,7 @@ public class InjectionDemo {
     }
     
     private static void demonstrateBasicInjection() {
-        System.out.println("🚀 2. Basic Framework Injection");
+        System.out.println("[ROCKET] 2. Basic Framework Injection");
         System.out.println("------------------------------");
         
         System.out.println("Code example:");
@@ -100,7 +100,7 @@ public class InjectionDemo {
             "DocumentationObsessed - Creates comprehensive docs, focuses on clarity",
             "PerformanceFreak - Optimizes for speed, measures everything", 
             "SecurityParanoid - Validates inputs, checks vulnerabilities",
-            "ArchitectureNazi - Enforces patterns, maintains structure",
+            "ArchitectureEnforcer - Enforces patterns, maintains structure",
             "TestingEvangelist - Writes tests first, ensures coverage",
             "LegacyWhisperer - Understands old code, preserves stability"
         };
@@ -153,7 +153,7 @@ public class InjectionDemo {
     }
     
     private static void demonstrateAgentLearning() {
-        System.out.println("🧠 5. Agent Learning & Framework Evolution");
+        System.out.println("[BRAIN] 5. Agent Learning & Framework Evolution");
         System.out.println("------------------------------------------");
         
         System.out.println("Learning timeline simulation:");
@@ -161,15 +161,15 @@ public class InjectionDemo {
         
         // Week 1
         System.out.println("📅 Week 1 - Initial Learning:");
-        System.out.println("  🔍 Agent discovers Java patterns in src/main/java");
-        System.out.println("  📚 Agent reads documentation in markdown files");
+        System.out.println("  [DISCOVER] Agent discovers Java patterns in src/main/java");
+        System.out.println("  [LEARN] Agent reads documentation in markdown files");
         System.out.println("  🏗️ Agent understands modular architecture");
         System.out.println("  📊 Learning: 45 files analyzed, 12 patterns identified");
         System.out.println();
         
         // Month 1  
         System.out.println("📅 Month 1 - Pattern Recognition:");
-        System.out.println("  🎯 Agent recognizes context engineering domain");
+        System.out.println("  [TARGET] Agent recognizes context engineering domain");
         System.out.println("  🛠️ Agent creates specialized ContextCollector for this project");
         System.out.println("  📈 Agent optimizes token budgets for technical documentation");
         System.out.println("  📊 Evolution: 3 new collectors, 8 optimized filters");
@@ -177,13 +177,13 @@ public class InjectionDemo {
         
         // Month 3
         System.out.println("📅 Month 3 - Framework Evolution:");
-        System.out.println("  🚀 Agent evolved framework to understand AI engineering patterns");
+        System.out.println("  [ROCKET] Agent evolved framework to understand AI engineering patterns");
         System.out.println("  🎭 Agent created new characteristic: 'ContextEngineeringExpert'");
         System.out.println("  🔄 Agent developed self-improvement capabilities");
         System.out.println("  📊 Mastery: Framework now 85% optimized for this project type");
         System.out.println();
         
-        System.out.println("🎯 Result:");
+        System.out.println("[TARGET] Result:");
         System.out.println("  • Framework became an expert in context engineering");
         System.out.println("  • Context quality improved by 300%");
         System.out.println("  • Token efficiency increased by 150%");

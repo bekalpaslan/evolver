@@ -238,7 +238,7 @@ public class AgentExperiment {
          * Promote the variant to become the new baseline
          */
         public void promote() {
-            System.out.println("\n🚀 PROMOTING VARIANT TO PRODUCTION");
+            System.out.println("\n[ROCKET] PROMOTING VARIANT TO PRODUCTION");
             System.out.println("  Experiment: " + experimentId);
             System.out.println("  Improvement: " + String.format("%.1f%%", improvement));
             System.out.println("  Status: ✅ Variant is now the default");

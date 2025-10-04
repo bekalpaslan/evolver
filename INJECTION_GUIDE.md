@@ -169,7 +169,7 @@ Choose agent personalities that match your team:
 // Validates inputs, checks vulnerabilities
 
 // For clean architecture enthusiasts
-.withAgentCharacteristic("ArchitectureNazi")
+.withAgentCharacteristic("ArchitectureEnforcer")
 // Enforces patterns, maintains structure
 
 // For test-driven development
@@ -367,7 +367,7 @@ FrameworkInjector.inject()
 // Different teams, different characteristics
 if (team.equals("backend")) {
     FrameworkInjector.inject()
-        .withAgentCharacteristic("ArchitectureNazi")
+        .withAgentCharacteristic("ArchitectureEnforcer")
         .withAgentCharacteristic("SecurityParanoid")
         .start();
 }

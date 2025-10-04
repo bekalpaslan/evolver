@@ -158,7 +158,7 @@ FrameworkInjector.inject()
     .withLearningDock("module-a/src/")
     .withLearningDock("module-b/src/")
     .withLearningDock("module-c/src/")
-    .withAgentCharacteristic("ArchitectureNazi")
+    .withAgentCharacteristic("ArchitectureEnforcer")
     .start();
 ```
 
@@ -170,7 +170,7 @@ Different teams use different agent characteristics:
 // Backend team
 if (System.getProperty("team").equals("backend")) {
     FrameworkInjector.inject()
-        .withAgentCharacteristic("ArchitectureNazi")
+        .withAgentCharacteristic("ArchitectureEnforcer")
         .withAgentCharacteristic("SecurityParanoid")
         .start();
 }

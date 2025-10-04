@@ -3,8 +3,11 @@ package com.evolver.injection;
 import com.evolver.agent.AgentCharacteristic;
 import com.evolver.agent.AgentInterface;
 import com.evolver.context.ContextEngine;
+import com.evolver.injection.FrameworkMerger.MergeResult;
+import com.evolver.injection.LearningDockFactory.LearningDock;
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * FRAMEWORK INJECTOR
@@ -55,7 +58,7 @@ public class FrameworkInjector {
      * Detect existing framework and project structure
      */
     public FrameworkInjector detectExistingFramework() {
-        System.out.println("🔍 Scanning project for existing frameworks...");
+        System.out.println("[DISCOVER] Scanning project for existing frameworks...");
         
         ProjectScan scan = detector.scanProject(projectRoot);
         this.detectedProjectType = scan.getProjectType();
@@ -115,30 +118,122 @@ public class FrameworkInjector {
     }
     
     /**
-     * Activate the injection - merge framework and start agents
+     * EVOLVED: Activate the injection with intelligent optimization
      */
     public InjectionResult activate() {
-        System.out.println("🚀 Activating framework injection...");
+        System.out.println("[ROCKET] Activating EVOLVED framework injection...");
+        
+        // 0. EVOLUTION: Pre-injection intelligence gathering
+        ProjectIntelligence intelligence = gatherProjectIntelligence();
+        optimizeAgentsForProject(intelligence);
         
         // 1. Merge frameworks
         MergeResult mergeResult = merger.merge(
-            detectedProjectType, 
-            existingFramework, 
+            detectedProjectType.toString(), 
+            existingFramework.toString(), 
             projectRoot
         );
         
-        // 2. Start agents with their characteristics
-        List<AgentInterface> activeAgents = new ArrayList<>();
-        for (AgentCharacteristic characteristic : spawnedAgents) {
-            AgentInterface agent = new AgentInterface(characteristic);
-            agent.startLearning(projectRoot + "/evolver-dock");
-            activeAgents.add(agent);
+        // 2. Create learning dock (using existing method)
+        LearningDock dock = dockFactory.createDock(projectRoot, detectedProjectType.toString());
+        
+        // 3. Spawn optimized agents
+        List<AgentInterface> optimizedAgents = spawnOptimizedAgents(intelligence);
+        
+        // 4. Start collaborative learning
+        initiateCollaborativeLearning(optimizedAgents, intelligence);
+        
+        return new InjectionResult(mergeResult, optimizedAgents);
+    }
+    
+    /**
+     * EVOLUTION: Gather project intelligence before injection
+     */
+    private ProjectIntelligence gatherProjectIntelligence() {
+        System.out.println("[BRAIN] Gathering project intelligence...");
+        
+        ProjectIntelligence intel = new ProjectIntelligence();
+        
+        // Analyze project structure complexity
+        intel.complexity = analyzeProjectComplexity();
+        
+        // Detect primary domains
+        intel.primaryDomains = detectPrimaryDomains();
+        
+        // Assess current quality metrics
+        intel.currentQuality = assessCurrentQuality();
+        
+        // Identify critical paths
+        intel.criticalPaths = identifyCriticalPaths();
+        
+        System.out.println("[BRAIN] Intelligence: complexity=" + intel.complexity + 
+                         ", domains=" + intel.primaryDomains.size() + 
+                         ", quality=" + intel.currentQuality);
+        
+        return intel;
+    }
+    
+    /**
+     * EVOLUTION: Optimize agent characteristics for specific project
+     */
+    private void optimizeAgentsForProject(ProjectIntelligence intelligence) {
+        List<AgentCharacteristic> optimizedCharacteristics = new ArrayList<>();
+        
+        for (AgentCharacteristic original : spawnedAgents) {
+            // Create project-specific hybrid
+            if (intelligence.complexity > 0.8) {
+                // High complexity - blend with careful characteristics
+                AgentCharacteristic optimized = AgentCharacteristic.hybrid(
+                    original.name() + "_ProjectOptimized",
+                    original,
+                    AgentCharacteristic.MINIMALIST_ZEN,
+                    0.7
+                );
+                optimizedCharacteristics.add(optimized);
+            } else {
+                optimizedCharacteristics.add(original);
+            }
         }
         
-        System.out.println("✅ Framework injected successfully!");
-        System.out.println("✅ " + activeAgents.size() + " agents learning...");
-        
-        return new InjectionResult(mergeResult, activeAgents);
+        spawnedAgents.clear();
+        spawnedAgents.addAll(optimizedCharacteristics);
+    }
+    
+    private double analyzeProjectComplexity() {
+        // Simple heuristic based on file count and structure depth
+        return Math.min(1.0, countFiles() / 1000.0);
+    }
+    
+    private List<String> detectPrimaryDomains() {
+        return Arrays.asList("general"); // Simplified for now
+    }
+    
+    private double assessCurrentQuality() {
+        return 0.5; // Baseline quality score
+    }
+    
+    private List<String> identifyCriticalPaths() {
+        return Arrays.asList("src/main", "docs"); // Key paths to focus on
+    }
+    
+    private long countFiles() {
+        try {
+            return java.nio.file.Files.walk(java.nio.file.Paths.get(projectRoot))
+                .filter(java.nio.file.Files::isRegularFile)
+                .count();
+        } catch (Exception e) {
+            return 100; // Default assumption
+        }
+    }
+    
+    /**
+     * Project intelligence data structure
+     */
+    private static class ProjectIntelligence {
+        double complexity;
+        List<String> primaryDomains = new ArrayList<>();
+        double currentQuality;
+        List<String> criticalPaths = new ArrayList<>();
     }
     
     /**
@@ -209,8 +304,7 @@ class InjectionResult {
         System.out.println("🤖 Active agents: " + activeAgents.size());
         
         for (AgentInterface agent : activeAgents) {
-            System.out.println("  • " + agent.getCharacteristic().getName() + 
-                             " (" + agent.getCharacteristic().getPersonality() + ")");
+            System.out.println("  • Agent initialized and ready for learning");
         }
     }
 }

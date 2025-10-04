@@ -62,7 +62,7 @@ Choose agent characteristics that match your team:
 | `DocumentationObsessed` | Creates comprehensive docs | Projects needing better documentation |
 | `PerformanceFreak` | Optimizes for speed | High-performance applications |
 | `SecurityParanoid` | Validates and secures | Security-sensitive systems |
-| `ArchitectureNazi` | Enforces clean patterns | Large codebases needing structure |
+| `ArchitectureEnforcer` | Enforces clean patterns | Large codebases needing structure |
 | `TestingEvangelist` | Writes tests first | Projects needing test coverage |
 | `LegacyWhisperer` | Understands old code | Legacy system maintenance |
 
@@ -74,7 +74,7 @@ Choose agent characteristics that match your team:
 ```java
 FrameworkInjector.inject()
     .withLearningDock("src/main/java/controllers/")
-    .withAgentCharacteristic("ArchitectureNazi")
+    .withAgentCharacteristic("ArchitectureEnforcer")
     .withAgentCharacteristic("SecurityParanoid")
     .start();
 ```

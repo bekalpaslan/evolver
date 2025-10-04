@@ -14,33 +14,33 @@ import java.util.*;
 public class AgentDemo {
 
     public static void main(String[] args) {
-        System.out.println("╔════════════════════════════════════════════════════════════╗");
+        System.out.println("╔============================================================╗");
         System.out.println("║         ZERO-CONFIG AGENT DEMONSTRATION                   ║");
         System.out.println("║  Context Engineers: Just ask. Agents do the rest.        ║");
-        System.out.println("╚════════════════════════════════════════════════════════════╝");
+        System.out.println("╚============================================================╝");
         System.out.println();
 
         // ZERO CONFIG - Just create interface
         AgentInterface agent = new AgentInterface();
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("DEMO 1: Simple Question");
-        System.out.println("═".repeat(60) + "\n");
+        System.out.println("=".repeat(60) + "\n");
         demo1_SimpleAsk(agent);
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("DEMO 2: Complex Task with Auto-Detection");
-        System.out.println("═".repeat(60) + "\n");
+        System.out.println("=".repeat(60) + "\n");
         demo2_AutoDetection(agent);
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("DEMO 3: Agent Learns and Improves");
-        System.out.println("═".repeat(60) + "\n");
+        System.out.println("=".repeat(60) + "\n");
         demo3_LearningAndImprovement(agent);
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("DEMO 4: Agent Experiments with Strategies");
-        System.out.println("═".repeat(60) + "\n");
+        System.out.println("=".repeat(60) + "\n");
         demo4_Experimentation();
 
         System.out.println("\n✅ ALL DEMOS COMPLETE");

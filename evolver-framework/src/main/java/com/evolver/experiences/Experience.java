@@ -99,6 +99,20 @@ public class Experience {
     public String getProjectType() { return projectType; }
     public void setProjectType(String projectType) { this.projectType = projectType; }
     
+    /**
+     * Convenience method for compatibility - returns the approach as solution
+     */
+    public String getSolution() { 
+        return approach != null ? approach : outcome; 
+    }
+    
+    /**
+     * Static builder method for fluent API
+     */
+    public static ExperienceBuilder builder() {
+        return new ExperienceBuilder();
+    }
+    
     @Override
     public String toString() {
         return String.format("Experience[%s]: %s by %s (%s)", 

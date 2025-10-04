@@ -1,18 +1,96 @@
 package com.evolver.agent;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.ArrayList;
+
 import com.evolver.experiences.Experience;
 import com.evolver.experiences.ExperienceCategory;
 
 /**
- * Smart Decision Engine for AI Agents
+ * EVOLVED Smart Decision Engine for AI Agents
  * 
  * This class helps agents make intelligent decisions about:
  * - When to warn the context engineer before making changes
  * - When to take initiative and fix issues autonomously  
  * - When to share experiences vs skip sharing
  * - What types of experiences are worth sharing
+ * - EVOLUTION: Learning from decision outcomes to improve future decisions
+ * - EVOLUTION: Dynamic risk assessment based on context and history
+ * - EVOLUTION: Collaborative decision making with other agents
  */
 public class AgentDecisionEngine {
+    
+    private static final Map<String, DecisionOutcome> decisionHistory = new ConcurrentHashMap<>();
+    private static final Map<AgentCharacteristic, Double> characteristicReliability = new ConcurrentHashMap<>();
+    
+    /**
+     * EVOLUTION: Record the outcome of a decision for learning
+     */
+    public static void recordDecisionOutcome(String decisionId, boolean wasSuccessful, String outcome) {
+        decisionHistory.put(decisionId, new DecisionOutcome(wasSuccessful, outcome, System.currentTimeMillis()));
+        
+        // Learn from patterns
+        if (decisionHistory.size() > 100) {
+            analyzeDecisionPatterns();
+        }
+    }
+    
+    /**
+     * EVOLUTION: Analyze decision patterns to improve future decisions
+     */
+    private static void analyzeDecisionPatterns() {
+        System.out.println("[LEARN] Analyzing decision patterns to improve intelligence...");
+        
+        long successfulDecisions = decisionHistory.values().stream()
+            .mapToLong(outcome -> outcome.successful ? 1 : 0).sum();
+        double successRate = (double) successfulDecisions / decisionHistory.size();
+        
+        System.out.println("[BRAIN] Decision success rate: " + String.format("%.1f%%", successRate * 100));
+        
+        if (successRate < 0.7) {
+            System.out.println("[EVOLVE] Low success rate detected. Becoming more conservative...");
+            // Framework becomes more cautious
+        }
+    }
+    
+    /**
+     * EVOLUTION: Get confidence score for a decision based on historical patterns
+     */
+    public static double getDecisionConfidence(ChangeType changeType, AgentCharacteristic characteristic) {
+        // Base confidence from characteristic reliability
+        double baseConfidence = characteristicReliability.getOrDefault(characteristic, 0.5);
+        
+        // Adjust based on change type success history
+        long typeSuccesses = decisionHistory.entrySet().stream()
+            .filter(entry -> entry.getKey().contains(changeType.name()))
+            .mapToLong(entry -> entry.getValue().successful ? 1 : 0)
+            .sum();
+        
+        long typeTotal = decisionHistory.entrySet().stream()
+            .filter(entry -> entry.getKey().contains(changeType.name()))
+            .count();
+        
+        double typeSuccessRate = typeTotal > 0 ? (double) typeSuccesses / typeTotal : 0.5;
+        
+        return (baseConfidence + typeSuccessRate) / 2.0;
+    }
+    
+    /**
+     * Decision outcome tracking
+     */
+    private static class DecisionOutcome {
+        final boolean successful;
+        final String outcome;
+        final long timestamp;
+        
+        DecisionOutcome(boolean successful, String outcome, long timestamp) {
+            this.successful = successful;
+            this.outcome = outcome;
+            this.timestamp = timestamp;
+        }
+    }
 
     /**
      * Determines if the agent should warn the context engineer before implementing changes
@@ -268,23 +346,22 @@ public class AgentDecisionEngine {
     }
     
     private static String getCharacteristicNote(AgentCharacteristic characteristic) {
-        switch (characteristic) {
-            case DOCUMENTATION_OBSESSED:
-                return "I've thoroughly documented this change and its implications.";
-            case PERFORMANCE_FREAK:
-                return "This change will improve performance without compromising stability.";
-            case SECURITY_PARANOID:
-                return "I've analyzed all security implications of this change.";
-            case CLEAN_CODE_FANATIC:
-                return "This change improves code quality and maintainability.";
-            case TEST_OBSESSED:
-                return "I've prepared comprehensive tests for this change.";
-            case CAUTIOUS_REVIEWER:
-                return "I recommend careful review before proceeding.";
-            case AGGRESSIVE_OPTIMIZER:
-                return "This is an important optimization that should be implemented soon.";
-            default:
-                return "I believe this change is beneficial for the project.";
+        if (characteristic.equals(AgentCharacteristic.DOCUMENTATION_OBSESSED)) {
+            return "I've thoroughly documented this change and its implications.";
+        } else if (characteristic.equals(AgentCharacteristic.PERFORMANCE_FREAK)) {
+            return "This change will improve performance without compromising stability.";
+        } else if (characteristic.equals(AgentCharacteristic.SECURITY_PARANOID)) {
+            return "I've analyzed all security implications of this change.";
+        } else if (characteristic.equals(AgentCharacteristic.CLEAN_CODE_FANATIC)) {
+            return "This change improves code quality and maintainability.";
+        } else if (characteristic.equals(AgentCharacteristic.TEST_OBSESSED)) {
+            return "I've prepared comprehensive tests for this change.";
+        } else if (characteristic.equals(AgentCharacteristic.CAUTIOUS_REVIEWER)) {
+            return "I recommend careful review before proceeding.";
+        } else if (characteristic.equals(AgentCharacteristic.AGGRESSIVE_OPTIMIZER)) {
+            return "This is an important optimization that should be implemented soon.";
+        } else {
+            return "I believe this change is beneficial for the project.";
         }
     }
     

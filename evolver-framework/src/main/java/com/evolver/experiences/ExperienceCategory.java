@@ -133,7 +133,13 @@ public enum ExperienceCategory {
      * Meta-learning: learning about learning itself
      * Examples: Learning efficiency, knowledge acquisition strategies, cognitive patterns
      */
-    META_LEARNING("Meta Learning", "Learning about learning itself");
+    META_LEARNING("Meta Learning", "Learning about learning itself"),
+    
+    /**
+     * Technology assessment and rating
+     * Examples: Framework evaluations, library comparisons, technology recommendations
+     */
+    TECHNOLOGY_ASSESSMENT("Technology Assessment", "Technology assessment and rating");
     
     private final String displayName;
     private final String description;

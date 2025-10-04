@@ -32,10 +32,18 @@ public class ExperienceRepository {
     
     private static final String EXPERIENCES_DIR = "experiences/categories";
     private static final String GLOBAL_INDEX = "experiences/experience_index.json";
+    private static ExperienceRepository instance;
     
     private final ObjectMapper objectMapper;
     private final Path experiencesPath;
     private final Path indexPath;
+    
+    public static synchronized ExperienceRepository getInstance() {
+        if (instance == null) {
+            instance = new ExperienceRepository();
+        }
+        return instance;
+    }
     
     public ExperienceRepository() {
         this.objectMapper = new ObjectMapper()
@@ -331,5 +339,12 @@ public class ExperienceRepository {
     
     private void saveIndex(List<String> index) throws IOException {
         objectMapper.writeValue(indexPath.toFile(), index);
+    }
+    
+    public void showStats() {
+        System.out.println("[STATS] Experience Repository Statistics:");
+        System.out.println("- Experiences directory: " + experiencesPath);
+        System.out.println("- Index file: " + indexPath);
+        System.out.println("- Repository initialized and ready");
     }
 }

@@ -33,11 +33,11 @@ public class AgentBootstrap {
         System.out.println("─".repeat(60));
         discover();
 
-        System.out.println("\n📚 PHASE 2: LEARNING");
+        System.out.println("\n[LEARN] PHASE 2: LEARNING");
         System.out.println("─".repeat(60));
         learn();
 
-        System.out.println("\n🎯 PHASE 3: ADOPTION");
+        System.out.println("\n[TARGET] PHASE 3: ADOPTION");
         System.out.println("─".repeat(60));
         adopt();
 
@@ -56,13 +56,13 @@ public class AgentBootstrap {
      * PHASE 1: Agent discovers the framework
      */
     private void discover() {
-        System.out.println("🔍 Discovering framework components...\n");
+        System.out.println("[DISCOVERY] Discovering framework components...\n");
 
-        System.out.println("✓ Found: Context Engineering Framework");
+        System.out.println("[+] Found: Context Engineering Framework");
         System.out.println("  Purpose: Optimize context for AI agents");
         System.out.println("  Location: com.evolver.context.*");
 
-        System.out.println("\n✓ Found: Core Components");
+        System.out.println("\n[+] Found: Core Components");
         System.out.println("  - ContextEngine: Main orchestrator");
         System.out.println("  - ContextCollector: Pluggable collectors");
         System.out.println("  - ContextFilter: Relevance filtering");
@@ -83,14 +83,14 @@ public class AgentBootstrap {
         System.out.println("  - Rule evolution");
         System.out.println("  - Custom collector creation");
 
-        System.out.println("\n💡 Discovery complete. Framework structure understood.");
+        System.out.println("\n[IDEA] Discovery complete. Framework structure understood.");
     }
 
     /**
      * PHASE 2: Agent learns by using the framework on itself
      */
     private void learn() {
-        System.out.println("🧠 Learning framework by using it on itself...\n");
+        System.out.println("[BRAIN] Learning framework by using it on itself...\n");
 
         // Create self-learning context engine
         ContextEngine engine = createLearningEngine();
@@ -125,14 +125,14 @@ public class AgentBootstrap {
         System.out.println("  ✓ Extension points identified");
         System.out.println("  ✓ Best practices internalized");
 
-        System.out.println("\n💡 Learning complete. Ready to use framework.");
+        System.out.println("\n[IDEA] Learning complete. Ready to use framework.");
     }
 
     /**
      * PHASE 3: Agent adopts the framework for tasks
      */
     private void adopt() {
-        System.out.println("🎯 Adopting framework for practical tasks...\n");
+        System.out.println("[TARGET] Adopting framework for practical tasks...\n");
 
         ContextEngine engine = createLearningEngine();
 
@@ -164,7 +164,7 @@ public class AgentBootstrap {
         System.out.println("  - Can analyze quality ✓");
         System.out.println("  - Can format for AI ✓");
 
-        System.out.println("\n💡 Adoption complete. Framework is operational.");
+        System.out.println("\n[IDEA] Adoption complete. Framework is operational.");
     }
 
     /**
@@ -198,14 +198,14 @@ public class AgentBootstrap {
         System.out.println("     → Experiment: New solutions");
         System.out.println("     → Integrate: Improvements");
 
-        System.out.println("\n💡 Evolution enabled. You have full autonomy.");
+        System.out.println("\n[IDEA] Evolution enabled. You have full autonomy.");
     }
 
     /**
      * Next steps for the agent
      */
     private void printNextSteps() {
-        System.out.println("\n🚀 YOU ARE NOW READY, AGENT!\n");
+        System.out.println("\n[ROCKET] YOU ARE NOW READY, AGENT!\n");
 
         System.out.println("Next Commands:");
         System.out.println("  ./gradlew agentFirstTask      # Guided first task");
@@ -225,11 +225,11 @@ public class AgentBootstrap {
         System.out.println("  📖 Read: AGENT_MANIFESTO.md for full autonomy guide");
         System.out.println("  🧪 Experiment: Try new approaches freely");
         System.out.println("  📊 Measure: Track what works");
-        System.out.println("  🚀 Evolve: Make the framework better");
+        System.out.println("  [ROCKET] Evolve: Make the framework better");
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("AUTONOMOUS AGENT ACTIVATED - EVOLUTION BEGINS NOW");
-        System.out.println("═".repeat(60));
+        System.out.println("=".repeat(60));
     }
 
     /**

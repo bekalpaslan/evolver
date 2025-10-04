@@ -25,7 +25,7 @@ public class SelfBootstrap {
 
     public static void main(String[] args) {
         System.out.println("🔄 SELF-BOOTSTRAP: Framework Improving Itself\n");
-        System.out.println("═".repeat(70) + "\n");
+        System.out.println("=".repeat(70) + "\n");
 
         SelfBootstrap bootstrap = new SelfBootstrap();
 
@@ -81,7 +81,7 @@ public class SelfBootstrap {
      * Step 2: Find areas for improvement
      */
     private void findImprovements() {
-        System.out.println("🔍 STEP 2: Finding Improvement Opportunities");
+        System.out.println("[DISCOVER] STEP 2: Finding Improvement Opportunities");
         System.out.println("─".repeat(70));
 
         ContextRequest request = ContextRequest.builder()
@@ -98,17 +98,17 @@ public class SelfBootstrap {
         ContextPackage improvements = engine.gatherContext(request).join();
 
         System.out.println("✅ Identified improvement areas:");
-        System.out.println("\n1. 🚀 Performance Optimizations:");
+        System.out.println("\n1. [ROCKET] Performance Optimizations:");
         System.out.println("   • Add caching layer for expensive collectors");
         System.out.println("   • Implement collector result memoization");
         System.out.println("   • Optimize fragment deduplication algorithm");
 
-        System.out.println("\n2. 🎯 Accuracy Improvements:");
+        System.out.println("\n2. [TARGET] Accuracy Improvements:");
         System.out.println("   • Enhance relevance scoring with ML models");
         System.out.println("   • Add context quality prediction");
         System.out.println("   • Improve semantic similarity matching");
 
-        System.out.println("\n3. 🔧 Feature Additions:");
+        System.out.println("\n3. [TOOL] Feature Additions:");
         System.out.println("   • Stream-based context delivery for large contexts");
         System.out.println("   • Adaptive token budgeting");
         System.out.println("   • Context compression for better efficiency");
@@ -150,7 +150,7 @@ public class SelfBootstrap {
             Expected improvement: 40% faster for large fragment sets
             """);
 
-        System.out.println("💡 The framework just optimized itself!\n");
+        System.out.println("[IDEA] The framework just optimized itself!\n");
     }
 
     /**
@@ -179,9 +179,9 @@ public class SelfBootstrap {
         System.out.println("\n🔄 Evolution Actions:");
         System.out.println("   ✓ Keep high-performing collectors (>0.8)");
         System.out.println("   ⚡ Optimize medium performers (0.6-0.8)");
-        System.out.println("   🔧 Redesign low performers (<0.6)");
+        System.out.println("   [TOOL] Redesign low performers (<0.6)");
 
-        System.out.println("\n💡 Creating evolved collector:\n");
+        System.out.println("\n[IDEA] Creating evolved collector:\n");
 
         // The framework creates an improved collector
         ContextRequest request = ContextRequest.builder()
@@ -302,9 +302,9 @@ public class SelfBootstrap {
      * Demonstrate the framework's self-awareness
      */
     public void demonstrateSelfAwareness() {
-        System.out.println("\n" + "═".repeat(70));
-        System.out.println("🧠 FRAMEWORK SELF-AWARENESS DEMONSTRATION");
-        System.out.println("═".repeat(70) + "\n");
+        System.out.println("\n" + "=".repeat(70));
+        System.out.println("[BRAIN] FRAMEWORK SELF-AWARENESS DEMONSTRATION");
+        System.out.println("=".repeat(70) + "\n");
 
         System.out.println("The Context Engineering Framework can:");
         System.out.println("  ✓ Analyze its own code architecture");
@@ -313,15 +313,15 @@ public class SelfBootstrap {
         System.out.println("  ✓ Evolve its collectors based on effectiveness");
         System.out.println("  ✓ Optimize its own algorithms");
 
-        System.out.println("\n🎯 This demonstrates:");
+        System.out.println("\n[TARGET] This demonstrates:");
         System.out.println("  • Meta-programming capabilities");
         System.out.println("  • Self-improvement loops");
         System.out.println("  • Recursive context engineering");
         System.out.println("  • AI-assisted evolution");
 
-        System.out.println("\n💡 The framework is not just a tool for AI agents,");
+        System.out.println("\n[IDEA] The framework is not just a tool for AI agents,");
         System.out.println("   it's an AI agent that improves itself!");
 
-        System.out.println("\n" + "═".repeat(70) + "\n");
+        System.out.println("\n" + "=".repeat(70) + "\n");
     }
 }

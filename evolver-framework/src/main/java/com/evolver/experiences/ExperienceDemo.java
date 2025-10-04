@@ -35,7 +35,7 @@ public class ExperienceDemo {
         
         System.out.println("✅ Experience sharing demo complete!");
         System.out.println();
-        System.out.println("🎯 For AI Agents:");
+        System.out.println("[TARGET] For AI Agents:");
         System.out.println("  • Always check existing experiences before sharing");
         System.out.println("  • Read relevant experiences before making decisions");
         System.out.println("  • Share your best strategies and insights");
@@ -82,7 +82,7 @@ public class ExperienceDemo {
         
         // Example 2: Integration experience
         Experience integration = ExperienceBuilder
-            .projectIntegration("agent_002", "ArchitectureNazi")
+            .projectIntegration("agent_002", "ArchitectureEnforcer")
             .title("Seamless React Integration Strategy")
             .description("How to integrate with React projects without disrupting existing workflows")
             .situation("React app with TypeScript, complex component hierarchy, strict ESLint rules")
@@ -125,7 +125,7 @@ public class ExperienceDemo {
     }
     
     private static void demonstrateExperienceDiscovery(ExperienceRepository repository) {
-        System.out.println("🔍 Experience Discovery Examples:");
+        System.out.println("[DISCOVER] Experience Discovery Examples:");
         System.out.println("---------------------------------");
         
         // Find experiences by category
@@ -158,30 +158,30 @@ public class ExperienceDemo {
         
         System.out.println("Scenario 1: New agent joining the team");
         System.out.println("  🤖 NewAgent: 'I need to learn React integration'");
-        System.out.println("  🔍 Searches: category=PROJECT_INTEGRATION, tags=['react']");
+        System.out.println("  [DISCOVER] Searches: category=PROJECT_INTEGRATION, tags=['react']");
         
         List<Experience> reactIntegration = repository.searchExperiences("React integration");
         if (!reactIntegration.isEmpty()) {
             Experience exp = reactIntegration.get(0);
-            System.out.println("  📚 Found: '" + exp.getTitle() + "' by " + exp.getAgentCharacteristic());
-            System.out.println("  💡 Key lesson: " + (exp.getLessonsLearned() != null && !exp.getLessonsLearned().isEmpty() 
+            System.out.println("  [LEARN] Found: '" + exp.getTitle() + "' by " + exp.getAgentCharacteristic());
+            System.out.println("  [IDEA] Key lesson: " + (exp.getLessonsLearned() != null && !exp.getLessonsLearned().isEmpty() 
                 ? exp.getLessonsLearned().get(0) : "Respect existing patterns"));
         }
         System.out.println();
         
         System.out.println("Scenario 2: Facing performance issues");
         System.out.println("  🤖 SlowAgent: 'Context generation is taking too long'");
-        System.out.println("  🔍 Searches: category=PERFORMANCE, characteristic=PerformanceFreak");
+        System.out.println("  [DISCOVER] Searches: category=PERFORMANCE, characteristic=PerformanceFreak");
         
         List<Experience> performanceExps = repository.findExperiencesByCategory(ExperienceCategory.PERFORMANCE);
-        System.out.println("  📚 Found " + performanceExps.size() + " performance-related experiences");
-        System.out.println("  💡 Learning from experts who solved similar problems");
+        System.out.println("  [LEARN] Found " + performanceExps.size() + " performance-related experiences");
+        System.out.println("  [IDEA] Learning from experts who solved similar problems");
         System.out.println();
         
         System.out.println("Scenario 3: Sharing breakthrough discovery");
         System.out.println("  🤖 InnovativeAgent: 'Discovered amazing new caching strategy!'");
         System.out.println("  📝 Creates: Detailed experience with situation, approach, outcome");
-        System.out.println("  🎯 Result: All agents benefit from the discovery");
+        System.out.println("  [TARGET] Result: All agents benefit from the discovery");
         System.out.println("  🔄 Collective intelligence grows");
     }
 }

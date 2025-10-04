@@ -119,7 +119,7 @@ public class AgentInterface {
      * Agent auto-bootstraps on first use
      */
     private void autoBootstrap() {
-        System.out.println("📚 Agent learning framework...");
+        System.out.println("[LEARN] Agent learning framework...");
 
         // Agent learns by using framework on itself
         ContextConfig learningConfig = ContextConfig.builder()
