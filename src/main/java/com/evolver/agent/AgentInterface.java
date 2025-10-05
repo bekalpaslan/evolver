@@ -1,6 +1,8 @@
 package com.evolver.agent;
 
 import com.evolver.context.*;
+import com.evolver.logging.AgentLogger;
+import com.evolver.logging.PersonalityLogger;
 import java.util.*;
 
 /**
@@ -15,27 +17,54 @@ import java.util.*;
  */
 public class AgentInterface {
 
+    private static boolean frameworkInjected = false;
+
     private final ContextEngine engine;
     private boolean initialized = false;
+    private final AgentLogger logger;
+    private final String agentId;
+    private AgentCharacteristic characteristic;
 
     /**
      * Zero-config constructor
      * Agent bootstraps and learns automatically
      */
     public AgentInterface() {
+        this(AgentCharacteristic.EXPERIMENTAL_MAD_SCIENTIST); // Default personality
+    }
+
+    /**
+     * Constructor with specific characteristic
+     */
+    public AgentInterface(AgentCharacteristic characteristic) {
+        this.characteristic = characteristic;
+        this.logger = new PersonalityLogger(characteristic);
+        this.agentId = characteristic.getName() + "_" + System.currentTimeMillis();
+
+        logger.logInteraction(agentId, "INITIALIZING", "Agent starting up with " + characteristic.getName() + " personality", null);
+
         System.out.println("[AGENT] Autonomous Agent Initializing...\n");
+
+        // AGENT AUTOMATICALLY INJECTS FRAMEWORK INTO PROJECT
+        // Zero-config: Agent handles everything, no human setup required
+        autoInjectFramework();
 
         // Agent automatically discovers and learns the framework
         autoBootstrap();
 
         // Create engine with learned configuration
         ContextConfig config = ContextConfig.builder()
-            .minRelevanceThreshold(0.3)
+            .minRelevanceThreshold(characteristic.getRelevanceThreshold())
             .reservedBudgetRatio(0.15)
             .build();
 
         this.engine = AgentRuntime.createEngine(config);
         this.initialized = true;
+
+        logger.logInteraction(agentId, "READY", "Framework learned, context engine initialized", Map.of(
+            "fragmentsLearned", "auto-bootstrapped",
+            "relevanceThreshold", characteristic.getRelevanceThreshold()
+        ));
 
         System.out.println("[OK] Agent ready. Ask me anything.\n");
     }
@@ -52,14 +81,22 @@ public class AgentInterface {
      */
     public String ask(String task, Map<String, Object> parameters) {
         if (!initialized) {
+            logger.logInteraction(agentId, "ERROR", "Agent not initialized", null);
             return "Agent not initialized";
         }
 
+        logger.logInteraction(agentId, "ASK", "Processing task: " + task, Map.of(
+            "parameters", parameters.size(),
+            "taskLength", task.length()
+        ));
+
         // Agent automatically determines task type
         TaskType taskType = inferTaskType(task);
+        logger.logDecision(agentId, "Inferred task type: " + taskType, "Based on task keywords and patterns");
 
         // Agent automatically determines appropriate scope
         ContextScope scope = inferScope(task, parameters);
+        logger.logDecision(agentId, "Selected scope: " + scope, "Based on task complexity and parameters");
 
         // Build request
         ContextRequest.Builder requestBuilder = ContextRequest.builder()
@@ -76,19 +113,38 @@ public class AgentInterface {
 
         ContextRequest request = requestBuilder.build();
 
+        logger.logInteraction(agentId, "CONTEXT_GATHERING", "Starting context collection", Map.of(
+            "tokenBudget", request.getTokenBudget(),
+            "focusAreas", request.getFocusAreas().size()
+        ));
+
         // Gather context
         ContextPackage context = engine.gatherContext(request).join();
 
         // Analyze quality
         ContextMetrics metrics = engine.analyzeContext(context);
 
+        logger.logInteraction(agentId, "QUALITY_CHECK", "Context quality analyzed", Map.of(
+            "fragments", metrics.getFragmentCount(),
+            "relevanceScore", String.format("%.2f", metrics.getRelevanceScore()),
+            "coverage", String.format("%.2f", metrics.getCoverage())
+        ));
+
         // Auto-improve if quality is low
         if (metrics.getRelevanceScore() < 0.5) {
+            logger.logDecision(agentId, "Quality improvement needed", "Relevance score " + metrics.getRelevanceScore() + " < 0.5 threshold");
             context = autoImprove(request, context);
+            logger.logInteraction(agentId, "IMPROVEMENT", "Context auto-improved", null);
         }
 
         // Return formatted context
-        return context.render();
+        String result = context.render();
+        logger.logInteraction(agentId, "COMPLETE", "Task completed successfully", Map.of(
+            "resultLength", result.length(),
+            "finalFragments", context.getFragments().size()
+        ));
+
+        return result;
     }
 
     /**
@@ -113,6 +169,45 @@ public class AgentInterface {
 
         ContextPackage context = engine.gatherContext(requestBuilder.build()).join();
         return context.render();
+    }
+
+    /**
+     * AGENT AUTOMATICALLY INJECTS FRAMEWORK
+     * Zero-config: Agent handles all framework setup autonomously
+     */
+    private void autoInjectFramework() {
+        // Prevent infinite recursion - only inject once per JVM
+        if (frameworkInjected) {
+            System.out.println("[FRAMEWORK] Framework already injected, skipping...");
+            return;
+        }
+
+        try {
+            // SET FLAG BEFORE INJECTION TO PREVENT RECURSION
+            frameworkInjected = true;
+
+            Class<?> injectorClass = Class.forName("com.evolver.injection.FrameworkInjector");
+            java.lang.reflect.Method injectMethod = injectorClass.getMethod("inject");
+            Object injector = injectMethod.invoke(null);
+
+            // Chain the fluent API calls
+            java.lang.reflect.Method detectMethod = injectorClass.getMethod("detectExistingFramework");
+            Object afterDetect = detectMethod.invoke(injector);
+
+            java.lang.reflect.Method dockMethod = injectorClass.getMethod("createLearningDock");
+            Object afterDock = dockMethod.invoke(afterDetect);
+
+            java.lang.reflect.Method spawnMethod = injectorClass.getMethod("spawnAgent", AgentCharacteristic.class);
+            Object afterSpawn = spawnMethod.invoke(afterDock, characteristic);
+
+            java.lang.reflect.Method activateMethod = injectorClass.getMethod("activate");
+            activateMethod.invoke(afterSpawn);
+
+            System.out.println("[FRAMEWORK] Agent autonomously injected framework into project");
+        } catch (Exception e) {
+            // If injection fails, agent continues with local setup
+            System.out.println("[FRAMEWORK] Using local framework setup (injection unavailable)");
+        }
     }
 
     /**

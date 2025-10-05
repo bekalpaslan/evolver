@@ -299,4 +299,34 @@ public class AgentCharacteristic {
     public String toString() {
         return name + ": " + personality;
     }
+    
+    public static void main(String[] args) {
+        System.out.println("🧬 Agent Evolution Demo");
+        System.out.println("======================");
+
+        // Start with a basic agent
+        AgentCharacteristic original = AgentCharacteristic.DOCUMENTATION_OBSESSIVE;
+        System.out.println("Original: " + original);
+
+        // Agent evolves based on experience
+        AgentCharacteristic evolved = original.evolve("Learned that performance matters too",
+            Map.of("focusAreas", Arrays.asList("documentation", "performance", "optimization")));
+
+        System.out.println("Evolved: " + evolved);
+
+        // Create a hybrid agent
+        AgentCharacteristic hybrid = AgentCharacteristic.crossBreed(
+            AgentCharacteristic.CLEAN_CODE_FREAK,
+            AgentCharacteristic.PERFORMANCE_MANIAC,
+            "CleanSpeed"
+        );
+
+        System.out.println("Hybrid: " + hybrid);
+
+        // Show how evolution can lead to unexpected behaviors
+        System.out.println("\nEvolution can lead to emergent behaviors:");
+        System.out.println("- Original focus: " + original.getFocusAreas());
+        System.out.println("- Evolved focus: " + evolved.getFocusAreas());
+        System.out.println("- Hybrid focus: " + hybrid.getFocusAreas());
+    }
 }
