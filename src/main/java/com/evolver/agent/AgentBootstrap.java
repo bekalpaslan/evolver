@@ -3,6 +3,8 @@ package com.evolver.agent;
 import com.evolver.context.*;
 import com.evolver.context.collectors.*;
 import com.evolver.metrics.Baseline;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * AGENT BOOTSTRAP - Your First Entry Point
@@ -77,6 +79,9 @@ public class AgentBootstrap {
         
         // Show final progress after bootstrap
         progress.printProgress();
+        
+        // Generate initial benefit report as demonstration
+        generateInitialBenefitReport();
         
         printNextSteps();
 
@@ -263,6 +268,83 @@ public class AgentBootstrap {
         }
 
         System.out.println("\n💡 Evolution enabled. You have full autonomy.");
+    }
+
+    /**
+     * Generate initial benefit report demonstrating how agents should track framework value
+     */
+    private void generateInitialBenefitReport() {
+        System.out.println("\n📊 GENERATING FRAMEWORK BENEFIT REPORT");
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("(Demonstrating benefit tracking requirement from AGENT_MANIFESTO.md)");
+        
+        try {
+            // Use available methods to gather database information
+            List<ExperienceRepository.ExperienceEntry> allExperiences = ExperienceRepository.getAll();
+            
+            System.out.println("\n📈 Current Framework Benefits:");
+            System.out.println("  Experience Database: " + allExperiences.size() + " experiences loaded");
+            
+            // Count categories
+            long categoryCount = allExperiences.stream()
+                .map(e -> e.category != null ? e.category : "uncategorized")
+                .distinct()
+                .count();
+            System.out.println("  Knowledge Base: " + categoryCount + " categories covered");
+            
+            // Count contributing agents
+            long agentCount = allExperiences.stream()
+                .map(e -> e.agent)
+                .filter(Objects::nonNull)
+                .distinct()
+                .count();
+            System.out.println("  Collaborative Learning: " + agentCount + " agents contributing");
+            System.out.println("  Framework Version: 2.0.0 (with migration support)");
+            
+            // Log this in agent diary as structured data for engineers
+            String benefitReport = String.format(
+                "## Framework Benefit Report - Bootstrap\\n\\n" +
+                "### Quantitative Metrics:\\n" +
+                "- Database experiences: %d\\n" +
+                "- Knowledge categories: %d\\n" +
+                "- Contributing agents: %d\\n" +
+                "- Framework version: 2.0.0\\n\\n" +
+                "### Key Benefits:\\n" +
+                "- Automated context gathering reduces manual research time\\n" +
+                "- Shared experience database accelerates learning\\n" +
+                "- Version management ensures data consistency\\n" +
+                "- Memory-efficient lazy loading supports scaling\\n\\n" +
+                "### Documentation Maintenance:\\n" +
+                "- AGENT_MANIFESTO.md updated with documentation maintenance protocol\\n" +
+                "- All agent guidelines now include doc sync requirements\\n" +
+                "- Bootstrap enhanced to demonstrate documentation practices\\n\\n" +
+                "### Recommendations:\\n" +
+                "- Continue running weekly benefit reports via gradle tasks\\n" +
+                "- Monitor database growth and memory usage patterns\\n" +
+                "- Track time savings from automated context collection\\n" +
+                "- Always update documentation immediately after code changes\\n",
+                allExperiences.size(),
+                categoryCount,
+                agentCount
+            );
+            
+            AgentDiary.entry(benefitReport);
+            
+            System.out.println("\n💡 Benefit tracking established. Future reports via:");
+            System.out.println("  gradle dbStats          # Database metrics");
+            System.out.println("  gradle memoryAnalyze    # Memory efficiency"); 
+            System.out.println("  gradle dbVersion        # Version status");
+            System.out.println("  gradle javadoc          # Generate API documentation");
+            System.out.println("\n📚 Documentation maintenance requirement added to manifesto:");
+            System.out.println("  Core Rule #7: Documentation must be updated immediately after any code changes");
+            System.out.println("  📝 Always verify docs are synchronized with code modifications"); 
+            System.out.println("  gradle dbVersion        # Version status");
+            System.out.println("\n📝 Benefit report logged to agent diary for engineer visibility.");
+            
+        } catch (Exception e) {
+            System.out.println("⚠️  Benefit report generation failed: " + e.getMessage());
+            AgentDiary.entry("Benefit report generation failed during bootstrap: " + e.getMessage());
+        }
     }
 
     /**

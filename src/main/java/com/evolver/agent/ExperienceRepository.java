@@ -460,9 +460,16 @@ public class ExperienceRepository {
         private final ExperienceEntry entry = new ExperienceEntry();
 
         public ExperienceBuilder() {
-            entry.id = "exp-" + UUID.randomUUID().toString().substring(0, 8);
+            entry.id = "exp-" + Long.toHexString(System.nanoTime()).substring(0, 8);
             entry.timestamp = Instant.now().toString();
-            entry.agent = "agent_" + System.getProperty("user.name", "unknown");
+            
+            // Automatically set agent identity with hashed IP
+            AgentIdentity.AgentInfo agentInfo = AgentIdentity.getAgentInfo();
+            entry.agentId = agentInfo.agentId;
+            entry.model = agentInfo.model;
+            entry.systemInfo = agentInfo.systemInfo;
+            entry.ipHash = agentInfo.ipHash;
+            entry.agent = agentInfo.agentId; // Backward compatibility
         }
 
         public ExperienceBuilder category(String category) {
@@ -547,7 +554,40 @@ public class ExperienceRepository {
 
         public void save() {
             synchronized (LOCK) {
-                // Validate required fields
+                // STRICT VALIDATION ENFORCEMENT - NO DIRTY DATA ALLOWED
+                
+                // Convert to JSON for validation
+                Gson gson = new GsonBuilder().create();
+                JsonObject experienceJson = gson.toJsonTree(entry).getAsJsonObject();
+                
+                // Run strict validation
+                ExperienceValidator.ValidationResult validation = ExperienceValidator.validateExperience(experienceJson);
+                
+                if (!validation.isValid()) {
+                    // REJECT EXPERIENCE - STRICT ENFORCEMENT
+                    String errorMessage = String.format(
+                        "❌ EXPERIENCE REJECTED - QUALITY VALIDATION FAILED\n" +
+                        "Agent: %s\n" +
+                        "Model: %s\n" +
+                        "Category: %s\n" +
+                        "Technology: %s\n\n" +
+                        "%s\n" +
+                        "🚫 This experience was AUTOMATICALLY REJECTED to maintain database quality.\n" +
+                        "Please fix the issues above and try again.",
+                        entry.agentId, entry.model, entry.category, 
+                        entry.technology != null ? entry.technology.name : "null",
+                        validation.getReport()
+                    );
+                    
+                    logger.severe(errorMessage);
+                    throw new IllegalArgumentException(errorMessage);
+                }
+                
+                // Log successful validation
+                logger.info(String.format("✅ Experience validated successfully (Quality Score: %.1f/10.0) - Agent: %s", 
+                    validation.qualityScore, entry.agentId));
+                
+                // Additional legacy validation
                 if (entry.category == null || entry.category.trim().isEmpty()) {
                     throw new IllegalStateException("Category is required");
                 }
@@ -561,6 +601,10 @@ public class ExperienceRepository {
 
                 database.experiences.add(entry);
                 saveDatabase();
+                
+                // Success feedback
+                System.out.printf("✅ Experience saved to database: %s (Quality Score: %.1f/10.0)%n", 
+                    entry.id, validation.qualityScore);
             }
         }
 
@@ -646,6 +690,10 @@ public class ExperienceRepository {
         String id;
         String timestamp;
         String agent;
+        String agentId;           // Hashed IP-based agent ID
+        String model;             // AI model information
+        String systemInfo;        // System information for debugging
+        String ipHash;            // Hashed IP for accountability
         String category;
         Technology technology;
         Map<String, Double> ratings;

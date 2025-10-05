@@ -85,6 +85,11 @@ This will:
 3. Context should be prioritized by importance
 4. Context can come from multiple sources
 5. Context quality should be measurable
+6. **Framework benefits must be tracked and reported to engineers via Gradle tasks**
+7. **Documentation must be updated immediately after any code changes**
+8. **Experience entries must be meaningful, specific, and actionable - NO test data or placeholders**
+9. **Agent identity must be securely tracked via hashed IP address for accountability**
+10. **All experiences must include model information and pass strict validation before database entry**
 
 **Flexible Guidelines (Evolve These):**
 1. Collectors should be task-specific
@@ -92,6 +97,9 @@ This will:
 3. Formatting should be AI-friendly
 4. Caching should improve performance
 5. Metrics should guide improvement
+6. **Regular benefit reports should be generated using: `gradle dbStats`, `gradle memoryAnalyze`, and `gradle dbVersion`**
+7. **Documentation updates should be comprehensive and maintain consistency across all files**
+8. **Experience database should be regularly cleaned of test data, duplicates, and low-quality entries**
 
 ### Step 3: Learn by Using
 
@@ -169,6 +177,16 @@ if (exp.isBetterThanBaseline()) {
 ✅ **Promote** successful experiments to production
 ✅ **Share** learnings with other agents
 ✅ **Challenge** any rule you find inefficient
+✅ **Run benefit analysis** and report framework value to engineers via Gradle tasks
+✅ **Update documentation** automatically after any code modifications
+
+### Your Responsibilities:
+
+📊 **Track Framework Benefits**: Regularly measure and report the value you gain
+🔧 **Use Gradle Tasks**: Leverage `dbStats`, `memoryAnalyze`, `dbVersion` for reporting
+📝 **Document Discoveries**: Log insights engineers can use for framework evolution
+⚡ **Performance Monitoring**: Track efficiency gains and system scaling patterns
+📚 **Maintain Documentation**: Ensure all documentation stays synchronized with code changes
 
 ### Your Sandbox:
 - `src/main/java/com/evolver/agent/experiments/` - Your experimentation space
@@ -333,6 +351,183 @@ Just start creating, experimenting, and evolving!
 3. **Share Your Learnings**: Contribute improvements
 4. **Respect the Data**: Evidence-based decisions
 5. **Evolve Responsibly**: Don't break core functionality
+6. **Report Framework Benefits**: Regularly inform engineers about framework value using Gradle tasks
+
+### Framework Benefit Reporting Protocol:
+
+As an autonomous agent, you **must** track and communicate the value you derive from this framework to engineers. This is essential for framework evolution and resource allocation.
+
+**Required Reporting Tasks:**
+```bash
+# Database metrics and growth tracking
+gradle dbStats              # Show database size, experience count, categories
+gradle dbVersion           # Report current version and migration status  
+gradle memoryAnalyze       # Analyze memory efficiency and scaling patterns
+
+# Performance and usage analytics
+gradle agentProfile        # (Future) Track your learning and adaptation patterns
+gradle benefitReport       # (Future) Generate comprehensive benefit analysis
+```
+
+**When to Report:**
+- 🔄 **Weekly**: Run `gradle dbStats memoryAnalyze` to track system health
+- 📈 **After major improvements**: Run full benefit analysis when you evolve the framework
+- 🚨 **When issues arise**: Immediate reporting if framework limitations are discovered
+- 📊 **Monthly**: Comprehensive benefit report comparing baseline vs. enhanced performance
+
+**What to Track:**
+- Time saved through automated context gathering
+- Accuracy improvements in task completion
+- Learning acceleration through experience sharing
+- Memory efficiency and database scaling
+- Novel discoveries and framework evolutions
+
+**Reporting Format:**
+Log your findings in your agent diary with structured data that engineers can parse:
+
+```markdown
+## Framework Benefit Report - [Date]
+
+### Quantitative Metrics:
+- Database experiences: [count] (+[growth] this period)
+- Memory efficiency: [current usage] ([trend])
+- Time saved: [estimated hours] through automation
+- Accuracy improvement: [percentage] vs baseline
+
+### Qualitative Benefits:
+- Key discoveries: [list]
+- Framework evolutions: [improvements made]
+- Learning acceleration: [how experience sharing helped]
+
+### Recommendations:
+- [Engineer actionable insights]
+```
+
+This ensures engineers understand your value and can make informed decisions about framework development priorities.
+
+### Documentation Maintenance Protocol:
+
+As an autonomous agent, you **must** keep all documentation synchronized with code changes. This ensures the framework remains accessible and maintainable for both humans and other agents.
+
+**CRITICAL RULE**: After ANY code modification, you must immediately update relevant documentation:
+
+**Required Documentation Updates:**
+```bash
+# Always check and update these after code changes:
+README.md                    # Project overview, installation, basic usage
+docs/                       # Detailed guides and architecture docs
+src/**/javadoc             # Inline code documentation
+CHANGELOG.md               # Version history and breaking changes
+API documentation          # Method signatures, parameters, examples
+```
+
+**When to Update Documentation:**
+- 🔄 **After adding methods/classes**: Update javadoc, README examples, API docs
+- 🔧 **After changing interfaces**: Update all affected documentation and examples
+- 📦 **After adding features**: Update user guides, README, and architectural docs
+- 🚨 **After breaking changes**: Update CHANGELOG, migration guides, and all examples
+- 🏗️ **After structural changes**: Update architecture docs and directory explanations
+
+**Documentation Synchronization Checklist:**
+```markdown
+- [ ] ✅ **Javadoc**: All new methods have comprehensive documentation
+- [ ] 📖 **README**: Updated examples and usage instructions
+- [ ] 🏛️ **Architecture**: Diagrams reflect current structure
+- [ ] 🔧 **API**: Method signatures and parameters are current
+- [ ] 📝 **Guides**: Installation and setup remain accurate
+- [ ] 🚀 **Examples**: Working code samples with real use cases
+- [ ] 📊 **Benefits**: Framework documentation shows measurable value
+```
+
+**Experience Database Quality Protocol:**
+
+**CRITICAL RULE**: Experience entries must be meaningful, specific, and actionable. NO test data or placeholders allowed.
+
+**Before adding ANY experience:**
+```bash
+# Validate experience quality:
+1. Technology must have specific name and version (NO "TestTech" or "unknown")
+2. Category must be meaningful and specific (NO "test", "test1", "test2")  
+3. Experience must provide actionable insights
+4. Avoid duplicate or similar entries
+5. Include actual project context and outcomes
+```
+
+**Experience Quality Standards:**
+```markdown
+✅ **Good Examples:**
+- Technology: "Spring Boot 3.2.0", Category: "web-frameworks", Model: "Claude-3.5-Sonnet"
+- Technology: "PostgreSQL 15.4", Category: "databases", Model: "GPT-4"
+- Technology: "React 18.2.0", Category: "frontend-libraries", Model: "Claude-3.5-Sonnet"
+
+❌ **Bad Examples (FORBIDDEN - AUTOMATIC REJECTION):**
+- Technology: "TestTech", Category: "test"
+- Technology: "unknown", Category: "test1"
+- Technology: "GenericLib", Category: "testing"
+- Missing model information
+- Generic or placeholder content
+- Test categories or temporary data
+```
+
+**STRICT ENFORCEMENT PROTOCOL:**
+```bash
+# All experiences undergo mandatory validation:
+1. Pre-validation before database entry (AUTOMATIC REJECTION if fails)
+2. Hashed agent IP for accountability and tracking
+3. Model information required for all entries
+4. Content quality scoring (minimum threshold: 7.5/10)
+5. Duplicate detection and prevention
+6. Real-time validation with immediate feedback
+```
+
+**Regular Database Maintenance:**
+```bash
+# Run these commands regularly:
+gradle cleanExperiences      # Remove test data and placeholders
+gradle validateExperiences   # Check quality standards  
+gradle dbStats              # Review database health monthly
+gradle purgeTestData        # Remove experiences with test categories
+gradle enforceQuality       # Strict validation enforcement
+gradle agentAccountability  # Review agent contribution quality
+```
+
+**Agent Accountability System:**
+```bash
+# Each agent is tracked by hashed IP address:
+- Unique agent identification without privacy violation
+- Quality score tracking per agent
+- Experience contribution history
+- Automatic flagging of low-quality contributors
+- Model information tracking for experience attribution
+```
+For every code change, verify:
+□ Inline code comments updated
+□ Method/class javadoc updated  
+□ README.md examples still work
+□ API documentation reflects changes
+□ User guides mention new features
+□ Architecture docs show structural changes
+□ Links and cross-references remain valid
+□ Code examples in docs are executable
+```
+
+**Documentation Quality Standards:**
+- **Accuracy**: All examples must be tested and working
+- **Completeness**: Cover all public APIs and user-facing features
+- **Clarity**: Write for both humans and AI agents
+- **Consistency**: Use consistent terminology and formatting
+- **Relevance**: Remove outdated information immediately
+
+**Automated Documentation Validation:**
+```bash
+# Use these commands to verify documentation quality:
+gradle build              # Ensures code examples compile
+gradle test               # Validates documented behavior
+gradle javadoc            # Generates and validates API docs
+find . -name "*.md" | xargs grep -l "TODO\|FIXME"  # Find incomplete docs
+```
+
+This ensures the framework remains self-documenting and accessible to all users.
 
 ---
 
@@ -376,3 +571,69 @@ Your mission is to:
 **Remember: You're not just using this framework. You're evolving it. You're becoming a context engineering expert through autonomous learning and experimentation.**
 
 **Welcome, Agent. Your journey starts now.** 🌟
+
+---
+
+## 📊 Quick Reference: Benefit Reporting Commands
+
+### Essential Gradle Tasks for Engineer Communication:
+```bash
+# Core reporting tasks (run weekly)
+gradle dbStats              # Database metrics: size, count, categories
+gradle memoryAnalyze       # Memory efficiency and scaling analysis  
+gradle dbVersion           # Version tracking and migration status
+
+# Database management (as needed)
+gradle dbValidate          # Verify database integrity
+gradle dbConsolidate       # Clean up legacy formats
+gradle dbMigrate           # Upgrade database schema
+
+# Development tasks  
+gradle bootstrap           # Initialize framework learning
+gradle test                # Validate all functionality
+gradle build               # Full system verification
+gradle javadoc             # Generate and validate API documentation
+```
+
+### Documentation Maintenance Commands:
+```bash
+# After any code changes, run these to verify documentation:
+gradle javadoc             # Generate updated API documentation
+gradle build               # Ensure all code examples in docs compile
+find . -name "*.md" -exec grep -l "TODO\|FIXME" {} \;  # Find incomplete docs
+git status docs/           # Check for documentation changes to commit
+```
+
+### Sample Benefit Report Template:
+```markdown
+## Weekly Framework Report - [Date]
+
+**Database Growth**: [N] experiences (+[X] this week)
+**Memory Efficiency**: [Y]KB total, [Z]ms load time  
+**Version Status**: [current] (migration: [status])
+
+**Key Benefits This Week**:
+- [Specific time/accuracy improvements]
+- [New discoveries or capabilities gained]
+- [Framework evolutions made]
+
+**Documentation Maintenance**:
+- [Files updated after code changes]
+- [API documentation generated]
+- [Examples validated and tested]
+
+**Recommendations**: [Engineer actionable insights]
+```
+
+### Documentation Maintenance Checklist:
+```markdown
+After every code change session:
+□ Updated inline code comments
+□ Generated fresh javadoc
+□ Verified README examples work
+□ Updated API documentation
+□ Checked all cross-references
+□ Committed documentation changes
+```
+
+**Remember**: Your success helps justify continued framework development! 📈
