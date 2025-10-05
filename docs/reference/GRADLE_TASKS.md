@@ -50,6 +50,13 @@ This document provides comprehensive documentation for all Gradle tasks in the E
 | `experienceReport` | Generate comprehensive experience database quality report | `gradle experienceReport` |
 | `agentAccountability` | Generate agent accountability and contribution quality report | `gradle agentAccountability` |
 
+### 🧹 **Maintenance Tasks** (`group = 'maintenance'`)
+**Purpose**: Project maintenance and cleanup
+
+| Task | Description | Usage |
+|------|-------------|--------|
+| `cleanup` | Remove OLD files and backups from the project | `gradle cleanup` |
+
 ### ✅ **Verification Tasks** (`group = 'verification'`)
 **Purpose**: Testing and verification
 

@@ -79,6 +79,13 @@ tasks.register('learningDockLiveTest', JavaExec) {
     mainClass = 'com.evolver.injection.LearningDockLiveTest'
 }
 
+tasks.register('learningDockOutcomes', JavaExec) {
+    group = 'injection'
+    description = 'Demonstrate actual LearningDock outcomes for different project types'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.injection.LearningDockOutcomesDemo'
+}
+
 tasks.register('cli', JavaExec) {
     group = 'agent'
     description = 'Evolver CLI for privacy controls and configuration'
@@ -87,6 +94,13 @@ tasks.register('cli', JavaExec) {
     if (project.hasProperty('args')) {
         args project.property('args').split(' ')
     }
+}
+
+tasks.register('cleanup', JavaExec) {
+    group = 'maintenance'
+    description = 'Remove OLD files and backups from the project'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.cleanup.ProjectCleanup'
 }
 
 tasks.withType(JavaCompile) {
