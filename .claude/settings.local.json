@@ -7,7 +7,9 @@
       "Bash(./gradlew:*)",
       "Bash(gradle build:*)",
       "Bash(gradle bootstrap:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Implement centralized experience database and clean demo files\n\nMajor Changes:\n- Centralized experience database: Single experiences.json at root\n- Auto-loads on every framework execution\n- Git-tracked for sharing across all instances\n- Removed all demo files (QuickStartDemo, AutonomousAgent, AgentDemo, etc.)\n- Cleaned build.gradle to essential tasks only (bootstrap, inject)\n\nNew Features:\n- ExperienceRepository: Complete rewrite with fluent API\n- Auto-load database on bootstrap with stats\n- Search by category, tags, get all experiences\n- Support for 0.1 decimal precision ratings\n- Technology harmony tracking\n- Evidence-based measurements\n\nDocumentation:\n- EXPERIENCE_FLOW.md: Visual flow guide\n- docs/agent/EXPERIENCE_DATABASE.md: Technical specification\n- Updated AGENT_SESSION_REMINDERS.md with new API\n\nConfiguration:\n- .gitignore: Diaries local-only, experiences.json tracked\n- experiences.json: Initial database with 2 experiences\n\nFlow: Framework starts → Auto-loads experiences.json → Agent records → \nCommit to git → Other instances pull → Shared intelligence!\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []

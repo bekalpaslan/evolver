@@ -30,5 +30,9 @@ Thumbs.db
 # Agent personal diaries (local only - not shared)
 .agent/diaries/
 
+# Experience database temp and backup files (auto-generated)
+experiences.tmp
+experiences.backup.json
+
 # IMPORTANT: experiences.json is TRACKED (shared intelligence across instances)
 # !experiences.json
