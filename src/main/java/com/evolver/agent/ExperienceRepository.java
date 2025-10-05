@@ -1,5 +1,6 @@
 package com.evolver.agent;
 
+import com.google.gson.*;
 import java.io.*;
 import java.nio.file.*;
 import java.time.*;
@@ -9,357 +10,295 @@ import java.util.stream.*;
 /**
  * Experience Repository - Collective Agent Learning
  *
- * Allows agents to:
- * - Record experiences (issues, solutions, insights)
- * - Search previous experiences
- * - Learn from other agents
- * - Choose recording method
+ * CENTRALIZED DATABASE APPROACH:
+ * - Single experiences.json file at project root
+ * - Auto-loaded on every framework execution
+ * - Committed to GitHub for sharing across instances
+ * - All agents read from and write to same database
  */
 public class ExperienceRepository {
 
-    private static final Path EXPERIENCE_DIR = Paths.get(".agent/experiences");
-    private static final Path INDEX_FILE = EXPERIENCE_DIR.resolve("index.json");
+    private static final Path DATABASE_FILE = Paths.get("experiences.json");
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static ExperienceDatabase database = null;
 
     /**
-     * Record a new experience
+     * AUTO-LOAD DATABASE
+     * Called automatically by AgentBootstrap
      */
-    public static Experience record() {
-        return new Experience();
+    public static void loadOnBootstrap() {
+        loadDatabase();
+
+        if (database != null && database.experiences != null) {
+            System.out.println("📚 Loading shared experience database...");
+            System.out.println("[OK] Found " + database.experiences.size() + " experiences from agents");
+            System.out.println("  Database: experiences.json (tracked in git)");
+
+            // Show summary
+            Map<String, Long> byCategory = database.experiences.stream()
+                .collect(Collectors.groupingBy(e -> e.category, Collectors.counting()));
+            System.out.println("  Categories: " + byCategory);
+        } else {
+            System.out.println("📚 No shared experiences found. Creating new database...");
+            database = new ExperienceDatabase();
+            saveDatabase();
+        }
     }
 
     /**
-     * Search experiences by category and tags
+     * Record a new experience - writes to centralized database
      */
-    public static List<ExperienceRecord> search(String category, String... tags) {
-        ensureDirectoryExists();
+    public static ExperienceBuilder record() {
+        return new ExperienceBuilder();
+    }
 
-        List<ExperienceRecord> results = new ArrayList<>();
+    /**
+     * Search experiences by category
+     */
+    public static List<ExperienceEntry> search(String category) {
+        loadDatabaseIfNeeded();
 
-        try {
-            Files.walk(EXPERIENCE_DIR)
-                .filter(p -> p.toString().endsWith(".md") || p.toString().endsWith(".json"))
-                .filter(p -> matchesCategory(p, category))
-                .filter(p -> matchesTags(p, tags))
-                .forEach(p -> {
-                    try {
-                        results.add(loadExperience(p));
-                    } catch (IOException e) {
-                        // Skip unreadable files
-                    }
-                });
-        } catch (IOException e) {
-            System.err.println("Error searching experiences: " + e.getMessage());
+        if (database == null || database.experiences == null) {
+            return Collections.emptyList();
         }
 
-        return results;
-    }
-
-    /**
-     * Load all relevant experiences for a task
-     */
-    public static List<ExperienceRecord> loadRelevantExperiences(String taskType, String... focusAreas) {
-        return search("all")
-            .stream()
-            .filter(exp -> isRelevantTo(exp, taskType, focusAreas))
-            .sorted((a, b) -> Double.compare(b.relevanceScore, a.relevanceScore))
+        return database.experiences.stream()
+            .filter(e -> "all".equals(category) || category.equals(e.category))
             .collect(Collectors.toList());
     }
 
     /**
-     * Quick experience recording (append to quick notes)
+     * Search by tags
      */
-    public static void quickNote(String note) {
-        ensureDirectoryExists();
-        Path quickNotes = EXPERIENCE_DIR.resolve("quick_notes.txt");
+    public static List<ExperienceEntry> searchByTags(String... tags) {
+        loadDatabaseIfNeeded();
 
-        String timestamp = Instant.now().toString();
-        String entry = String.format("\n%s - %s\n%s\n", timestamp, getAgentId(), note);
-
-        try {
-            Files.writeString(quickNotes, entry, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            System.out.println("[OK] Quick note recorded");
-        } catch (IOException e) {
-            System.err.println("Failed to record quick note: " + e.getMessage());
+        if (database == null || database.experiences == null) {
+            return Collections.emptyList();
         }
+
+        return database.experiences.stream()
+            .filter(e -> e.tags != null && Arrays.stream(tags).anyMatch(tag -> e.tags.contains(tag)))
+            .collect(Collectors.toList());
     }
 
     /**
-     * Load experiences on bootstrap
+     * Get all experiences
      */
-    public static void loadOnBootstrap() {
-        ensureDirectoryExists();
-        createReadmeIfNeeded();
+    public static List<ExperienceEntry> getAll() {
+        loadDatabaseIfNeeded();
+        return database != null && database.experiences != null ?
+            new ArrayList<>(database.experiences) : Collections.emptyList();
+    }
 
-        System.out.println("📚 Loading agent experiences...");
+    /**
+     * Get database statistics
+     */
+    public static void printStats() {
+        loadDatabaseIfNeeded();
 
+        if (database == null || database.experiences == null) {
+            System.out.println("No experiences in database");
+            return;
+        }
+
+        System.out.println("\n📊 Experience Database Stats:");
+        System.out.println("  Total experiences: " + database.experiences.size());
+        System.out.println("  Last updated: " + database.lastUpdated);
+        System.out.println("  Database version: " + database.version);
+
+        Map<String, Long> byCategory = database.experiences.stream()
+            .collect(Collectors.groupingBy(e -> e.category, Collectors.counting()));
+        System.out.println("  By category: " + byCategory);
+
+        Set<String> agents = database.experiences.stream()
+            .map(e -> e.agent)
+            .collect(Collectors.toSet());
+        System.out.println("  Contributing agents: " + agents);
+    }
+
+    // Internal methods
+
+    private static void loadDatabaseIfNeeded() {
+        if (database == null) {
+            loadDatabase();
+        }
+    }
+
+    private static void loadDatabase() {
         try {
-            long count = Files.walk(EXPERIENCE_DIR)
-                .filter(p -> p.toString().endsWith(".md") || p.toString().endsWith(".json"))
-                .count();
-
-            if (count > 0) {
-                System.out.println("[OK] Found " + count + " experiences from other agents");
-                System.out.println("  Read them at: .agent/experiences/");
+            if (Files.exists(DATABASE_FILE)) {
+                String json = Files.readString(DATABASE_FILE);
+                database = gson.fromJson(json, ExperienceDatabase.class);
             } else {
-                System.out.println("[OK] No previous experiences. You're the first!");
-                System.out.println("  Record your learnings for future agents.");
+                database = new ExperienceDatabase();
             }
-        } catch (IOException e) {
-            System.out.println("⚠ Could not load experiences: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("⚠ Failed to load experience database: " + e.getMessage());
+            database = new ExperienceDatabase();
+        }
+    }
+
+    private static void saveDatabase() {
+        try {
+            database.lastUpdated = Instant.now().toString();
+            database.updateStatistics();
+
+            String json = gson.toJson(database);
+            Files.writeString(DATABASE_FILE, json);
+
+            System.out.println("[OK] Experience saved to database: experiences.json");
+            System.out.println("  📌 Commit this file to git to share with other agents!");
+        } catch (Exception e) {
+            System.err.println("❌ Failed to save experience database: " + e.getMessage());
         }
     }
 
     /**
-     * Helper: Ensure directory structure exists
+     * Experience Builder
      */
-    private static void ensureDirectoryExists() {
-        try {
-            Files.createDirectories(EXPERIENCE_DIR);
-            Files.createDirectories(EXPERIENCE_DIR.resolve("performance"));
-            Files.createDirectories(EXPERIENCE_DIR.resolve("accuracy"));
-            Files.createDirectories(EXPERIENCE_DIR.resolve("bugs"));
-            Files.createDirectories(EXPERIENCE_DIR.resolve("strategies"));
-            Files.createDirectories(EXPERIENCE_DIR.resolve("experiments"));
-        } catch (IOException e) {
-            System.err.println("Could not create experience directories: " + e.getMessage());
+    public static class ExperienceBuilder {
+        private final ExperienceEntry entry = new ExperienceEntry();
+
+        public ExperienceBuilder() {
+            entry.id = "exp-" + UUID.randomUUID().toString().substring(0, 8);
+            entry.timestamp = Instant.now().toString();
+            entry.agent = "agent_" + System.getProperty("user.name", "unknown");
         }
-    }
 
-    private static void createReadmeIfNeeded() {
-        // README.md already exists from our setup
-    }
-
-    private static boolean matchesCategory(Path path, String category) {
-        if ("all".equals(category)) return true;
-        return path.toString().contains(category);
-    }
-
-    private static boolean matchesTags(Path path, String[] tags) {
-        if (tags.length == 0) return true;
-
-        try {
-            String content = Files.readString(path).toLowerCase();
-            return Arrays.stream(tags)
-                .anyMatch(tag -> content.contains(tag.toLowerCase()));
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    private static ExperienceRecord loadExperience(Path path) throws IOException {
-        String content = Files.readString(path);
-        return new ExperienceRecord(
-            path.getFileName().toString(),
-            extractCategory(path),
-            content,
-            0.8 // Default relevance
-        );
-    }
-
-    private static String extractCategory(Path path) {
-        Path parent = path.getParent();
-        if (parent != null && !parent.equals(EXPERIENCE_DIR)) {
-            return parent.getFileName().toString();
-        }
-        return "general";
-    }
-
-    private static boolean isRelevantTo(ExperienceRecord exp, String taskType, String[] focusAreas) {
-        String lower = exp.content.toLowerCase();
-        boolean matchesTask = lower.contains(taskType.toLowerCase());
-        boolean matchesFocus = focusAreas.length == 0 ||
-            Arrays.stream(focusAreas).anyMatch(area -> lower.contains(area.toLowerCase()));
-        return matchesTask || matchesFocus;
-    }
-
-    private static String getAgentId() {
-        return "agent_" + System.getProperty("user.name", "unknown");
-    }
-
-    /**
-     * Experience builder
-     */
-    public static class Experience {
-        private String category = "general";
-        private String issue;
-        private String solution;
-        private Map<String, Object> evidence = new HashMap<>();
-        private String recommendation;
-        private List<String> tags = new ArrayList<>();
-        private ExperienceFormat format = ExperienceFormat.MARKDOWN;
-
-        public Experience category(String category) {
-            this.category = category;
+        public ExperienceBuilder category(String category) {
+            entry.category = category;
             return this;
         }
 
-        public Experience issue(String issue) {
-            this.issue = issue;
+        public ExperienceBuilder technology(String name, String version, String type) {
+            entry.technology = new Technology(name, version, type);
             return this;
         }
 
-        public Experience solution(String solution) {
-            this.solution = solution;
+        public ExperienceBuilder rating(String aspect, double value) {
+            if (entry.ratings == null) entry.ratings = new HashMap<>();
+            entry.ratings.put(aspect, value);
             return this;
         }
 
-        public Experience evidence(String metric, Object before, Object after) {
-            this.evidence.put(metric + "_before", before);
-            this.evidence.put(metric + "_after", after);
+        public ExperienceBuilder easeOfUse(double value) {
+            return rating("easeOfUse", value);
+        }
+
+        public ExperienceBuilder power(double value) {
+            return rating("power", value);
+        }
+
+        public ExperienceBuilder performance(double value) {
+            return rating("performance", value);
+        }
+
+        public ExperienceBuilder harmony(String tech, double rating, String notes) {
+            if (entry.harmony == null) entry.harmony = new ArrayList<>();
+            entry.harmony.add(new Harmony(tech, rating, notes));
             return this;
         }
 
-        public Experience recommendation(String recommendation) {
-            this.recommendation = recommendation;
+        public ExperienceBuilder evidence(String key, String value) {
+            if (entry.evidence == null) entry.evidence = new HashMap<>();
+            entry.evidence.put(key, value);
             return this;
         }
 
-        public Experience tag(String tag) {
-            this.tags.add(tag);
+        public ExperienceBuilder workingAspect(String aspect) {
+            if (entry.workingAspects == null) entry.workingAspects = new ArrayList<>();
+            entry.workingAspects.add(aspect);
             return this;
         }
 
-        public Experience format(ExperienceFormat format) {
-            this.format = format;
+        public ExperienceBuilder improvementArea(String area) {
+            if (entry.improvementAreas == null) entry.improvementAreas = new ArrayList<>();
+            entry.improvementAreas.add(area);
             return this;
         }
 
-        /**
-         * Save the experience
-         */
+        public ExperienceBuilder recommendation(String rec) {
+            entry.recommendation = rec;
+            return this;
+        }
+
+        public ExperienceBuilder tag(String tag) {
+            if (entry.tags == null) entry.tags = new ArrayList<>();
+            entry.tags.add(tag);
+            return this;
+        }
+
         public void save() {
-            ensureDirectoryExists();
-
-            String filename = generateFilename();
-            Path filepath = EXPERIENCE_DIR.resolve(category).resolve(filename);
-
-            String content = format == ExperienceFormat.JSON ?
-                generateJSON() : generateMarkdown();
-
-            try {
-                Files.writeString(filepath, content);
-                System.out.println("[OK] Experience recorded: " + filepath);
-                System.out.println("  Other agents will learn from this!");
-            } catch (IOException e) {
-                System.err.println("Failed to save experience: " + e.getMessage());
-            }
-        }
-
-        private String generateFilename() {
-            String base = issue.toLowerCase()
-                .replaceAll("[^a-z0-9]+", "_")
-                .replaceAll("^_|_$", "");
-
-            String timestamp = Instant.now().toString().substring(0, 10);
-            String ext = format == ExperienceFormat.JSON ? ".json" : ".md";
-
-            return base + "_" + timestamp + ext;
-        }
-
-        private String generateMarkdown() {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("# Experience: ").append(issue).append("\n\n");
-            sb.append("**Date:** ").append(Instant.now().toString().substring(0, 10)).append("\n");
-            sb.append("**Agent:** ").append(getAgentId()).append("\n");
-            sb.append("**Category:** ").append(category).append("\n\n");
-
-            sb.append("## Issue Encountered\n");
-            sb.append(issue).append("\n\n");
-
-            sb.append("## Solution Applied\n");
-            sb.append(solution).append("\n\n");
-
-            if (!evidence.isEmpty()) {
-                sb.append("## Evidence\n");
-                evidence.forEach((k, v) -> sb.append("- ").append(k).append(": ").append(v).append("\n"));
-                sb.append("\n");
-            }
-
-            if (recommendation != null) {
-                sb.append("## Recommendation\n");
-                sb.append(recommendation).append("\n\n");
-            }
-
-            if (!tags.isEmpty()) {
-                sb.append("## Tags\n");
-                tags.forEach(tag -> sb.append("`").append(tag).append("` "));
-                sb.append("\n");
-            }
-
-            return sb.toString();
-        }
-
-        private String generateJSON() {
-            return String.format("""
-                {
-                  "id": "%s",
-                  "agent": "%s",
-                  "timestamp": "%s",
-                  "category": "%s",
-                  "issue": "%s",
-                  "solution": "%s",
-                  "evidence": %s,
-                  "recommendation": "%s",
-                  "tags": %s
-                }
-                """,
-                UUID.randomUUID().toString().substring(0, 8),
-                getAgentId(),
-                Instant.now().toString(),
-                category,
-                issue,
-                solution,
-                formatEvidence(),
-                recommendation != null ? recommendation : "",
-                formatTags()
-            );
-        }
-
-        private String formatEvidence() {
-            if (evidence.isEmpty()) return "{}";
-            StringBuilder sb = new StringBuilder("{");
-            evidence.forEach((k, v) ->
-                sb.append("\"").append(k).append("\": \"").append(v).append("\", ")
-            );
-            sb.setLength(sb.length() - 2);
-            sb.append("}");
-            return sb.toString();
-        }
-
-        private String formatTags() {
-            if (tags.isEmpty()) return "[]";
-            return "[\"" + String.join("\", \"", tags) + "\"]";
+            loadDatabaseIfNeeded();
+            database.experiences.add(entry);
+            saveDatabase();
         }
     }
 
-    /**
-     * Experience format options
-     */
-    public enum ExperienceFormat {
-        MARKDOWN,  // Human + AI friendly
-        JSON       // Machine-readable
+    // Data classes
+
+    static class ExperienceDatabase {
+        String version = "1.0.0";
+        String lastUpdated;
+        List<ExperienceEntry> experiences = new ArrayList<>();
+        Statistics statistics = new Statistics();
+
+        void updateStatistics() {
+            statistics.totalExperiences = experiences.size();
+            statistics.categories = experiences.stream()
+                .map(e -> e.category)
+                .distinct()
+                .collect(Collectors.toList());
+            statistics.contributingAgents = experiences.stream()
+                .map(e -> e.agent)
+                .distinct()
+                .collect(Collectors.toList());
+        }
     }
 
-    /**
-     * Experience record
-     */
-    public static class ExperienceRecord {
-        public final String id;
-        public final String category;
-        public final String content;
-        public final double relevanceScore;
+    static class Statistics {
+        int totalExperiences;
+        List<String> categories;
+        List<String> contributingAgents;
+    }
 
-        public ExperienceRecord(String id, String category, String content, double relevanceScore) {
-            this.id = id;
-            this.category = category;
-            this.content = content;
-            this.relevanceScore = relevanceScore;
+    public static class ExperienceEntry {
+        String id;
+        String timestamp;
+        String agent;
+        String category;
+        Technology technology;
+        Map<String, Double> ratings;
+        List<Harmony> harmony;
+        Map<String, String> evidence;
+        List<String> workingAspects;
+        List<String> improvementAreas;
+        String recommendation;
+        List<String> tags;
+    }
+
+    static class Technology {
+        String name;
+        String version;
+        String type;
+
+        Technology(String name, String version, String type) {
+            this.name = name;
+            this.version = version;
+            this.type = type;
         }
+    }
 
-        @Override
-        public String toString() {
-            return String.format("[%s] %s (relevance: %.2f)", category, id, relevanceScore);
+    static class Harmony {
+        String technology;
+        double rating;
+        String notes;
+
+        Harmony(String technology, double rating, String notes) {
+            this.technology = technology;
+            this.rating = rating;
+            this.notes = notes;
         }
     }
 }

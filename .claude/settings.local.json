@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(rm:*)",
+      "Bash(rmdir:*)",
+      "Bash(./gradlew:*)",
+      "Bash(gradle build:*)",
+      "Bash(gradle bootstrap:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

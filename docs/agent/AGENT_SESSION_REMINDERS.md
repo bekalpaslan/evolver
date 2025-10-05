@@ -9,10 +9,16 @@
 ❌ WRONG: 8/10, 9/10, 6/10
 ```
 
-### 🤝 **Technology Combinations ("Used Together" Field)**
+### 🤝 **Technology Combinations ("harmony" Field)**
 - **Always record harmony ratings** when multiple technologies are used
 - Rate how well technologies work together (0.0-10.0)
 - Include integration notes and recommended use cases
+
+### 💾 **Centralized Experience Database**
+- **ALL experiences → `experiences.json`** (single source of truth)
+- Auto-loaded on every framework execution
+- **COMMIT to git** after recording experiences
+- Other instances auto-sync when they pull from git
 
 ### 🧠 **Context Structure Optimization**
 - Experiment with different context explanation approaches
@@ -26,22 +32,36 @@
 
 ## 🚀 **Quick Reference Commands**
 
-### Record Technology Experience
+### Record Technology Experience (NEW - CENTRALIZED)
 ```java
-TechnologyExperience.builder("Spring Boot", "3.1.5", FRAMEWORK)
+ExperienceRepository.record()
+    .category("frameworks")
+    .technology("Spring Boot", "3.2.0", "backend-framework")
     .easeOfUse(8.7)                              // 0.1 precision!
     .power(9.2)
-    .usedTogether("PostgreSQL", "15.3", 9.5)     // Harmony rating
-    .build();
+    .harmony("PostgreSQL", 9.5, "Excellent integration")  // Harmony rating
+    .evidence("startupTime", "2.3s")
+    .workingAspect("Auto-config reduces boilerplate")
+    .improvementArea("Large JAR size")
+    .recommendation("Ideal for microservices")
+    .tag("spring-boot")
+    .save();
+
+// Then commit to git:
+// git add experiences.json
+// git commit -m "feat: Add Spring Boot experience"
 ```
 
-### Record Context Experiment
+### Search Experiences
 ```java
-ContextExperiment.builder("agent-001", "code_explanation")
-    .effectivenessScore(8.5)                     // 0.1 precision!
-    .userSatisfaction(9.0)
-    .workingAspect("Clear step-by-step breakdown")
-    .build();
+// By category
+ExperienceRepository.search("frameworks");
+
+// By tags
+ExperienceRepository.searchByTags("spring-boot", "java");
+
+// View stats
+ExperienceRepository.printStats();
 ```
 
 ## ⚡ **Session Checklist**

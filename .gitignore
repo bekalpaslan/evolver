@@ -26,3 +26,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Agent personal diaries (local only - not shared)
+.agent/diaries/
+
+# IMPORTANT: experiences.json is TRACKED (shared intelligence across instances)
+# !experiences.json
