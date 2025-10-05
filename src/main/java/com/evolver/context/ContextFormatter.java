@@ -1,49 +1,118 @@
 package com.evolver.context;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
  * Formats context fragments into a coherent package for AI consumption
  */
 public class ContextFormatter {
+    private static final Logger logger = Logger.getLogger(ContextFormatter.class.getName());
+
+    @SuppressWarnings("unused")
     private final ContextConfig config;
 
     public ContextFormatter(ContextConfig config) {
-        this.config = config;
+        this.config = Objects.requireNonNull(config, "ContextConfig cannot be null");
     }
 
     /**
      * Format fragments into a context package
      */
     public ContextPackage format(List<ContextFragment> fragments, ContextRequest request) {
-        // Group fragments by type
-        Map<ContextType, List<ContextFragment>> groupedByType = fragments.stream()
-            .collect(Collectors.groupingBy(ContextFragment::getType));
-
-        // Sort groups by importance for the task type
-        List<ContextType> typeOrder = getTypeOrderForTask(request.getTaskType());
-
-        // Build sections
-        List<ContextSection> sections = new ArrayList<>();
-        for (ContextType type : typeOrder) {
-            List<ContextFragment> typeFragments = groupedByType.get(type);
-            if (typeFragments != null && !typeFragments.isEmpty()) {
-                sections.add(buildSection(type, typeFragments));
-            }
+        if (fragments == null) {
+            logger.warning("Received null fragments list, creating empty package");
+            return createEmptyPackage(request);
         }
 
-        // Add remaining types not in preferred order
-        for (Map.Entry<ContextType, List<ContextFragment>> entry : groupedByType.entrySet()) {
-            if (!typeOrder.contains(entry.getKey())) {
-                sections.add(buildSection(entry.getKey(), entry.getValue()));
-            }
+        if (request == null) {
+            logger.warning("Received null request, creating empty package");
+            return createEmptyPackage(null);
         }
+
+        try {
+            // Group fragments by type
+            Map<ContextType, List<ContextFragment>> groupedByType = new HashMap<>();
+            for (ContextFragment fragment : fragments) {
+                if (fragment != null && fragment.getType() != null) {
+                    try {
+                        groupedByType.computeIfAbsent(fragment.getType(), k -> new ArrayList<>())
+                                   .add(fragment);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Error grouping fragment by type", e);
+                    }
+                }
+            }
+
+            // Sort groups by importance for the task type
+            List<ContextType> typeOrder = getTypeOrderForTask(request.getTaskType());
+
+            // Build sections
+            List<ContextSection> sections = new ArrayList<>();
+            for (ContextType type : typeOrder) {
+                try {
+                    List<ContextFragment> typeFragments = groupedByType.get(type);
+                    if (typeFragments != null && !typeFragments.isEmpty()) {
+                        ContextSection section = buildSection(type, typeFragments);
+                        if (section != null) {
+                            sections.add(section);
+                        }
+                    }
+                } catch (Exception e) {
+                    logger.log(Level.WARNING, "Error building section for type: " + type, e);
+                }
+            }
+
+            // Add remaining types not in preferred order
+            for (Map.Entry<ContextType, List<ContextFragment>> entry : groupedByType.entrySet()) {
+                if (entry.getKey() != null && !typeOrder.contains(entry.getKey())) {
+                    try {
+                        ContextSection section = buildSection(entry.getKey(), entry.getValue());
+                        if (section != null) {
+                            sections.add(section);
+                        }
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Error building section for remaining type: " + entry.getKey(), e);
+                    }
+                }
+            }
+
+            ContextPackage contextPackage = ContextPackage.builder()
+                .request(request)
+                .sections(sections)
+                .fragments(fragments.stream().filter(Objects::nonNull).collect(Collectors.toList()))
+                .build();
+
+            logger.fine("Formatted " + fragments.size() + " fragments into " + sections.size() + " sections");
+
+            return contextPackage;
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Critical error during context formatting", e);
+            return createErrorPackage(request, "Formatting failed: " + e.getMessage());
+        }
+    }
+
+    private ContextPackage createEmptyPackage(ContextRequest request) {
+        return ContextPackage.builder()
+            .request(request)
+            .sections(Collections.emptyList())
+            .fragments(Collections.emptyList())
+            .build();
+    }
+
+    private ContextPackage createErrorPackage(ContextRequest request, String errorMessage) {
+        Map<String, Object> errorMetadata = new HashMap<>();
+        errorMetadata.put("error", errorMessage);
+        errorMetadata.put("timestamp", System.currentTimeMillis());
 
         return ContextPackage.builder()
             .request(request)
-            .sections(sections)
-            .fragments(fragments)
+            .sections(Collections.emptyList())
+            .fragments(Collections.emptyList())
+            .metadata(errorMetadata)
             .build();
     }
 
