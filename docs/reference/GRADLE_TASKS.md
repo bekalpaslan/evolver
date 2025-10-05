@@ -24,6 +24,8 @@ This document provides comprehensive documentation for all Gradle tasks in the E
 | Task | Description | Usage |
 |------|-------------|--------|
 | `inject` | Inject framework into current project | `gradle inject` |
+| `learningDockDemo` | Demonstrate LearningDock functionality | `gradle learningDockDemo` |
+| `learningDockLiveTest` | Live test - materialize a real LearningDock | `gradle learningDockLiveTest` |
 
 ### 🗄️ **Database Tasks** (`group = 'database'`)
 **Purpose**: Experience database management and quality control

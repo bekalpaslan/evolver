@@ -1,0 +1,21 @@
+{
+  "dockName": "main",
+  "projectType": "GRADLE_JAVA",
+  "frameworkType": "NONE",
+  "entryPoints": [
+    "src/main/java",
+    "src/test/java",
+    "build.gradle",
+    "pom.xml",
+    "README.md",
+    "docs/"
+  ],
+  "learningPaths": [
+    "Java source code patterns",
+    "Build configuration",
+    "Test patterns",
+    "Documentation structure"
+  ],
+  "initialized": true,
+  "version": "1.0.0"
+}

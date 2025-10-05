@@ -65,6 +65,20 @@ tasks.register('inject', JavaExec) {
     mainClass = 'com.evolver.injection.InjectionRunner'
 }
 
+tasks.register('learningDockDemo', JavaExec) {
+    group = 'injection'
+    description = 'Demonstrate LearningDock functionality'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.injection.LearningDockDemo'
+}
+
+tasks.register('learningDockLiveTest', JavaExec) {
+    group = 'injection'
+    description = 'Live test - materialize a real LearningDock'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.injection.LearningDockLiveTest'
+}
+
 tasks.register('cli', JavaExec) {
     group = 'agent'
     description = 'Evolver CLI for privacy controls and configuration'

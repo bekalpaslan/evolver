@@ -2,7 +2,7 @@
   "collectorsCreated": 1,
   "experimentsRun": 10,
   "baselineImprovement": 25.0,
-  "rulesChallenged": 6,
+  "rulesChallenged": 3,
   "milestones": [
     "Created collector: TestCollector",
     "Improved baseline by 25.0% in test",
@@ -18,10 +18,7 @@
     "Completed experiment: exp-9 (successful)",
     "Challenged rule: rule-001 - Challenge 1",
     "Challenged rule: rule-002 - Challenge 2",
-    "Challenged rule: rule-003 - Challenge 3",
-    "Challenged rule: Context gathering timeout should be fixed at 10 seconds - Dynamic timeouts based on request complexity show better performance",
-    "Challenged rule: Context gathering timeout should be fixed at 10 seconds - Dynamic timeouts based on request complexity show better performance",
-    "Challenged rule: Context gathering timeout should be fixed at 10 seconds - Dynamic timeouts based on request complexity show better performance"
+    "Challenged rule: rule-003 - Challenge 3"
   ],
   "achievements": [
     "Improved baseline by 25.0% in test",
@@ -38,11 +35,8 @@
     "Rule challenge: rule-001",
     "Rule challenge: rule-002",
     "Rule challenge: rule-003",
-    "🎓 GRADUATED from framework mastery",
-    "Rule challenge: Context gathering timeout should be fixed at 10 seconds",
-    "Rule challenge: Context gathering timeout should be fixed at 10 seconds",
-    "Rule challenge: Context gathering timeout should be fixed at 10 seconds"
+    "🎓 GRADUATED from framework mastery"
   ],
   "hasGraduated": true,
-  "graduationDate": "2025-10-05T05:40:37.850957Z"
+  "graduationDate": "2025-10-05T05:54:50.538930600Z"
 }

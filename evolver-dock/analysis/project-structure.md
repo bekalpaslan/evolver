@@ -1,0 +1,161 @@
+# Project Structure Analysis
+
+## Detected Structure
+
+- bin/
+  - main/
+    - com/
+      - evolver/
+  - test/
+    - com/
+      - evolver/
+- build/
+  - classes/
+    - java/
+      - main/
+      - test/
+  - distributions/
+    - evolver-1.0.0.tar
+    - evolver-1.0.0.zip
+  - docs/
+    - javadoc/
+  - generated/
+    - sources/
+      - annotationProcessor/
+      - headers/
+  - libs/
+    - evolver-1.0.0.jar
+  - reports/
+    - problems/
+      - problems-report.html
+    - tests/
+      - test/
+  - scripts/
+    - evolver
+    - evolver.bat
+  - test-results/
+    - test/
+      - binary/
+  - tmp/
+    - compileJava/
+      - compileTransaction/
+      - previous-compilation-data.bin
+    - compileTestJava/
+      - compileTransaction/
+      - previous-compilation-data.bin
+    - jar/
+      - MANIFEST.MF
+    - javadoc/
+      - javadoc.options
+    - test/
+- build.gradle
+- docs/
+  - agent/
+    - AGENT_MANIFESTO.md
+    - AGENT_SESSION_REMINDERS.md
+    - AI_AGENT_EXPERIENCE_COLLECTION.md
+    - EXPERIENCE_DATABASE.md
+    - EXPERIENCE_FLOW.md
+    - VERSION_MANAGEMENT.md
+  - analysis/
+    - CODE_ANALYSIS_IMPROVEMENTS.md
+    - CONTEXT_DEDUPLICATION_SYSTEM.md
+    - FINAL_SUMMARY.md
+    - PROJECT_RESTRUCTURING_SUMMARY.md
+  - architecture/
+    - ARCHITECTURE.md
+    - COMPLETE_SYSTEM.md
+    - INTELLIGENT_CONTEXT_IMPLEMENTATION_SUMMARY.md
+    - INTELLIGENT_CONTEXT_MANAGEMENT_ANALYSIS.md
+    - INTELLIGENT_CONTEXT_SYSTEM.md
+    - META_FRAMEWORK.md
+  - development/
+    - FRAMEWORK_IMPROVEMENTS.md
+    - FRAMEWORK_IMPROVEMENTS_OLD.md
+    - IMPLEMENTATION_COMPLETE.md
+    - SECURITY_FIXES.md
+  - framework/
+    - FRAMEWORK_CONTEXT_OVERHEAD_ANALYSIS.md
+    - FRAMEWORK_SEPARATION_STRATEGIES.md
+    - INJECTION_GUIDE.md
+    - INJECTION_SUMMARY.md
+    - LEARNING_DOCK.md
+    - SIMPLE_DATABASE_SUMMARY.md
+    - TECHNOLOGY_INTELLIGENCE_SUMMARY.md
+    - ZERO_CONFIG_SUMMARY.md
+  - guides/
+    - ENHANCED_QUICK_START.md
+    - GETTING_STARTED.md
+    - QUICK_START_OLD.md
+    - RUN_ME_FIRST.md
+    - START_HERE.md
+  - README.md
+  - reference/
+    - GRADLE_TASKS.md
+    - GRADLE_TASKS_OLD.md
+- evolver-dock/
+  - agents/
+  - analysis/
+    - project-structure.md
+  - context/
+  - dock-config.json
+  - entry-point-mappings.md
+  - evolution/
+  - learning/
+  - LEARNING_GUIDE.md
+- evolver-framework/
+  - AGENT_EXPERIENCE_GUIDELINES.md
+  - build/
+    - classes/
+      - java/
+    - distributions/
+      - evolver-framework-1.0.0.tar
+      - evolver-framework-1.0.0.zip
+    - generated/
+      - sources/
+    - libs/
+      - evolver-framework-1.0.0.jar
+    - reports/
+      - problems/
+    - scripts/
+      - evolver-framework
+      - evolver-framework.bat
+    - tmp/
+      - compileJava/
+      - jar/
+  - build.gradle
+  - DEPLOYMENT_GUIDE.md
+  - experiences/
+    - categories/
+      - context_optimization/
+      - debugging/
+      - framework_usage/
+      - project_integration/
+    - README.md
+  - README.md
+  - src/
+    - main/
+      - java/
+- experiences.backup.json
+- experiences.json
+- experiences.json.backup.1759639362659
+- EXPERIENCE_FLOW.md
+- IMPLEMENTATION_COMPLETE_OLD.md
+- my-data.json
+- README.md
+- SECURITY_FIXES_OLD.md
+- src/
+  - main/
+    - java/
+      - com/
+  - test/
+    - java/
+      - com/
+
+## Key Directories
+
+- **src/main/java**: Directory with 1 items
+- **src/test/java**: Directory with 1 items
+- **build.gradle**: File (6020 bytes)
+- **README.md**: File (9986 bytes)
+- **docs/**: Directory with 8 items

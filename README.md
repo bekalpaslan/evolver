@@ -24,11 +24,25 @@
 # Copy framework package into your project
 cp -r evolver-framework/ /path/to/your/project/
 
-# ONE line injection
-FrameworkInjector.inject().withLearningDock("docs/").start();
+# ONE line injection with learning dock
+FrameworkInjector.inject().createLearningDock("docs/").start();
 ```
 
-**Zero disruption.** Agents learn your project and evolve the framework automatically. [See injection guide →](evolver-framework/INJECTION_GUIDE.md)
+**Zero disruption.** Agents learn your project through specialized LearningDocks and evolve the framework automatically. [See injection guide →](evolver-framework/INJECTION_GUIDE.md)
+
+### 🚢 Learning Docks - Agent Training Environments
+
+**LearningDocks** are where agents discover and learn your project:
+
+```bash
+# Demo learning dock functionality
+./gradlew learningDockDemo
+
+# See agent learning in action
+./gradlew bootstrap
+```
+
+**[📖 LearningDock Documentation](docs/framework/LEARNING_DOCK.md)** - Complete guide to agent training environments
 
 ---
 

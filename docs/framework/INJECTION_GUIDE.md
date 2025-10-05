@@ -210,41 +210,114 @@ FrameworkInjector.inject()
 
 ## 🎯 Learning Docks
 
-**Learning Docks** are entry points where agents start discovering your project:
+**Learning Docks** are specialized environments where agents discover, learn, and evolve within your project. They serve as entry points for agent-driven framework evolution.
 
-### Common Dock Patterns
+> 📖 **Detailed Guide**: See [LEARNING_DOCK.md](LEARNING_DOCK.md) for comprehensive documentation
+
+### Quick Start with Learning Docks
+
+```java
+// Create and materialize a learning dock
+LearningDock dock = new LearningDock(
+    "my-project-dock",
+    "/path/to/project", 
+    ProjectType.GRADLE_JAVA,
+    FrameworkType.SPRING_BOOT
+);
+
+dock.materialize();
+dock.startLearning();
+```
+
+### Common Entry Point Patterns
 
 ```java
 // Documentation-first discovery
-.withLearningDock("docs/")
-// Agents learn from your existing documentation
+.withEntryPoint("docs/")
+.withEntryPoint("README.md")
+// 🎯 Agent learns project purpose and domain knowledge
 
 // API-first discovery  
-.withLearningDock("src/main/controllers/")
-// Agents understand your API patterns
+.withEntryPoint("src/main/controllers/")
+.withEntryPoint("src/main/api/")
+// 🎯 Agent understands API patterns and structures
 
 // Domain-first discovery
-.withLearningDock("src/main/models/")  
-// Agents learn your business domain
+.withEntryPoint("src/main/models/")
+.withEntryPoint("src/main/entities/")
+// 🎯 Agent learns business domain and data models
 
 // Test-first discovery
-.withLearningDock("src/test/")
-// Agents understand through your tests
+.withEntryPoint("src/test/")
+.withEntryPoint("tests/")
+// 🎯 Agent understands through test patterns and examples
 
 // Configuration-first discovery
-.withLearningDock("config/")
-// Agents learn your deployment patterns
+.withEntryPoint("config/")
+.withEntryPoint("application.properties")
+// 🎯 Agent learns deployment and runtime patterns
 ```
 
-### Multiple Docks for Comprehensive Learning
+### Multiple Entry Points for Comprehensive Learning
 
 ```java
-FrameworkInjector.inject()
-    .withLearningDock("docs/", DockPriority.HIGH)
-    .withLearningDock("src/main/api/", DockPriority.MEDIUM)  
-    .withLearningDock("tests/integration/", DockPriority.LOW)
-    .start();
+LearningDock dock = new LearningDock(
+    "comprehensive-dock",
+    projectRoot,
+    ProjectType.GRADLE_JAVA,
+    FrameworkType.SPRING_BOOT
+)
+.withEntryPoint("docs/")           // High priority: domain knowledge
+.withEntryPoint("src/main/api/")   // Medium priority: API patterns  
+.withEntryPoint("tests/integration/") // Low priority: integration examples
+.withEntryPoint("config/");       // Low priority: operational insights
+
+dock.materialize();
+dock.startLearning();
 ```
+
+### Integration with FrameworkInjector
+
+```java
+// Injector automatically creates learning docks
+FrameworkInjector.inject()
+    .detectExistingFramework()
+    .createLearningDock("main")  // Creates dock with smart defaults
+    .spawnAgent(AgentCharacteristic.DOCUMENTATION_OBSESSIVE)
+    .activate();
+
+// Or with custom dock configuration
+FrameworkInjector.inject()
+    .detectExistingFramework()
+    .createLearningDock("custom")
+    .withCustomEntryPoints("src/domain/", "docs/architecture/")
+    .spawnAgent(AgentCharacteristic.CLEAN_CODE_FREAK)
+    .activate();
+```
+
+### Generated Learning Environment
+
+When materialized, LearningDock creates:
+
+```
+evolver-dock/
+├── agents/          # Agent workspace and state
+├── analysis/        # Project structure analysis  
+├── context/         # Generated context patterns
+├── learning/        # Learning progress and insights
+├── evolution/       # Framework evolution tracking
+├── dock-config.json # Dock configuration
+├── LEARNING_GUIDE.md # Agent instructions
+├── project-structure.md # Analyzed project structure
+└── entry-point-mappings.md # Discovery routes
+```
+
+### Agent Learning Process
+
+1. **🔍 Discovery Phase**: Analyze entry points and map project structure
+2. **📚 Learning Phase**: Extract domain knowledge and understand patterns  
+3. **🔧 Collection Phase**: Build specialized context collectors
+4. **🚀 Evolution Phase**: Adapt framework to project needs
 
 ---
 
