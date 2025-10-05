@@ -127,9 +127,9 @@ public class AgentCharacteristic {
         )
     );
     
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // CHARACTERISTIC DEFINITION
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     private final String name;
     private final String personality;
@@ -152,9 +152,9 @@ public class AgentCharacteristic {
         return new AgentCharacteristic(name, personality, traits);
     }
     
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // CHARACTERISTIC BEHAVIORS
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     /**
      * How this characteristic prioritizes collectors
@@ -229,9 +229,9 @@ public class AgentCharacteristic {
         }
     }
     
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // EVOLUTION & LEARNING
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     /**
      * Agent can evolve its characteristics based on experience
@@ -286,9 +286,9 @@ public class AgentCharacteristic {
         return new AgentCharacteristic(name, hybridPersonality, hybridTraits);
     }
     
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // GETTERS
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     
     public String getName() { return name; }
     public String getPersonality() { return personality; }

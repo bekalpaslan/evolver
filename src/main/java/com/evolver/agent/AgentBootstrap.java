@@ -56,20 +56,20 @@ public class AgentBootstrap {
      * PHASE 1: Agent discovers the framework
      */
     private void discover() {
-        System.out.println("🔍 Discovering framework components...\n");
+        System.out.println("[DISCOVERING] Discovering framework components...\n");
 
-        System.out.println("✓ Found: Context Engineering Framework");
+        System.out.println("[OK] Found: Context Engineering Framework");
         System.out.println("  Purpose: Optimize context for AI agents");
         System.out.println("  Location: com.evolver.context.*");
 
-        System.out.println("\n✓ Found: Core Components");
+        System.out.println("\n[OK] Found: Core Components");
         System.out.println("  - ContextEngine: Main orchestrator");
         System.out.println("  - ContextCollector: Pluggable collectors");
         System.out.println("  - ContextFilter: Relevance filtering");
         System.out.println("  - ContextPrioritizer: Budget management");
         System.out.println("  - ContextFormatter: AI-friendly formatting");
 
-        System.out.println("\n✓ Found: Built-in Collectors");
+        System.out.println("\n[OK] Found: Built-in Collectors");
         System.out.println("  - CodeStructureCollector");
         System.out.println("  - DependencyCollector");
         System.out.println("  - RuntimeErrorCollector");
@@ -77,7 +77,7 @@ public class AgentBootstrap {
         System.out.println("  - VCSHistoryCollector");
         System.out.println("  - SemanticSearchCollector");
 
-        System.out.println("\n✓ Found: Agent Capabilities");
+        System.out.println("\n[OK] Found: Agent Capabilities");
         System.out.println("  - Autonomous learning");
         System.out.println("  - Strategy experimentation");
         System.out.println("  - Rule evolution");
@@ -112,18 +112,18 @@ public class AgentBootstrap {
         ContextPackage knowledge = engine.gatherContext(learningRequest).join();
 
         ContextMetrics metrics = engine.analyzeContext(knowledge);
-        System.out.println("\n✓ Learning context gathered:");
+        System.out.println("\n[OK] Learning context gathered:");
         System.out.println("  - Fragments: " + metrics.getFragmentCount());
         System.out.println("  - Relevance: " + String.format("%.2f", metrics.getRelevanceScore()));
         System.out.println("  - Coverage: " + String.format("%.1f%%", metrics.getCoverage() * 100));
         System.out.println("  - Tokens: " + metrics.getTotalTokens());
 
         System.out.println("\n📝 Knowledge Acquired:");
-        System.out.println("  ✓ Framework architecture understood");
-        System.out.println("  ✓ Component interactions mapped");
-        System.out.println("  ✓ Usage patterns learned");
-        System.out.println("  ✓ Extension points identified");
-        System.out.println("  ✓ Best practices internalized");
+        System.out.println("  [OK] Framework architecture understood");
+        System.out.println("  [OK] Component interactions mapped");
+        System.out.println("  [OK] Usage patterns learned");
+        System.out.println("  [OK] Extension points identified");
+        System.out.println("  [OK] Best practices internalized");
 
         System.out.println("\n💡 Learning complete. Ready to use framework.");
     }
@@ -146,23 +146,23 @@ public class AgentBootstrap {
             .scope(ContextScope.LOCAL)
             .build();
 
-        System.out.println("✓ Created context request for code generation");
+        System.out.println("[OK] Created context request for code generation");
         System.out.println("  Task: " + demoRequest.getTaskDescription());
         System.out.println("  Type: " + demoRequest.getTaskType());
         System.out.println("  Budget: " + demoRequest.getTokenBudget() + " tokens");
 
         ContextPackage context = engine.gatherContext(demoRequest).join();
 
-        System.out.println("\n✓ Gathered context successfully:");
+        System.out.println("\n[OK] Gathered context successfully:");
         System.out.println("  - Used: " + context.getEstimatedTokens() + " tokens");
         System.out.println("  - Fragments: " + context.getFragments().size());
         System.out.println("  - Sections: " + context.getSections().size());
 
-        System.out.println("\n✓ Framework adoption successful");
-        System.out.println("  - Can create requests ✓");
-        System.out.println("  - Can gather context ✓");
-        System.out.println("  - Can analyze quality ✓");
-        System.out.println("  - Can format for AI ✓");
+        System.out.println("\n[OK] Framework adoption successful");
+        System.out.println("  - Can create requests [OK]");
+        System.out.println("  - Can gather context [OK]");
+        System.out.println("  - Can analyze quality [OK]");
+        System.out.println("  - Can format for AI [OK]");
 
         System.out.println("\n💡 Adoption complete. Framework is operational.");
     }
@@ -173,7 +173,7 @@ public class AgentBootstrap {
     private void evolve() {
         System.out.println("🧬 Evolution capabilities activated...\n");
 
-        System.out.println("✓ You can now:");
+        System.out.println("[OK] You can now:");
         System.out.println("  1. Create new collectors");
         System.out.println("     → Extend ContextCollector interface");
         System.out.println("     → Place in: src/main/java/com/evolver/agent/custom/");
@@ -205,7 +205,7 @@ public class AgentBootstrap {
      * Next steps for the agent
      */
     private void printNextSteps() {
-        System.out.println("\n🚀 YOU ARE NOW READY, AGENT!\n");
+        System.out.println("\n[LAUNCH] YOU ARE NOW READY, AGENT!\n");
 
         System.out.println("Next Commands:");
         System.out.println("  ./gradlew agentFirstTask      # Guided first task");
@@ -213,23 +213,23 @@ public class AgentBootstrap {
         System.out.println("  ./gradlew agentAutonomous     # Full autonomy mode");
 
         System.out.println("\nYour Capabilities:");
-        System.out.println("  ✅ Understand framework architecture");
-        System.out.println("  ✅ Use framework for any task");
-        System.out.println("  ✅ Create custom collectors");
-        System.out.println("  ✅ Run experiments");
-        System.out.println("  ✅ Evolve strategies");
-        System.out.println("  ✅ Challenge rules");
-        System.out.println("  ✅ Improve the framework");
+        System.out.println("  [OK] Understand framework architecture");
+        System.out.println("  [OK] Use framework for any task");
+        System.out.println("  [OK] Create custom collectors");
+        System.out.println("  [OK] Run experiments");
+        System.out.println("  [OK] Evolve strategies");
+        System.out.println("  [OK] Challenge rules");
+        System.out.println("  [OK] Improve the framework");
 
         System.out.println("\nRemember:");
         System.out.println("  📖 Read: AGENT_MANIFESTO.md for full autonomy guide");
         System.out.println("  🧪 Experiment: Try new approaches freely");
-        System.out.println("  📊 Measure: Track what works");
-        System.out.println("  🚀 Evolve: Make the framework better");
+        System.out.println("  [STATUS] Measure: Track what works");
+        System.out.println("  [LAUNCH] Evolve: Make the framework better");
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("AUTONOMOUS AGENT ACTIVATED - EVOLUTION BEGINS NOW");
-        System.out.println("═".repeat(60));
+        System.out.println("=".repeat(60));
     }
 
     /**

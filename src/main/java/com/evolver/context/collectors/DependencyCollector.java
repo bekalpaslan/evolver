@@ -27,6 +27,7 @@ public class DependencyCollector implements ContextCollector {
             .content(dependencies)
             .addAspect("dependencies")
             .addAspect("imports")
+            .addAspect("code")
             .relevanceScore(0.7)
             .addMetadata("file", filePath)
             .build();

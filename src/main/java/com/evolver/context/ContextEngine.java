@@ -270,6 +270,10 @@ public class ContextEngine {
             .flatMap(f -> f.getAspects().stream())
             .collect(Collectors.toSet());
 
-        return (double) coveredAspects.size() / config.getRequiredAspects().size();
+        long coveredRequired = config.getRequiredAspects().stream()
+            .filter(coveredAspects::contains)
+            .count();
+
+        return (double) coveredRequired / config.getRequiredAspects().size();
     }
 }

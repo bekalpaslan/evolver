@@ -10,7 +10,7 @@ package com.evolver.injection.demo;
 public class InjectionDemo {
     
     public static void main(String[] args) {
-        System.out.println("🔌 Evolver Framework Injection Demo");
+        System.out.println("[PLUG] Evolver Framework Injection Demo");
         System.out.println("===================================");
         System.out.println();
         
@@ -29,12 +29,12 @@ public class InjectionDemo {
         demonstrateAgentLearning();
         System.out.println();
         
-        System.out.println("✅ Injection Demo Complete!");
+        System.out.println("[OK] Injection Demo Complete!");
         System.out.println();
         System.out.println("📚 Next Steps:");
-        System.out.println("  • Read INJECTION_GUIDE.md for detailed instructions");
-        System.out.println("  • Try injecting into your own project");
-        System.out.println("  • Watch agents learn and evolve your framework");
+        System.out.println("  * Read INJECTION_GUIDE.md for detailed instructions");
+        System.out.println("  * Try injecting into your own project");
+        System.out.println("  * Watch agents learn and evolve your framework");
     }
     
     private static void demonstrateProjectDetection() {
@@ -43,22 +43,22 @@ public class InjectionDemo {
         
         // Simulate project detection (would use ProjectDetector in real implementation)
         System.out.println("Scanning project structure...");
-        System.out.println("  ✅ Found: build.gradle (Gradle project)");
-        System.out.println("  ✅ Found: src/main/java (Java source)");
-        System.out.println("  ✅ Found: README.md (Documentation)");
-        System.out.println("  ✅ Found: .git (Version control)");
+        System.out.println("  [OK] Found: build.gradle (Gradle project)");
+        System.out.println("  [OK] Found: src/main/java (Java source)");
+        System.out.println("  [OK] Found: README.md (Documentation)");
+        System.out.println("  [OK] Found: .git (Version control)");
         System.out.println();
         
-        System.out.println("📊 Detection Results:");
-        System.out.println("  • Project Type: Java/Gradle");
-        System.out.println("  • Framework: Custom Context Engineering");
-        System.out.println("  • Architecture: Modular (agent/, context/, injection/)");
-        System.out.println("  • Documentation: Present (markdown files)");
-        System.out.println("  • Tests: Present (src/test/java)");
+        System.out.println("[STATUS] Detection Results:");
+        System.out.println("  * Project Type: Java/Gradle");
+        System.out.println("  * Framework: Custom Context Engineering");
+        System.out.println("  * Architecture: Modular (agent/, context/, injection/)");
+        System.out.println("  * Documentation: Present (markdown files)");
+        System.out.println("  * Tests: Present (src/test/java)");
     }
     
     private static void demonstrateBasicInjection() {
-        System.out.println("🚀 2. Basic Framework Injection");
+        System.out.println("[LAUNCH] 2. Basic Framework Injection");
         System.out.println("------------------------------");
         
         System.out.println("Code example:");
@@ -80,14 +80,14 @@ public class InjectionDemo {
         delay(500);
         System.out.println("  [4/4] Starting learning process...");
         delay(500);
-        System.out.println("  ✅ Injection complete!");
+        System.out.println("  [OK] Injection complete!");
         System.out.println();
         
         System.out.println("📝 What happened:");
-        System.out.println("  • Framework integrated without breaking existing code");
-        System.out.println("  • Agent started learning from docs/ directory");
-        System.out.println("  • Context engine now available via ContextEngine.getInstance()");
-        System.out.println("  • Your existing application continues to work unchanged");
+        System.out.println("  * Framework integrated without breaking existing code");
+        System.out.println("  * Agent started learning from docs/ directory");
+        System.out.println("  * Context engine now available via ContextEngine.getInstance()");
+        System.out.println("  * Your existing application continues to work unchanged");
     }
     
     private static void demonstrateCharacteristicInjection() {
@@ -106,7 +106,7 @@ public class InjectionDemo {
         };
         
         for (String characteristic : characteristics) {
-            System.out.println("  🤖 " + characteristic);
+            System.out.println("  [AGENT] " + characteristic);
         }
         System.out.println();
         
@@ -128,28 +128,28 @@ public class InjectionDemo {
         System.out.println();
         
         // Simulate agent activities
-        System.out.println("🤖 DocumentationObsessed:");
-        System.out.println("  • Analyzing README.md structure...");
-        System.out.println("  • Creating documentation context collector...");
-        System.out.println("  • Prioritizing clarity in context generation...");
+        System.out.println("[AGENT] DocumentationObsessed:");
+        System.out.println("  * Analyzing README.md structure...");
+        System.out.println("  * Creating documentation context collector...");
+        System.out.println("  * Prioritizing clarity in context generation...");
         System.out.println();
         
         System.out.println("🛡️ SecurityParanoid:");
-        System.out.println("  • Scanning for security patterns...");
-        System.out.println("  • Creating security-focused context filters...");
-        System.out.println("  • Validating input handling patterns...");
+        System.out.println("  * Scanning for security patterns...");
+        System.out.println("  * Creating security-focused context filters...");
+        System.out.println("  * Validating input handling patterns...");
         System.out.println();
         
         System.out.println("⚡ PerformanceFreak:");
-        System.out.println("  • Measuring context generation speed...");
-        System.out.println("  • Optimizing collector efficiency...");
-        System.out.println("  • Creating performance metrics dashboard...");
+        System.out.println("  * Measuring context generation speed...");
+        System.out.println("  * Optimizing collector efficiency...");
+        System.out.println("  * Creating performance metrics dashboard...");
         System.out.println();
         
         System.out.println("🤝 Agent Collaboration:");
-        System.out.println("  • Agents share discoveries with each other");
-        System.out.println("  • Framework evolves to incorporate all perspectives");
-        System.out.println("  • No conflicts - agents complement each other");
+        System.out.println("  * Agents share discoveries with each other");
+        System.out.println("  * Framework evolves to incorporate all perspectives");
+        System.out.println("  * No conflicts - agents complement each other");
     }
     
     private static void demonstrateAgentLearning() {
@@ -164,7 +164,7 @@ public class InjectionDemo {
         System.out.println("  🔍 Agent discovers Java patterns in src/main/java");
         System.out.println("  📚 Agent reads documentation in markdown files");
         System.out.println("  🏗️ Agent understands modular architecture");
-        System.out.println("  📊 Learning: 45 files analyzed, 12 patterns identified");
+        System.out.println("  [STATUS] Learning: 45 files analyzed, 12 patterns identified");
         System.out.println();
         
         // Month 1  
@@ -172,22 +172,22 @@ public class InjectionDemo {
         System.out.println("  🎯 Agent recognizes context engineering domain");
         System.out.println("  🛠️ Agent creates specialized ContextCollector for this project");
         System.out.println("  📈 Agent optimizes token budgets for technical documentation");
-        System.out.println("  📊 Evolution: 3 new collectors, 8 optimized filters");
+        System.out.println("  [STATUS] Evolution: 3 new collectors, 8 optimized filters");
         System.out.println();
         
         // Month 3
         System.out.println("📅 Month 3 - Framework Evolution:");
-        System.out.println("  🚀 Agent evolved framework to understand AI engineering patterns");
+        System.out.println("  [LAUNCH] Agent evolved framework to understand AI engineering patterns");
         System.out.println("  🎭 Agent created new characteristic: 'ContextEngineeringExpert'");
         System.out.println("  🔄 Agent developed self-improvement capabilities");
-        System.out.println("  📊 Mastery: Framework now 85% optimized for this project type");
+        System.out.println("  [STATUS] Mastery: Framework now 85% optimized for this project type");
         System.out.println();
         
         System.out.println("🎯 Result:");
-        System.out.println("  • Framework became an expert in context engineering");
-        System.out.println("  • Context quality improved by 300%");
-        System.out.println("  • Token efficiency increased by 150%");
-        System.out.println("  • Agent developed project-specific intelligence");
+        System.out.println("  * Framework became an expert in context engineering");
+        System.out.println("  * Context quality improved by 300%");
+        System.out.println("  * Token efficiency increased by 150%");
+        System.out.println("  * Agent developed project-specific intelligence");
     }
     
     private static void delay(int milliseconds) {

@@ -21,6 +21,9 @@ dependencies {
     // Logging
     implementation 'org.slf4j:slf4j-api:2.0.9'
     implementation 'ch.qos.logback:logback-classic:1.4.11'
+
+    // JSON serialization
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 test {
@@ -97,4 +100,8 @@ tasks.register('agentJar', Jar) {
             'Implementation-Version': project.version
         )
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }

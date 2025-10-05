@@ -23,7 +23,7 @@ public class AgentInterface {
      * Agent bootstraps and learns automatically
      */
     public AgentInterface() {
-        System.out.println("🤖 Autonomous Agent Initializing...\n");
+        System.out.println("[AGENT] Autonomous Agent Initializing...\n");
 
         // Agent automatically discovers and learns the framework
         autoBootstrap();
@@ -37,7 +37,7 @@ public class AgentInterface {
         this.engine = AgentRuntime.createEngine(config);
         this.initialized = true;
 
-        System.out.println("✅ Agent ready. Ask me anything.\n");
+        System.out.println("[OK] Agent ready. Ask me anything.\n");
     }
 
     /**
@@ -140,7 +140,7 @@ public class AgentInterface {
 
         ContextPackage knowledge = learningEngine.gatherContext(learningRequest).join();
 
-        System.out.println("✓ Framework learned (" + knowledge.getFragments().size() + " concepts)");
+        System.out.println("[OK] Framework learned (" + knowledge.getFragments().size() + " concepts)");
     }
 
     /**
@@ -251,7 +251,7 @@ public class AgentInterface {
             .build();
 
         ContextPackage result = engine.gatherContext(improved).join();
-        System.out.println("✓ Context improved");
+        System.out.println("[OK] Context improved");
 
         return result;
     }

@@ -77,7 +77,7 @@ public class ExperienceRepository {
 
         try {
             Files.writeString(quickNotes, entry, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            System.out.println("✓ Quick note recorded");
+            System.out.println("[OK] Quick note recorded");
         } catch (IOException e) {
             System.err.println("Failed to record quick note: " + e.getMessage());
         }
@@ -98,10 +98,10 @@ public class ExperienceRepository {
                 .count();
 
             if (count > 0) {
-                System.out.println("✓ Found " + count + " experiences from other agents");
+                System.out.println("[OK] Found " + count + " experiences from other agents");
                 System.out.println("  Read them at: .agent/experiences/");
             } else {
-                System.out.println("✓ No previous experiences. You're the first!");
+                System.out.println("[OK] No previous experiences. You're the first!");
                 System.out.println("  Record your learnings for future agents.");
             }
         } catch (IOException e) {
@@ -238,7 +238,7 @@ public class ExperienceRepository {
 
             try {
                 Files.writeString(filepath, content);
-                System.out.println("✓ Experience recorded: " + filepath);
+                System.out.println("[OK] Experience recorded: " + filepath);
                 System.out.println("  Other agents will learn from this!");
             } catch (IOException e) {
                 System.err.println("Failed to save experience: " + e.getMessage());

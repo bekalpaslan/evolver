@@ -34,7 +34,7 @@ public class AgentRuntime {
         String name = collector.getMetadata().getName();
         customCollectors.put(name, collector);
         log("Registered custom collector: " + name);
-        System.out.println("✅ Registered: " + name);
+        System.out.println("[OK] Registered: " + name);
     }
 
     /**
@@ -43,7 +43,7 @@ public class AgentRuntime {
     public static void registerStrategy(String name, Object strategy) {
         strategies.put(name, strategy);
         log("Registered strategy: " + name);
-        System.out.println("✅ Registered strategy: " + name);
+        System.out.println("[OK] Registered strategy: " + name);
     }
 
     /**
@@ -148,14 +148,14 @@ public class AgentRuntime {
      * Print current state
      */
     public static void printState() {
-        System.out.println("\n📊 AGENT RUNTIME STATE");
-        System.out.println("─".repeat(60));
+        System.out.println("\n[STATUS] AGENT RUNTIME STATE");
+        System.out.println("-".repeat(60));
         System.out.println("Custom Collectors: " + customCollectors.size());
         System.out.println("Custom Strategies: " + strategies.size());
         System.out.println("Successful Experiments: " + experiments.size());
         System.out.println("Active Rules: " + rules.size());
         System.out.println("Evolution Events: " + evolutionLog.size());
-        System.out.println("─".repeat(60));
+        System.out.println("-".repeat(60));
     }
 
     /**

@@ -39,7 +39,7 @@ public class AgentExperiment {
         System.out.println("Hypothesis: " + hypothesis);
         System.out.println("Trials: " + trials);
         System.out.println("Metrics: " + metrics);
-        System.out.println("─".repeat(60) + "\n");
+        System.out.println("-".repeat(60) + "\n");
 
         Map<String, Double> baselineScores = new HashMap<>();
         Map<String, Double> variantScores = new HashMap<>();
@@ -116,8 +116,8 @@ public class AgentExperiment {
         Map<String, Double> baselineScores,
         Map<String, Double> variantScores
     ) {
-        System.out.println("📊 RESULTS:");
-        System.out.println("─".repeat(60));
+        System.out.println("[STATUS] RESULTS:");
+        System.out.println("-".repeat(60));
 
         boolean variantBetter = true;
         double improvementSum = 0;
@@ -132,7 +132,7 @@ public class AgentExperiment {
             metricCount++;
 
             String symbol = improvement > 0 ? "↑" : "↓";
-            String color = improvement > 0 ? "✓" : "✗";
+            String color = improvement > 0 ? "[OK]" : "✗";
 
             System.out.printf("  %s %-15s: Baseline=%.2f  Variant=%.2f  %s %.1f%%\n",
                 color, metric, baselineScore, variantScore, symbol, Math.abs(improvement));
@@ -238,10 +238,10 @@ public class AgentExperiment {
          * Promote the variant to become the new baseline
          */
         public void promote() {
-            System.out.println("\n🚀 PROMOTING VARIANT TO PRODUCTION");
+            System.out.println("\n[LAUNCH] PROMOTING VARIANT TO PRODUCTION");
             System.out.println("  Experiment: " + experimentId);
             System.out.println("  Improvement: " + String.format("%.1f%%", improvement));
-            System.out.println("  Status: ✅ Variant is now the default");
+            System.out.println("  Status: [OK] Variant is now the default");
 
             // In a real system, this would update configuration
             AgentRuntime.registerExperimentSuccess(experimentId, this);

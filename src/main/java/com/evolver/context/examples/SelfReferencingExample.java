@@ -15,7 +15,7 @@ public class SelfReferencingExample {
         System.out.println("🔄 Meta Example: Framework Using Itself!\n");
         System.out.println("Question: How can an AI agent learn to use this framework?\n");
         System.out.println("Answer: By using the framework to gather context about itself!\n");
-        System.out.println("═══════════════════════════════════════════════════════════\n");
+        System.out.println("===========================================================\n");
 
         // The framework uses itself to explain itself
         demonstrateMetaUsage();
@@ -49,7 +49,7 @@ public class SelfReferencingExample {
 
         // 4. Analyze the meta-context
         ContextMetrics metrics = engine.analyzeContext(context);
-        System.out.println("📊 Meta-Context Quality:");
+        System.out.println("[STATUS] Meta-Context Quality:");
         System.out.println("   Fragments collected: " + metrics.getFragmentCount());
         System.out.println("   Relevance score: " + String.format("%.2f", metrics.getRelevanceScore()));
         System.out.println("   Coverage: " + String.format("%.1f%%", metrics.getCoverage() * 100));
@@ -84,11 +84,11 @@ public class SelfReferencingExample {
 
         String aiPrompt = context.render(learningTemplate);
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("📤 PROMPT FOR AI (Self-Learning):");
-        System.out.println("═".repeat(60));
+        System.out.println("=".repeat(60));
         System.out.println(aiPrompt);
-        System.out.println("═".repeat(60));
+        System.out.println("=".repeat(60));
 
         System.out.println("\n💡 The AI agent now has optimal context to learn the framework!");
         System.out.println("💡 It gathered this context BY USING the framework itself!");
@@ -126,8 +126,8 @@ public class SelfReferencingExample {
      * Simulate how an AI agent would learn from the gathered context
      */
     private static void simulateAILearning(ContextPackage context) {
-        System.out.println("\n🤖 AI Agent Learning Process:");
-        System.out.println("─".repeat(60));
+        System.out.println("\n[AGENT] AI Agent Learning Process:");
+        System.out.println("-".repeat(60));
 
         // Extract key learnings from the context
         int stepCount = 1;
@@ -147,8 +147,8 @@ public class SelfReferencingExample {
         System.out.println(stepCount++ + ". Understood quality metrics");
         System.out.println("   → Learned: Check relevance, coverage, token usage");
 
-        System.out.println("\n✅ AI Agent is now competent with the framework!");
-        System.out.println("✅ It learned by using the framework on itself!");
+        System.out.println("\n[OK] AI Agent is now competent with the framework!");
+        System.out.println("[OK] It learned by using the framework on itself!");
 
         // Now the AI can use the framework
         demonstrateLearnedAbility();
@@ -159,7 +159,7 @@ public class SelfReferencingExample {
      */
     private static void demonstrateLearnedAbility() {
         System.out.println("\n🎓 AI Agent's First Independent Use:");
-        System.out.println("─".repeat(60));
+        System.out.println("-".repeat(60));
 
         // The AI creates its own request (it learned this!)
         ContextConfig config = ContextConfig.builder().build();
@@ -178,7 +178,7 @@ public class SelfReferencingExample {
         System.out.println("  Budget: " + aiCreatedRequest.getTokenBudget());
 
         ContextPackage result = engine.gatherContext(aiCreatedRequest).join();
-        System.out.println("\n✅ AI gathered context successfully!");
+        System.out.println("\n[OK] AI gathered context successfully!");
         System.out.println("   Tokens: " + result.getEstimatedTokens());
         System.out.println("   Fragments: " + result.getFragments().size());
 

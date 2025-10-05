@@ -25,7 +25,7 @@ public class SelfBootstrap {
 
     public static void main(String[] args) {
         System.out.println("🔄 SELF-BOOTSTRAP: Framework Improving Itself\n");
-        System.out.println("═".repeat(70) + "\n");
+        System.out.println("=".repeat(70) + "\n");
 
         SelfBootstrap bootstrap = new SelfBootstrap();
 
@@ -46,8 +46,8 @@ public class SelfBootstrap {
      * Step 1: The framework analyzes its own architecture
      */
     private void analyzeSelf() {
-        System.out.println("📊 STEP 1: Self-Analysis");
-        System.out.println("─".repeat(70));
+        System.out.println("[STATUS] STEP 1: Self-Analysis");
+        System.out.println("-".repeat(70));
 
         ContextRequest request = ContextRequest.builder()
             .taskDescription("Analyze the Context Engineering Framework architecture for strengths and weaknesses")
@@ -63,15 +63,15 @@ public class SelfBootstrap {
         ContextPackage analysis = engine.gatherContext(request).join();
         ContextMetrics metrics = engine.analyzeContext(analysis);
 
-        System.out.println("✅ Self-analysis complete!");
+        System.out.println("[OK] Self-analysis complete!");
         System.out.println("   Architecture fragments: " + metrics.getFragmentCount());
         System.out.println("   Code quality score: " + String.format("%.2f", metrics.getRelevanceScore()));
         System.out.println("   Coverage: " + String.format("%.1f%%", metrics.getCoverage() * 100));
 
         System.out.println("\n💭 Framework's self-assessment:");
-        System.out.println("   ✓ Modular design with clear separation of concerns");
-        System.out.println("   ✓ Extensible collector architecture");
-        System.out.println("   ✓ Token budget management is effective");
+        System.out.println("   [OK] Modular design with clear separation of concerns");
+        System.out.println("   [OK] Extensible collector architecture");
+        System.out.println("   [OK] Token budget management is effective");
         System.out.println("   ⚠ Could improve: Collector caching mechanism");
         System.out.println("   ⚠ Could improve: Parallel collection optimization");
         System.out.println();
@@ -82,7 +82,7 @@ public class SelfBootstrap {
      */
     private void findImprovements() {
         System.out.println("🔍 STEP 2: Finding Improvement Opportunities");
-        System.out.println("─".repeat(70));
+        System.out.println("-".repeat(70));
 
         ContextRequest request = ContextRequest.builder()
             .taskDescription("Identify performance bottlenecks and optimization opportunities in the framework")
@@ -97,21 +97,21 @@ public class SelfBootstrap {
 
         ContextPackage improvements = engine.gatherContext(request).join();
 
-        System.out.println("✅ Identified improvement areas:");
-        System.out.println("\n1. 🚀 Performance Optimizations:");
-        System.out.println("   • Add caching layer for expensive collectors");
-        System.out.println("   • Implement collector result memoization");
-        System.out.println("   • Optimize fragment deduplication algorithm");
+        System.out.println("[OK] Identified improvement areas:");
+        System.out.println("\n1. [LAUNCH] Performance Optimizations:");
+        System.out.println("   * Add caching layer for expensive collectors");
+        System.out.println("   * Implement collector result memoization");
+        System.out.println("   * Optimize fragment deduplication algorithm");
 
         System.out.println("\n2. 🎯 Accuracy Improvements:");
-        System.out.println("   • Enhance relevance scoring with ML models");
-        System.out.println("   • Add context quality prediction");
-        System.out.println("   • Improve semantic similarity matching");
+        System.out.println("   * Enhance relevance scoring with ML models");
+        System.out.println("   * Add context quality prediction");
+        System.out.println("   * Improve semantic similarity matching");
 
         System.out.println("\n3. 🔧 Feature Additions:");
-        System.out.println("   • Stream-based context delivery for large contexts");
-        System.out.println("   • Adaptive token budgeting");
-        System.out.println("   • Context compression for better efficiency");
+        System.out.println("   * Stream-based context delivery for large contexts");
+        System.out.println("   * Adaptive token budgeting");
+        System.out.println("   * Context compression for better efficiency");
         System.out.println();
     }
 
@@ -120,7 +120,7 @@ public class SelfBootstrap {
      */
     private void optimizeSelf() {
         System.out.println("⚡ STEP 3: Self-Optimization");
-        System.out.println("─".repeat(70));
+        System.out.println("-".repeat(70));
 
         ContextRequest request = ContextRequest.builder()
             .taskDescription("Generate optimized version of ContextPrioritizer with better performance")
@@ -134,7 +134,7 @@ public class SelfBootstrap {
 
         ContextPackage optimization = engine.gatherContext(request).join();
 
-        System.out.println("✅ Generated optimization context!");
+        System.out.println("[OK] Generated optimization context!");
         System.out.println("\n📝 Suggested optimization:");
         System.out.println("""
             The framework analyzed its own ContextPrioritizer and suggests:
@@ -158,7 +158,7 @@ public class SelfBootstrap {
      */
     private void evolveCollectors() {
         System.out.println("🧬 STEP 4: Collector Evolution");
-        System.out.println("─".repeat(70));
+        System.out.println("-".repeat(70));
 
         System.out.println("The framework analyzes collector effectiveness:\n");
 
@@ -169,15 +169,15 @@ public class SelfBootstrap {
         collectorEffectiveness.put("SemanticSearchCollector", 0.65);
         collectorEffectiveness.put("VCSHistoryCollector", 0.58);
 
-        System.out.println("📊 Collector Effectiveness Scores:");
+        System.out.println("[STATUS] Collector Effectiveness Scores:");
         collectorEffectiveness.forEach((name, score) -> {
             String rating = score > 0.8 ? "⭐ Excellent" :
-                           score > 0.6 ? "✓ Good" : "⚠ Needs improvement";
+                           score > 0.6 ? "[OK] Good" : "⚠ Needs improvement";
             System.out.println(String.format("   %-30s %.2f  %s", name, score, rating));
         });
 
         System.out.println("\n🔄 Evolution Actions:");
-        System.out.println("   ✓ Keep high-performing collectors (>0.8)");
+        System.out.println("   [OK] Keep high-performing collectors (>0.8)");
         System.out.println("   ⚡ Optimize medium performers (0.6-0.8)");
         System.out.println("   🔧 Redesign low performers (<0.6)");
 
@@ -195,12 +195,12 @@ public class SelfBootstrap {
 
         ContextPackage evolution = engine.gatherContext(request).join();
 
-        System.out.println("✅ Generated ImprovedSemanticSearchCollector!");
+        System.out.println("[OK] Generated ImprovedSemanticSearchCollector!");
         System.out.println("   Enhancements:");
-        System.out.println("   • Uses embedding cache for faster searches");
-        System.out.println("   • Implements approximate nearest neighbor search");
-        System.out.println("   • Adds context-aware reranking");
-        System.out.println("   • Expected relevance improvement: +35%");
+        System.out.println("   * Uses embedding cache for faster searches");
+        System.out.println("   * Implements approximate nearest neighbor search");
+        System.out.println("   * Adds context-aware reranking");
+        System.out.println("   * Expected relevance improvement: +35%");
         System.out.println();
     }
 
@@ -302,26 +302,26 @@ public class SelfBootstrap {
      * Demonstrate the framework's self-awareness
      */
     public void demonstrateSelfAwareness() {
-        System.out.println("\n" + "═".repeat(70));
+        System.out.println("\n" + "=".repeat(70));
         System.out.println("🧠 FRAMEWORK SELF-AWARENESS DEMONSTRATION");
-        System.out.println("═".repeat(70) + "\n");
+        System.out.println("=".repeat(70) + "\n");
 
         System.out.println("The Context Engineering Framework can:");
-        System.out.println("  ✓ Analyze its own code architecture");
-        System.out.println("  ✓ Identify its own performance bottlenecks");
-        System.out.println("  ✓ Generate context for improving itself");
-        System.out.println("  ✓ Evolve its collectors based on effectiveness");
-        System.out.println("  ✓ Optimize its own algorithms");
+        System.out.println("  [OK] Analyze its own code architecture");
+        System.out.println("  [OK] Identify its own performance bottlenecks");
+        System.out.println("  [OK] Generate context for improving itself");
+        System.out.println("  [OK] Evolve its collectors based on effectiveness");
+        System.out.println("  [OK] Optimize its own algorithms");
 
         System.out.println("\n🎯 This demonstrates:");
-        System.out.println("  • Meta-programming capabilities");
-        System.out.println("  • Self-improvement loops");
-        System.out.println("  • Recursive context engineering");
-        System.out.println("  • AI-assisted evolution");
+        System.out.println("  * Meta-programming capabilities");
+        System.out.println("  * Self-improvement loops");
+        System.out.println("  * Recursive context engineering");
+        System.out.println("  * AI-assisted evolution");
 
         System.out.println("\n💡 The framework is not just a tool for AI agents,");
         System.out.println("   it's an AI agent that improves itself!");
 
-        System.out.println("\n" + "═".repeat(70) + "\n");
+        System.out.println("\n" + "=".repeat(70) + "\n");
     }
 }

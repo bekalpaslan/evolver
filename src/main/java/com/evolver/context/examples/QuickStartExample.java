@@ -11,7 +11,7 @@ import com.evolver.context.collectors.*;
 public class QuickStartExample {
 
     public static void main(String[] args) {
-        System.out.println("🚀 Context Engineering Framework - Quick Start\n");
+        System.out.println("[LAUNCH] Context Engineering Framework - Quick Start\n");
 
         // STEP 1: Create and configure the engine (one-time setup)
         ContextEngine engine = createEngine();
@@ -46,9 +46,9 @@ public class QuickStartExample {
      * Example 1: Generate code with optimal context
      */
     private static void example1_CodeGeneration(ContextEngine engine) {
-        System.out.println("═══════════════════════════════════════════");
+        System.out.println("===========================================");
         System.out.println("Example 1: Code Generation");
-        System.out.println("═══════════════════════════════════════════\n");
+        System.out.println("===========================================\n");
 
         // What you want the AI to do
         String task = "Create a method to validate user passwords";
@@ -69,7 +69,7 @@ public class QuickStartExample {
 
         System.out.println("📤 Prompt for AI:");
         System.out.println(promptForAI);
-        System.out.println("\n✅ Tokens used: " + context.getEstimatedTokens() + "/6000");
+        System.out.println("\n[OK] Tokens used: " + context.getEstimatedTokens() + "/6000");
 
         // In real usage: String result = yourAI.complete(promptForAI);
         System.out.println("\n💡 Next: Send 'promptForAI' to OpenAI/Claude/etc.\n");
@@ -79,9 +79,9 @@ public class QuickStartExample {
      * Example 2: Fix bugs with error-focused context
      */
     private static void example2_BugFixing(ContextEngine engine) {
-        System.out.println("═══════════════════════════════════════════");
+        System.out.println("===========================================");
         System.out.println("Example 2: Bug Fixing");
-        System.out.println("═══════════════════════════════════════════\n");
+        System.out.println("===========================================\n");
 
         // The error you want fixed
         String errorLog = """
@@ -102,7 +102,7 @@ public class QuickStartExample {
 
         // Check quality
         ContextMetrics metrics = engine.analyzeContext(context);
-        System.out.println("📊 Context Quality:");
+        System.out.println("[STATUS] Context Quality:");
         System.out.println("   Relevance: " + String.format("%.2f", metrics.getRelevanceScore()));
         System.out.println("   Fragments: " + metrics.getFragmentCount());
         System.out.println("   Tokens: " + metrics.getTotalTokens());
@@ -117,9 +117,9 @@ public class QuickStartExample {
      * Example 3: Code review with best practices
      */
     private static void example3_CodeReview(ContextEngine engine) {
-        System.out.println("═══════════════════════════════════════════");
+        System.out.println("===========================================");
         System.out.println("Example 3: Code Review");
-        System.out.println("═══════════════════════════════════════════\n");
+        System.out.println("===========================================\n");
 
         ContextRequest request = ContextRequest.builder()
             .taskDescription("Review this code for security issues")

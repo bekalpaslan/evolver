@@ -36,6 +36,7 @@ public class CodeStructureCollector implements ContextCollector {
             .content(structure)
             .addAspect("structure")
             .addAspect("api")
+            .addAspect("code")
             .relevanceScore(0.8)
             .addMetadata("file", filePath)
             .build();

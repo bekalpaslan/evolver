@@ -14,36 +14,36 @@ import java.util.*;
 public class AgentDemo {
 
     public static void main(String[] args) {
-        System.out.println("╔════════════════════════════════════════════════════════════╗");
+        System.out.println("╔============================================================╗");
         System.out.println("║         ZERO-CONFIG AGENT DEMONSTRATION                   ║");
         System.out.println("║  Context Engineers: Just ask. Agents do the rest.        ║");
-        System.out.println("╚════════════════════════════════════════════════════════════╝");
+        System.out.println("╚============================================================╝");
         System.out.println();
 
         // ZERO CONFIG - Just create interface
         AgentInterface agent = new AgentInterface();
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("DEMO 1: Simple Question");
-        System.out.println("═".repeat(60) + "\n");
+        System.out.println("=".repeat(60) + "\n");
         demo1_SimpleAsk(agent);
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("DEMO 2: Complex Task with Auto-Detection");
-        System.out.println("═".repeat(60) + "\n");
+        System.out.println("=".repeat(60) + "\n");
         demo2_AutoDetection(agent);
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("DEMO 3: Agent Learns and Improves");
-        System.out.println("═".repeat(60) + "\n");
+        System.out.println("=".repeat(60) + "\n");
         demo3_LearningAndImprovement(agent);
 
-        System.out.println("\n" + "═".repeat(60));
+        System.out.println("\n" + "=".repeat(60));
         System.out.println("DEMO 4: Agent Experiments with Strategies");
-        System.out.println("═".repeat(60) + "\n");
+        System.out.println("=".repeat(60) + "\n");
         demo4_Experimentation();
 
-        System.out.println("\n✅ ALL DEMOS COMPLETE");
+        System.out.println("\n[OK] ALL DEMOS COMPLETE");
         System.out.println("Context engineers never needed to configure anything!");
     }
 
@@ -57,10 +57,10 @@ public class AgentDemo {
         String context = agent.ask("Generate a user validation function");
 
         System.out.println("Agent response:");
-        System.out.println("  ✓ Detected task type: CODE_GENERATION");
-        System.out.println("  ✓ Selected optimal collectors");
-        System.out.println("  ✓ Gathered relevant context");
-        System.out.println("  ✓ Context ready for AI model");
+        System.out.println("  [OK] Detected task type: CODE_GENERATION");
+        System.out.println("  [OK] Selected optimal collectors");
+        System.out.println("  [OK] Gathered relevant context");
+        System.out.println("  [OK] Context ready for AI model");
         System.out.println("\n  (Context would be sent to OpenAI/Claude/etc.)");
     }
 
@@ -80,11 +80,11 @@ public class AgentDemo {
         );
 
         System.out.println("Agent automatically:");
-        System.out.println("  ✓ Detected: BUG_FIXING task");
-        System.out.println("  ✓ Inferred focus: error_handling, authentication");
-        System.out.println("  ✓ Selected: RuntimeErrorCollector, CodeStructureCollector");
-        System.out.println("  ✓ Scoped: MODULE level");
-        System.out.println("  ✓ Budgeted: 10000 tokens (optimal for debugging)");
+        System.out.println("  [OK] Detected: BUG_FIXING task");
+        System.out.println("  [OK] Inferred focus: error_handling, authentication");
+        System.out.println("  [OK] Selected: RuntimeErrorCollector, CodeStructureCollector");
+        System.out.println("  [OK] Scoped: MODULE level");
+        System.out.println("  [OK] Budgeted: 10000 tokens (optimal for debugging)");
         System.out.println("\n  Context optimized for bug fixing!");
     }
 
@@ -99,12 +99,12 @@ public class AgentDemo {
         );
 
         System.out.println("Agent learning cycle:");
-        System.out.println("  1. ✓ Detected: SECURITY_ANALYSIS task");
-        System.out.println("  2. ✓ Gathered initial context");
-        System.out.println("  3. ✓ Measured quality: relevance = 0.45 (LOW)");
-        System.out.println("  4. ✓ AUTO-IMPROVED: Expanded scope, added collectors");
-        System.out.println("  5. ✓ Re-gathered: relevance = 0.82 (HIGH)");
-        System.out.println("  6. ✓ Learned: Security tasks need broader scope");
+        System.out.println("  1. [OK] Detected: SECURITY_ANALYSIS task");
+        System.out.println("  2. [OK] Gathered initial context");
+        System.out.println("  3. [OK] Measured quality: relevance = 0.45 (LOW)");
+        System.out.println("  4. [OK] AUTO-IMPROVED: Expanded scope, added collectors");
+        System.out.println("  5. [OK] Re-gathered: relevance = 0.82 (HIGH)");
+        System.out.println("  6. [OK] Learned: Security tasks need broader scope");
         System.out.println("\n  Agent improved itself based on experience!");
     }
 
@@ -133,8 +133,8 @@ public class AgentDemo {
                 String.format("%.1f%%", result.getImprovement()) + " better");
 
             result.promote();
-            System.out.println("  ✓ New strategy promoted to production");
-            System.out.println("  ✓ All future requests use improved collector");
+            System.out.println("  [OK] New strategy promoted to production");
+            System.out.println("  [OK] All future requests use improved collector");
             System.out.println("\n  Agent evolved the framework!");
         }
     }
