@@ -529,3 +529,326 @@ public class BusinessService {
 ```
 
 These strategies ensure the evolver framework remains a transparent optimization layer while keeping production code focused on business value.
+
+---
+
+## 🤖 Agent Decision Framework: Choosing the Right Strategy
+
+### Project Analysis Protocol
+
+Before selecting a separation strategy, agents must analyze the target project using these dimensions:
+
+#### 1. Project Maturity Assessment
+```java
+public enum ProjectMaturity {
+    GREENFIELD,      // New project, no existing code
+    BROWNfield,      // Existing codebase, adding framework
+    LEGACY,          // Old codebase, high risk of breaking changes
+    MICROSERVICES,   // Distributed architecture
+    MONOLITHIC       // Single application
+}
+```
+
+#### 2. Technology Stack Evaluation
+```java
+public class TechStackAnalysis {
+    boolean usesSpring;           // Spring Boot, Spring Framework
+    boolean usesAspectJ;          // AOP support available
+    boolean usesCDI;              // Contexts and Dependency Injection
+    boolean usesOSGi;             // Modular runtime
+    boolean usesEvents;           // Event-driven architecture
+    boolean supportsAnnotations;  // Java annotations support
+    boolean supportsProxies;      // Dynamic proxy support
+}
+```
+
+#### 3. Team & Organization Factors
+```java
+public class TeamContext {
+    int teamSize;                 // Number of developers
+    boolean experienced;          // Framework experience level
+    boolean timeConstrained;      // Project deadlines
+    boolean riskAverse;           // Tolerance for architectural changes
+    AdoptionGoal adoptionGoal;    // GRADUAL, RAPID, MINIMAL_DISRUPTION
+}
+```
+
+### Strategy Selection Matrix
+
+#### For GREENFIELD Projects (New Applications)
+```
+🎯 PRIMARY: Interface-Based Abstraction + Configuration-Driven
+🎯 SECONDARY: Annotation-Based Configuration
+🎯 TERTIARY: AOP (if Spring ecosystem)
+
+WHY: Clean slate allows for ideal architectural patterns.
+Clean interfaces provide long-term maintainability.
+```
+
+#### For BROWNFIELD Projects (Existing Codebases)
+```
+🎯 PRIMARY: Decorator Pattern + Event-Driven
+🎯 SECONDARY: Proxy Pattern
+🎯 TERTIARY: Plugin Architecture
+
+WHY: Minimal changes to existing code.
+Decorators wrap existing logic without modification.
+Events provide loose coupling for gradual adoption.
+```
+
+#### For LEGACY Projects (Old, Critical Systems)
+```
+🎯 PRIMARY: Event-Driven Architecture
+🎯 SECONDARY: Service Locator Pattern
+🎯 TERTIARY: Configuration-Driven Separation
+
+WHY: Zero code changes required.
+Framework operates as sidecar observer.
+Easy rollback if issues arise.
+```
+
+#### For MICROSERVICES Architectures
+```
+🎯 PRIMARY: Plugin Architecture + Module System
+🎯 SECONDARY: Event-Driven Architecture
+🎯 TERTIARY: Service Locator Pattern
+
+WHY: Services can adopt framework independently.
+Plugin model supports service-specific optimizations.
+Events enable cross-service coordination.
+```
+
+#### For MONOLITHIC Applications
+```
+🎯 PRIMARY: AOP + Annotation-Based
+🎯 SECONDARY: Decorator Pattern
+🎯 TERTIARY: Interface-Based Abstraction
+
+WHY: Cross-cutting concerns apply globally.
+Annotations provide declarative configuration.
+Decorators allow selective enhancement.
+```
+
+### Decision Tree Algorithm
+
+```java
+public class StrategySelector {
+    public SeparationStrategy selectStrategy(ProjectAnalysis analysis) {
+        // Step 1: Assess project maturity
+        switch (analysis.getMaturity()) {
+            case GREENFIELD:
+                return selectGreenfieldStrategy(analysis);
+            case BROWNFIELD:
+                return selectBrownfieldStrategy(analysis);
+            case LEGACY:
+                return selectLegacyStrategy(analysis);
+            case MICROSERVICES:
+                return selectMicroservicesStrategy(analysis);
+            case MONOLITHIC:
+                return selectMonolithicStrategy(analysis);
+        }
+        throw new IllegalArgumentException("Unknown project maturity");
+    }
+
+    private SeparationStrategy selectGreenfieldStrategy(ProjectAnalysis analysis) {
+        if (analysis.getTechStack().usesSpring()) {
+            return new CombinedStrategy(
+                new InterfaceBasedStrategy(),
+                new ConfigurationDrivenStrategy()
+            );
+        }
+        return new InterfaceBasedStrategy();
+    }
+
+    private SeparationStrategy selectBrownfieldStrategy(ProjectAnalysis analysis) {
+        if (analysis.getTeamContext().isRiskAverse()) {
+            return new EventDrivenStrategy();
+        }
+        if (analysis.getTechStack().supportsProxies()) {
+            return new ProxyPatternStrategy();
+        }
+        return new DecoratorPatternStrategy();
+    }
+
+    private SeparationStrategy selectLegacyStrategy(ProjectAnalysis analysis) {
+        return new EventDrivenStrategy(); // Safest option
+    }
+
+    private SeparationStrategy selectMicroservicesStrategy(ProjectAnalysis analysis) {
+        if (analysis.getTechStack().usesOSGi()) {
+            return new ModuleSystemStrategy();
+        }
+        return new PluginArchitectureStrategy();
+    }
+
+    private SeparationStrategy selectMonolithicStrategy(ProjectAnalysis analysis) {
+        if (analysis.getTechStack().usesAspectJ()) {
+            return new AOPStrategy();
+        }
+        if (analysis.getTechStack().supportsAnnotations()) {
+            return new AnnotationBasedStrategy();
+        }
+        return new DecoratorPatternStrategy();
+    }
+}
+```
+
+### Risk Assessment Integration
+
+#### Low Risk Factors:
+- ✅ Greenfield project
+- ✅ Experienced development team
+- ✅ Spring/AspectJ ecosystem
+- ✅ Time available for refactoring
+- ✅ Comprehensive test coverage
+
+#### High Risk Factors:
+- ❌ Legacy codebase (>5 years old)
+- ❌ Critical production system
+- ❌ Inexperienced team
+- ❌ Tight deadlines
+- ❌ Minimal test coverage
+
+#### Risk-Based Strategy Adjustment:
+```java
+public SeparationStrategy adjustForRisk(SeparationStrategy baseStrategy, RiskLevel risk) {
+    switch (risk) {
+        case LOW:
+            return baseStrategy; // Use as-is
+        case MEDIUM:
+            return new ConservativeWrapper(baseStrategy); // Add safety measures
+        case HIGH:
+            return new MinimalInvasionStrategy(); // Event-driven or proxy only
+    }
+}
+```
+
+### Implementation Roadmap Generator
+
+```java
+public class ImplementationRoadmap {
+    public List<ImplementationPhase> generateRoadmap(
+            SeparationStrategy strategy,
+            ProjectAnalysis analysis) {
+
+        List<ImplementationPhase> phases = new ArrayList<>();
+
+        // Phase 1: Assessment & Planning
+        phases.add(new AssessmentPhase(analysis));
+
+        // Phase 2: Infrastructure Setup
+        phases.add(new InfrastructurePhase(strategy));
+
+        // Phase 3: Pilot Implementation
+        phases.add(new PilotPhase(strategy, analysis));
+
+        // Phase 4: Gradual Rollout
+        phases.add(new RolloutPhase(strategy, analysis));
+
+        // Phase 5: Monitoring & Optimization
+        phases.add(new MonitoringPhase(strategy));
+
+        return phases;
+    }
+}
+
+public class ImplementationPhase {
+    String name;
+    String description;
+    Duration estimatedDuration;
+    List<String> deliverables;
+    RiskLevel riskLevel;
+    List<String> prerequisites;
+}
+```
+
+### Agent Self-Assessment Checklist
+
+Before implementing any strategy, agents must complete this checklist:
+
+#### Pre-Implementation Verification:
+- [ ] **Project Analysis Complete**: Maturity, tech stack, team context assessed
+- [ ] **Risk Assessment Done**: Risk level determined and strategy adjusted accordingly
+- [ ] **Backup Strategy Ready**: Rollback plan documented
+- [ ] **Testing Strategy Defined**: How to validate framework integration
+- [ ] **Monitoring Plan Established**: How to measure framework effectiveness
+- [ ] **Documentation Plan Ready**: How to document changes for team
+
+#### Strategy-Specific Checks:
+
+**For AOP Strategy:**
+- [ ] AspectJ weaving configured correctly
+- [ ] Pointcut expressions tested
+- [ ] Aspect ordering resolved
+- [ ] Performance impact measured
+
+**For Decorator Pattern:**
+- [ ] Interface contracts preserved
+- [ ] Decorator composition tested
+- [ ] Circular dependencies avoided
+- [ ] Performance overhead acceptable
+
+**For Event-Driven:**
+- [ ] Event publishing reliable
+- [ ] Listener ordering correct
+- [ ] Asynchronous processing safe
+- [ ] Event storm prevention implemented
+
+### Success Metrics & Validation
+
+#### Quantitative Metrics:
+- **Framework Transparency**: % of business code unchanged (target: >95%)
+- **Performance Impact**: Response time degradation (target: <5%)
+- **Memory Overhead**: Additional memory usage (target: <10%)
+- **Integration Time**: Hours to implement strategy (target: <8 hours)
+- **Maintenance Burden**: Additional complexity introduced (target: minimal)
+
+#### Qualitative Assessment:
+- **Code Clarity**: Business logic remains readable
+- **Testability**: Business logic testable in isolation
+- **Debuggability**: Issues traceable to framework or business logic
+- **Team Acceptance**: Developer comfort with approach
+- **Long-term Viability**: Strategy sustainable for project lifecycle
+
+### Agent Learning Integration
+
+```java
+public class StrategyLearningSystem {
+    public void recordStrategyOutcome(
+            SeparationStrategy strategy,
+            ProjectAnalysis analysis,
+            StrategyOutcome outcome) {
+
+        Experience experience = ExperienceBuilder
+            .frameworkIntegration("strategy_selection", getAgentId())
+            .title("Strategy Selection: " + strategy.getName())
+            .situation("Project: " + analysis.getProjectType() +
+                      ", Risk: " + analysis.getRiskLevel())
+            .approach("Selected " + strategy.getName() +
+                     " based on " + analysis.getKeyFactors())
+            .outcome("Success: " + outcome.isSuccessful() +
+                    ", Performance: " + outcome.getPerformanceImpact() +
+                    ", Adoption: " + outcome.getTeamAcceptance())
+            .lessonLearned(extractKeyLessons(outcome))
+            .contextItem("strategy", strategy.getName())
+            .contextItem("project_maturity", analysis.getMaturity().name())
+            .contextItem("tech_stack", analysis.getTechStack().toString())
+            .tag("strategy_selection")
+            .tag("framework_integration")
+            .build();
+
+        experienceRepository.shareExperience(experience);
+    }
+}
+```
+
+### Continuous Improvement Protocol
+
+1. **Monitor Strategy Performance**: Track metrics for each implemented strategy
+2. **Collect Team Feedback**: Gather developer experiences and pain points
+3. **Analyze Success Patterns**: Identify what works for different project types
+4. **Refine Decision Matrix**: Update selection criteria based on outcomes
+5. **Share Learnings**: Contribute insights to agent community
+6. **Evolve Strategies**: Create new strategies based on emerging patterns
+
+This decision framework ensures agents make informed, context-aware choices that maximize framework benefits while minimizing project disruption.
