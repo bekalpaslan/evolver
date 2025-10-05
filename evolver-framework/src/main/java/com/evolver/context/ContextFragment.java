@@ -70,7 +70,11 @@ public class ContextFragment {
         public Builder addMetadata(String key, Object value) { this.metadata.put(key, value); return this; }
         public Builder aspects(Set<String> aspects) { this.aspects = aspects; return this; }
         public Builder addAspect(String aspect) { this.aspects.add(aspect); return this; }
-        public Builder relevanceScore(double score) { this.relevanceScore = score; return this; }
+        public Builder relevanceScore(double score) { 
+            validatePrecision(score, "relevanceScore");
+            this.relevanceScore = score; 
+            return this; 
+        }
         public Builder estimatedTokens(int tokens) { this.estimatedTokens = tokens; return this; }
         public Builder timestamp(Instant timestamp) { this.timestamp = timestamp; return this; }
         public Builder dependencies(List<String> dependencies) { this.dependencies = dependencies; return this; }
@@ -86,6 +90,19 @@ public class ContextFragment {
         private int estimateTokens(String text) {
             // Rough estimation: ~4 characters per token
             return text.length() / 4;
+        }
+        
+        /**
+         * Validate that double values use 0.1 precision as required by framework
+         */
+        private void validatePrecision(double value, String field) {
+            double rounded = Math.round(value * 10.0) / 10.0;
+            if (Math.abs(value - rounded) > 0.001) {
+                throw new IllegalArgumentException(
+                    field + " must have 0.1 precision, got: " + value +
+                    ". Use: " + rounded
+                );
+            }
         }
     }
 }

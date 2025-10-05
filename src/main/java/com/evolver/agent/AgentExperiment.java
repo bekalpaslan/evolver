@@ -238,13 +238,71 @@ public class AgentExperiment {
          * Promote the variant to become the new baseline
          */
         public void promote() {
+            if (!isSuccessful()) {
+                throw new IllegalStateException("Cannot promote unsuccessful experiment");
+            }
+
             System.out.println("\n[LAUNCH] PROMOTING VARIANT TO PRODUCTION");
             System.out.println("  Experiment: " + experimentId);
             System.out.println("  Improvement: " + String.format("%.1f%%", improvement));
             System.out.println("  Status: [OK] Variant is now the default");
 
+            // Record to experience database for other agents to learn from
+            try {
+                ExperienceRepository.record()
+                    .category("experiments")
+                    .technology("Experiment: " + experimentId, "1.0", "framework-experiment")
+                    .rating("improvement", Math.round(improvement * 10.0) / 10.0) // 0.1 precision
+                    .rating("confidence", isSignificant() ? 9.0 : 7.0)
+                    .evidence("hypothesis", hypothesis)
+                    .evidence("baselineAvg", String.valueOf(getBaselineAverage()))
+                    .evidence("variantAvg", String.valueOf(getVariantAverage()))
+                    .evidence("significance", String.valueOf(isSignificant()))
+                    .workingAspect("Variant improved performance by " + String.format("%.1f%%", improvement))
+                    .recommendation("Adopt variant approach for similar scenarios: " + hypothesis)
+                    .tag("experiment-success")
+                    .tag("promoted")
+                    .save();
+
+                System.out.println("✅ Experiment recorded to experience database!");
+                System.out.println("   Other agents can now learn from this experiment");
+            } catch (Exception e) {
+                System.err.println("⚠️  Failed to record experiment: " + e.getMessage());
+            }
+
+            // Update agent progress
+            AgentProgress progress = AgentProgress.load();
+            progress.recordExperimentCompletion(experimentId, true);
+
             // In a real system, this would update configuration
             AgentRuntime.registerExperimentSuccess(experimentId, this);
+        }
+        
+        /**
+         * Check if this experiment was successful
+         */
+        public boolean isSuccessful() {
+            return variantBetter && significant;
+        }
+        
+        /**
+         * Get average baseline score across all metrics
+         */
+        public double getBaselineAverage() {
+            return baselineScores.values().stream()
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(0.0);
+        }
+        
+        /**
+         * Get average variant score across all metrics
+         */
+        public double getVariantAverage() {
+            return variantScores.values().stream()
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(0.0);
         }
 
         /**

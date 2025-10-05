@@ -50,6 +50,16 @@ tasks.register('inject', JavaExec) {
     mainClass = 'com.evolver.injection.InjectionRunner'
 }
 
+tasks.register('cli', JavaExec) {
+    group = 'agent'
+    description = 'Evolver CLI for privacy controls and configuration'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.cli.EvolverCLI'
+    if (project.hasProperty('args')) {
+        args project.property('args').split(' ')
+    }
+}
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }

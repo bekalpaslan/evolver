@@ -40,16 +40,31 @@ public class ContextMetrics {
             return this;
         }
         public Builder relevanceScore(double score) {
+            validatePrecision(score, "relevanceScore");
             this.relevanceScore = score;
             return this;
         }
         public Builder coverage(double coverage) {
+            validatePrecision(coverage, "coverage");
             this.coverage = coverage;
             return this;
         }
 
         public ContextMetrics build() {
             return new ContextMetrics(this);
+        }
+        
+        /**
+         * Validate that double values use 0.1 precision as required by framework
+         */
+        private void validatePrecision(double value, String field) {
+            double rounded = Math.round(value * 10.0) / 10.0;
+            if (Math.abs(value - rounded) > 0.001) {
+                throw new IllegalArgumentException(
+                    field + " must have 0.1 precision, got: " + value +
+                    ". Use: " + rounded
+                );
+            }
         }
     }
 

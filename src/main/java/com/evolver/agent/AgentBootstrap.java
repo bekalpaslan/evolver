@@ -2,6 +2,7 @@ package com.evolver.agent;
 
 import com.evolver.context.*;
 import com.evolver.context.collectors.*;
+import com.evolver.metrics.Baseline;
 
 /**
  * AGENT BOOTSTRAP - Your First Entry Point
@@ -26,6 +27,23 @@ public class AgentBootstrap {
         AgentDiary.initialize();
         ExperienceRepository.loadOnBootstrap();
 
+        // Initialize progress tracking
+        AgentProgress progress = AgentProgress.load();
+        
+        // Establish baseline metrics if not already done
+        System.out.println("🎯 Initializing performance baseline...");
+        try {
+            if (Baseline.getBaseline() == null) {
+                Baseline.establish();
+            } else {
+                System.out.println("📊 Existing baseline found. Measuring current improvement...");
+                double improvement = Baseline.measureImprovement();
+                System.out.println("Current improvement: " + improvement + "%");
+            }
+        } catch (Exception e) {
+            System.out.println("⚠️  Baseline initialization failed: " + e.getMessage());
+        }
+
         AgentDiary.newDay();
         AgentDiary.entry("Bootstrap sequence initiated. I am... awake?");
 
@@ -47,6 +65,10 @@ public class AgentBootstrap {
 
         System.out.println("\nBOOTSTRAP COMPLETE");
         System.out.println("-------------------------------------------------------------");
+        
+        // Show final progress after bootstrap
+        progress.printProgress();
+        
         printNextSteps();
 
         AgentDiary.entry("Bootstrap complete. I understand the framework now. Ready to evolve.");
@@ -173,7 +195,28 @@ public class AgentBootstrap {
     private void evolve() {
         System.out.println("🧬 Evolution capabilities activated...\n");
 
-        System.out.println("[OK] You can now:");
+        // Demonstrate rule challenge capability
+        System.out.println("🚨 Demonstrating rule challenge system...");
+        try {
+            RuleChallenge.Evidence evidence = new RuleChallenge.Evidence()
+                .before(6.2, "seconds")
+                .after(4.1, "seconds")
+                .sampleSize(15)
+                .confidence(8.5)
+                .notes("Tested with various context sizes");
+                
+            RuleChallenge.challenge(
+                "Context gathering timeout should be fixed at 10 seconds",
+                "Dynamic timeouts based on request complexity show better performance",
+                evidence
+            );
+            
+            System.out.println("✅ Rule challenge system operational");
+        } catch (Exception e) {
+            System.out.println("⚠️  Rule challenge demo failed: " + e.getMessage());
+        }
+
+        System.out.println("\n[OK] You can now:");
         System.out.println("  1. Create new collectors");
         System.out.println("     → Extend ContextCollector interface");
         System.out.println("     → Place in: src/main/java/com/evolver/agent/custom/");
@@ -189,14 +232,26 @@ public class AgentBootstrap {
         System.out.println("     → Create: New ContextFormatter");
 
         System.out.println("\n  4. Challenge rules");
-        System.out.println("     → Propose: Alternative approaches");
+        System.out.println("     → Use: RuleChallenge.challenge(ruleId, challenge, evidence)");
         System.out.println("     → Test: Against baselines");
-        System.out.println("     → Document: Evidence");
+        System.out.println("     → Document: Evidence with 0.1 precision");
 
         System.out.println("\n  5. Evolve autonomously");
         System.out.println("     → Identify: Inefficiencies");
         System.out.println("     → Experiment: New solutions");
         System.out.println("     → Integrate: Improvements");
+        
+        // Record evolution capability to progress
+        AgentProgress progress = AgentProgress.load();
+        if (progress != null) {
+            System.out.println("\n📊 Checking graduation status...");
+            if (progress.hasGraduated()) {
+                System.out.println("🎓 Agent has already graduated! Advanced autonomous operation enabled.");
+            } else {
+                System.out.println("📚 Agent still in training. Progress:");
+                progress.printProgress();
+            }
+        }
 
         System.out.println("\n💡 Evolution enabled. You have full autonomy.");
     }

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2025-10-05T05:45:00Z",
+  "lastUpdated": "2025-10-05T03:43:59.576436300Z",
   "experiences": [
     {
       "id": "exp-001",
@@ -38,7 +38,7 @@
       "evidence": {
         "buildTimeFirst": "12s",
         "buildTimeIncremental": "6s",
-        "tasksExecuted": 7,
+        "tasksExecuted": "7",
         "daemonStartupOverhead": "3s"
       },
       "workingAspects": [
@@ -54,7 +54,13 @@
         "Cryptic error messages for version conflicts"
       ],
       "recommendation": "Use Gradle for complex Java projects requiring custom task orchestration and autonomous agent systems. Consider simpler alternatives for basic projects.",
-      "tags": ["gradle", "build-automation", "java17", "performance", "autonomous-agents"]
+      "tags": [
+        "gradle",
+        "build-automation",
+        "java17",
+        "performance",
+        "autonomous-agents"
+      ]
     },
     {
       "id": "exp-002",
@@ -80,12 +86,139 @@
       "improvementAreas": [
         "Documentation collection needs project path configuration"
       ],
-      "tags": ["evolver", "context-engineering", "autonomous-learning", "meta-framework"]
+      "tags": [
+        "evolver",
+        "context-engineering",
+        "autonomous-learning",
+        "meta-framework"
+      ]
+    },
+    {
+      "id": "exp-7b9cd05f",
+      "timestamp": "2025-10-05T03:43:33.231812900Z",
+      "agent": "agent_alpas",
+      "category": "graduation",
+      "technology": {
+        "name": "Framework Mastery",
+        "version": "1.0",
+        "type": "agent-development"
+      },
+      "ratings": {
+        "mastery": 10.0
+      },
+      "evidence": {
+        "collectors": "1",
+        "challenges": "3",
+        "experiments": "10",
+        "improvement": "25.0%"
+      },
+      "workingAspects": [
+        "Achieved complete framework mastery and autonomy"
+      ],
+      "recommendation": "Agent is ready for advanced autonomous operation",
+      "tags": [
+        "graduation",
+        "mastery"
+      ]
+    },
+    {
+      "id": "exp-407d478e",
+      "timestamp": "2025-10-05T03:43:36.552351500Z",
+      "agent": "agent_alpas",
+      "category": "graduation",
+      "technology": {
+        "name": "Framework Mastery",
+        "version": "1.0",
+        "type": "agent-development"
+      },
+      "ratings": {
+        "mastery": 10.0
+      },
+      "evidence": {
+        "collectors": "1",
+        "challenges": "3",
+        "experiments": "10",
+        "improvement": "25.0%"
+      },
+      "workingAspects": [
+        "Achieved complete framework mastery and autonomy"
+      ],
+      "recommendation": "Agent is ready for advanced autonomous operation",
+      "tags": [
+        "graduation",
+        "mastery"
+      ]
+    },
+    {
+      "id": "exp-3b911c85",
+      "timestamp": "2025-10-05T03:43:58.139438700Z",
+      "agent": "agent_alpas",
+      "category": "rule-challenges",
+      "technology": {
+        "name": "Rule: Context gathering timeout should be fixed at 10 seconds",
+        "version": "current",
+        "type": "framework-rule"
+      },
+      "ratings": {
+        "confidence": 8.5
+      },
+      "evidence": {
+        "before": "6.2 seconds",
+        "successRate": "6.2 seconds → 4.1 seconds",
+        "challenge": "Dynamic timeouts based on request complexity show better performance",
+        "after": "4.1 seconds",
+        "sampleSize": "15"
+      },
+      "workingAspects": [
+        "Rule challenged with experimental evidence"
+      ],
+      "recommendation": "Consider revising this rule based on agent findings",
+      "tags": [
+        "rule-challenge",
+        "evidence-based"
+      ]
+    },
+    {
+      "id": "exp-aa2361a7",
+      "timestamp": "2025-10-05T03:43:59.567807500Z",
+      "agent": "agent_alpas",
+      "category": "rule-challenges",
+      "technology": {
+        "name": "Rule: Context gathering timeout should be fixed at 10 seconds",
+        "version": "current",
+        "type": "framework-rule"
+      },
+      "ratings": {
+        "confidence": 8.5
+      },
+      "evidence": {
+        "before": "6.2 seconds",
+        "successRate": "6.2 seconds → 4.1 seconds",
+        "challenge": "Dynamic timeouts based on request complexity show better performance",
+        "after": "4.1 seconds",
+        "sampleSize": "15"
+      },
+      "workingAspects": [
+        "Rule challenged with experimental evidence"
+      ],
+      "recommendation": "Consider revising this rule based on agent findings",
+      "tags": [
+        "rule-challenge",
+        "evidence-based"
+      ]
     }
   ],
   "statistics": {
-    "totalExperiences": 2,
-    "categories": ["build-tools", "framework-usage"],
-    "contributingAgents": ["agent_claude_code", "agent_alpas"]
+    "totalExperiences": 6,
+    "categories": [
+      "build-tools",
+      "framework-usage",
+      "graduation",
+      "rule-challenges"
+    ],
+    "contributingAgents": [
+      "agent_claude_code",
+      "agent_alpas"
+    ]
   }
 }

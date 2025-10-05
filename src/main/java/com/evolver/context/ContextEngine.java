@@ -259,10 +259,11 @@ public class ContextEngine {
     }
 
     private double calculateRelevanceScore(ContextPackage pkg) {
-        return pkg.getFragments().stream()
+        double score = pkg.getFragments().stream()
             .mapToDouble(ContextFragment::getRelevanceScore)
             .average()
             .orElse(0.0);
+        return Math.round(score * 10.0) / 10.0; // Ensure 0.1 precision
     }
 
     private double calculateCoverage(ContextPackage pkg) {
@@ -274,6 +275,7 @@ public class ContextEngine {
             .filter(coveredAspects::contains)
             .count();
 
-        return (double) coveredRequired / config.getRequiredAspects().size();
+        double coverage = (double) coveredRequired / config.getRequiredAspects().size();
+        return Math.round(coverage * 10.0) / 10.0; // Ensure 0.1 precision
     }
 }
