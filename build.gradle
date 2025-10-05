@@ -5,16 +5,23 @@ plugins {
 
 group = 'com.evolver'
 version = '1.0.0'
-sourceCompatibility = '17'
+
+// Use toolchain instead of deprecated sourceCompatibility
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // Testing
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    // Testing - Explicit JUnit Platform dependency for Gradle 9.0
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation 'org.mockito:mockito-core:5.5.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
 
@@ -24,6 +31,14 @@ dependencies {
 
     // JSON serialization
     implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+        }
+    }
 }
 
 test {
@@ -62,4 +77,52 @@ tasks.register('cli', JavaExec) {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+// Experience Database Management Tasks
+task dbMigrate(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.ExperienceDbManager'
+    args = ['migrate']
+    description = 'Run experience database migration to latest version'
+    group = 'database'
+}
+
+task dbConsolidate(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.ExperienceDbManager'
+    args = ['consolidate']
+    description = 'Consolidate legacy experience formats into centralized database'
+    group = 'database'
+}
+
+task dbValidate(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.ExperienceDbManager'
+    args = ['validate']
+    description = 'Validate experience database schema and integrity'
+    group = 'database'
+}
+
+task dbStats(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.ExperienceDbManager'
+    args = ['stats']
+    description = 'Show experience database statistics'
+    group = 'database'
+}
+
+task dbVersion(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.ExperienceDbManager'
+    args = ['version']
+    description = 'Show experience database version information'
+    group = 'database'
+}
+
+task memoryAnalyze(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.agent.ExperienceMemoryAnalyzer'
+    description = 'Analyze memory usage of experience database loading'
+    group = 'database'
 }

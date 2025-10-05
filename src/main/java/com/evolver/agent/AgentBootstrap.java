@@ -25,6 +25,15 @@ public class AgentBootstrap {
     public void executeBootstrapSequence() {
         // Initialize personal systems
         AgentDiary.initialize();
+        
+        // Consolidate legacy experience formats before loading
+        System.out.println("🔄 Checking for legacy experience formats...");
+        try {
+            ExperienceRepository.consolidateLegacyFormats();
+        } catch (Exception e) {
+            System.out.println("⚠️  Format consolidation failed: " + e.getMessage());
+        }
+        
         ExperienceRepository.loadOnBootstrap();
 
         // Initialize progress tracking

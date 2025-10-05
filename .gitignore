@@ -1,9 +1,7 @@
 
 
-#Ignore vscode AI rules
-.github\instructions\codacy.instructions.md
-
-# Gradle build artifacts
+# Compiled classes and build artifacts
+bin/
 build/
 .gradle/
 **/build/

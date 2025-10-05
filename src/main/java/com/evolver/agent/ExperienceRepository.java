@@ -27,7 +27,16 @@ public class ExperienceRepository {
     private static final Path DATABASE_FILE = Paths.get("experiences.json");
     private static final Path TEMP_FILE = Paths.get("experiences.tmp");
     private static final Path BACKUP_FILE = Paths.get("experiences.backup.json");
+    private static final Path LOCK_FILE = Paths.get(".experiences.lock");
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    
+    // Version Management
+    private static final String CURRENT_VERSION = "2.0.0";
+    private static final String MIN_SUPPORTED_VERSION = "1.0.0";
+    private static final Map<String, String> VERSION_CHANGELOG = Map.of(
+        "1.0.0", "Initial version with basic experience tracking",
+        "2.0.0", "Added migration support, enhanced validation, conflict resolution"
+    );
 
     // Thread-safety: Use lock object for synchronization
     private static final Object LOCK = new Object();
@@ -170,6 +179,9 @@ public class ExperienceRepository {
 
     private static void loadDatabase() {
         try {
+            // Acquire file lock for safe concurrent access
+            acquireFileLock();
+            
             if (Files.exists(DATABASE_FILE)) {
                 // Check file size before loading
                 long fileSize = Files.size(DATABASE_FILE);
@@ -198,9 +210,29 @@ public class ExperienceRepository {
                 if (loaded.statistics == null) {
                     loaded.statistics = new Statistics();
                 }
+                if (loaded.version == null) {
+                    loaded.version = "1.0.0"; // Default for legacy databases
+                }
+
+                // VERSION MIGRATION LOGIC
+                if (!CURRENT_VERSION.equals(loaded.version)) {
+                    logger.info("Database version mismatch. Current: " + loaded.version + ", Required: " + CURRENT_VERSION);
+                    
+                    if (isVersionSupported(loaded.version)) {
+                        logger.info("Migrating database from " + loaded.version + " to " + CURRENT_VERSION);
+                        loaded = migrateDatabase(loaded, loaded.version, CURRENT_VERSION);
+                        logger.info("Migration completed successfully");
+                    } else {
+                        throw new IllegalStateException("Unsupported database version: " + loaded.version + 
+                            ". Minimum supported: " + MIN_SUPPORTED_VERSION);
+                    }
+                }
+
+                // Validate schema after migration
+                validateDatabaseSchema(loaded);
 
                 database = loaded;
-                logger.info("Loaded " + database.experiences.size() + " experiences from database");
+                logger.info("Loaded " + database.experiences.size() + " experiences from database (version: " + database.version + ")");
             } else {
                 database = new ExperienceDatabase();
                 logger.info("No existing database found, created new database");
@@ -214,6 +246,8 @@ public class ExperienceRepository {
         } catch (Exception e) {
             logger.severe("Unexpected error loading database: " + e.getMessage());
             database = new ExperienceDatabase();
+        } finally {
+            releaseFileLock();
         }
     }
 
@@ -236,13 +270,20 @@ public class ExperienceRepository {
 
     private static void saveDatabase() {
         try {
+            // Acquire file lock for safe concurrent access
+            acquireFileLock();
+            
             // Create backup before saving
             if (Files.exists(DATABASE_FILE)) {
                 Files.copy(DATABASE_FILE, BACKUP_FILE, StandardCopyOption.REPLACE_EXISTING);
             }
 
             database.lastUpdated = Instant.now().toString();
+            database.version = CURRENT_VERSION; // Ensure current version
             database.updateStatistics();
+
+            // Validate before saving
+            validateDatabaseSchema(database);
 
             String json = gson.toJson(database);
 
@@ -255,7 +296,7 @@ public class ExperienceRepository {
                 StandardCopyOption.REPLACE_EXISTING,
                 StandardCopyOption.ATOMIC_MOVE);
 
-            System.out.println("[OK] Experience saved to database: experiences.json");
+            System.out.println("[OK] Experience saved to database: experiences.json (v" + database.version + ")");
             System.out.println("  📌 Commit this file to git to share with other agents!");
 
             logger.info("Database saved successfully: " + database.experiences.size() + " experiences");
@@ -269,6 +310,146 @@ public class ExperienceRepository {
             } catch (IOException cleanupError) {
                 logger.warning("Failed to clean up temp file: " + cleanupError.getMessage());
             }
+        } finally {
+            releaseFileLock();
+        }
+    }
+    
+    // VERSION MIGRATION METHODS
+    
+    private static boolean isVersionSupported(String version) {
+        if (version == null) return false;
+        return compareVersions(version, MIN_SUPPORTED_VERSION) >= 0;
+    }
+    
+    private static ExperienceDatabase migrateDatabase(ExperienceDatabase db, String fromVersion, String toVersion) {
+        logger.info("Starting migration from " + fromVersion + " to " + toVersion);
+        
+        ExperienceDatabase migrated = db;
+        
+        // Migration path: 1.0.0 -> 2.0.0
+        if ("1.0.0".equals(fromVersion) && "2.0.0".equals(toVersion)) {
+            migrated = migrate_1_0_0_to_2_0_0(db);
+        }
+        
+        migrated.version = toVersion;
+        migrated.lastUpdated = Instant.now().toString();
+        
+        logger.info("Migration completed: " + fromVersion + " -> " + toVersion);
+        return migrated;
+    }
+    
+    private static ExperienceDatabase migrate_1_0_0_to_2_0_0(ExperienceDatabase db) {
+        logger.info("Applying migration: 1.0.0 -> 2.0.0");
+        
+        // Add schema version tracking
+        if (db.schemaMetadata == null) {
+            db.schemaMetadata = new SchemaMetadata();
+            db.schemaMetadata.formatVersion = "consolidated";
+            db.schemaMetadata.migrationHistory = new ArrayList<>();
+            db.schemaMetadata.migrationHistory.add(
+                "Migrated from 1.0.0 to 2.0.0 on " + Instant.now().toString()
+            );
+        }
+        
+        // Validate and fix experience entries
+        if (db.experiences != null) {
+            for (ExperienceEntry entry : db.experiences) {
+                if (entry != null) {
+                    // Ensure all entries have required fields
+                    if (entry.id == null) {
+                        entry.id = "exp-" + UUID.randomUUID().toString().substring(0, 8);
+                    }
+                    if (entry.timestamp == null) {
+                        entry.timestamp = Instant.now().toString();
+                    }
+                    if (entry.agent == null) {
+                        entry.agent = "legacy_agent";
+                    }
+                    if (entry.category == null) {
+                        entry.category = "general";
+                    }
+                    
+                    // Initialize collections if null
+                    if (entry.tags == null) entry.tags = new ArrayList<>();
+                    if (entry.workingAspects == null) entry.workingAspects = new ArrayList<>();
+                    if (entry.improvementAreas == null) entry.improvementAreas = new ArrayList<>();
+                }
+            }
+        }
+        
+        return db;
+    }
+    
+    private static int compareVersions(String v1, String v2) {
+        String[] parts1 = v1.split("\\.");
+        String[] parts2 = v2.split("\\.");
+        
+        int maxLength = Math.max(parts1.length, parts2.length);
+        for (int i = 0; i < maxLength; i++) {
+            int part1 = i < parts1.length ? Integer.parseInt(parts1[i]) : 0;
+            int part2 = i < parts2.length ? Integer.parseInt(parts2[i]) : 0;
+            
+            if (part1 < part2) return -1;
+            if (part1 > part2) return 1;
+        }
+        return 0;
+    }
+    
+    private static void validateDatabaseSchema(ExperienceDatabase db) {
+        if (db == null) {
+            throw new IllegalStateException("Database cannot be null");
+        }
+        
+        if (db.experiences == null) {
+            throw new IllegalStateException("Experiences collection cannot be null");
+        }
+        
+        if (db.statistics == null) {
+            throw new IllegalStateException("Statistics cannot be null");
+        }
+        
+        // Validate version format
+        if (db.version == null || !db.version.matches("\\d+\\.\\d+\\.\\d+")) {
+            throw new IllegalStateException("Invalid version format: " + db.version);
+        }
+        
+        // Validate experience entries
+        for (ExperienceEntry entry : db.experiences) {
+            if (entry != null) {
+                if (entry.id == null || entry.id.trim().isEmpty()) {
+                    throw new IllegalStateException("Experience entry missing required ID");
+                }
+                if (entry.category == null || entry.category.trim().isEmpty()) {
+                    throw new IllegalStateException("Experience entry missing required category: " + entry.id);
+                }
+            }
+        }
+    }
+    
+    // FILE LOCKING FOR CONCURRENT ACCESS
+    
+    private static void acquireFileLock() {
+        try {
+            // Simple file-based locking mechanism
+            for (int i = 0; i < 10; i++) {
+                if (!Files.exists(LOCK_FILE)) {
+                    Files.createFile(LOCK_FILE);
+                    return;
+                }
+                Thread.sleep(100); // Wait 100ms before retry
+            }
+            logger.warning("Could not acquire file lock, proceeding anyway");
+        } catch (IOException | InterruptedException e) {
+            logger.warning("File locking failed: " + e.getMessage());
+        }
+    }
+    
+    private static void releaseFileLock() {
+        try {
+            Files.deleteIfExists(LOCK_FILE);
+        } catch (IOException e) {
+            logger.warning("Failed to release file lock: " + e.getMessage());
         }
     }
 
@@ -420,10 +601,11 @@ public class ExperienceRepository {
     // Data classes
 
     static class ExperienceDatabase {
-        String version = "1.0.0";
+        String version = CURRENT_VERSION;
         String lastUpdated;
         List<ExperienceEntry> experiences = new ArrayList<>();
         Statistics statistics = new Statistics();
+        SchemaMetadata schemaMetadata = new SchemaMetadata();
 
         void updateStatistics() {
             statistics.totalExperiences = experiences.size();
@@ -438,6 +620,8 @@ public class ExperienceRepository {
                 .filter(Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList());
+            statistics.lastMigration = schemaMetadata != null && schemaMetadata.migrationHistory != null && !schemaMetadata.migrationHistory.isEmpty() ?
+                schemaMetadata.migrationHistory.get(schemaMetadata.migrationHistory.size() - 1) : "None";
         }
     }
 
@@ -445,6 +629,17 @@ public class ExperienceRepository {
         int totalExperiences;
         List<String> categories = new ArrayList<>();
         List<String> contributingAgents = new ArrayList<>();
+        String lastMigration;
+    }
+    
+    static class SchemaMetadata {
+        String formatVersion = "consolidated";
+        List<String> migrationHistory = new ArrayList<>();
+        String consolidatedFrom = "Legacy distributed format";
+        
+        SchemaMetadata() {
+            migrationHistory.add("Schema created on " + Instant.now().toString());
+        }
     }
 
     public static class ExperienceEntry {
@@ -471,6 +666,167 @@ public class ExperienceRepository {
             this.name = name;
             this.version = version;
             this.type = type;
+        }
+    }
+    
+    // FORMAT CONSOLIDATION METHODS
+    
+    /**
+     * Consolidate legacy experience formats into centralized database
+     */
+    public static void consolidateLegacyFormats() {
+        System.out.println("🔄 Consolidating legacy experience formats...");
+        
+        int consolidated = 0;
+        
+        // Check evolver-framework experiences
+        Path frameworkExperiences = Paths.get("evolver-framework/experiences/categories");
+        if (Files.exists(frameworkExperiences)) {
+            consolidated += consolidateFrameworkExperiences(frameworkExperiences);
+        }
+        
+        // Check .agent/experiences
+        Path agentExperiences = Paths.get(".agent/experiences");
+        if (Files.exists(agentExperiences)) {
+            consolidated += consolidateAgentExperiences(agentExperiences);
+        }
+        
+        if (consolidated > 0) {
+            System.out.println("✅ Consolidated " + consolidated + " legacy experiences into centralized database");
+            System.out.println("  📌 Legacy files preserved but system now uses experiences.json");
+        } else {
+            System.out.println("✅ No legacy experiences found to consolidate");
+        }
+    }
+    
+    private static int consolidateFrameworkExperiences(Path basePath) {
+        int count = 0;
+        try {
+            Files.walk(basePath)
+                .filter(p -> p.toString().endsWith(".json"))
+                .forEach(path -> {
+                    try {
+                        String content = Files.readString(path);
+                        // Parse legacy format and convert to current format
+                        JsonObject legacy = JsonParser.parseString(content).getAsJsonObject();
+                        ExperienceEntry converted = convertLegacyExperience(legacy, "framework");
+                        
+                        synchronized (LOCK) {
+                            loadDatabaseIfNeeded();
+                            database.experiences.add(converted);
+                        }
+                        
+                        System.out.println("  📄 Consolidated: " + path.getFileName());
+                    } catch (Exception e) {
+                        logger.warning("Failed to consolidate " + path + ": " + e.getMessage());
+                    }
+                });
+        } catch (IOException e) {
+            logger.warning("Failed to walk framework experiences: " + e.getMessage());
+        }
+        return count;
+    }
+    
+    private static int consolidateAgentExperiences(Path basePath) {
+        int count = 0;
+        try {
+            // Look for markdown files to convert
+            Files.walk(basePath)
+                .filter(p -> p.toString().endsWith(".md") && !p.toString().contains("README"))
+                .forEach(path -> {
+                    try {
+                        String content = Files.readString(path);
+                        ExperienceEntry converted = convertMarkdownExperience(content, path);
+                        
+                        synchronized (LOCK) {
+                            loadDatabaseIfNeeded();
+                            database.experiences.add(converted);
+                        }
+                        
+                        System.out.println("  📄 Consolidated: " + path.getFileName());
+                    } catch (Exception e) {
+                        logger.warning("Failed to consolidate " + path + ": " + e.getMessage());
+                    }
+                });
+        } catch (IOException e) {
+            logger.warning("Failed to walk agent experiences: " + e.getMessage());
+        }
+        return count;
+    }
+    
+    private static ExperienceEntry convertLegacyExperience(JsonObject legacy, String source) {
+        ExperienceEntry entry = new ExperienceEntry();
+        
+        entry.id = legacy.has("id") ? legacy.get("id").getAsString() : 
+                  "legacy-" + UUID.randomUUID().toString().substring(0, 8);
+        entry.timestamp = legacy.has("timestamp") ? legacy.get("timestamp").getAsString() : 
+                         Instant.now().toString();
+        entry.agent = legacy.has("agentId") ? legacy.get("agentId").getAsString() : 
+                     "legacy_" + source + "_agent";
+        entry.category = legacy.has("category") ? legacy.get("category").getAsString() : "legacy";
+        
+        // Convert technology info
+        if (legacy.has("title")) {
+            String title = legacy.get("title").getAsString();
+            entry.technology = new Technology(title, "unknown", "legacy");
+        }
+        
+        // Extract lessons learned as working aspects
+        if (legacy.has("lessonsLearned")) {
+            entry.workingAspects = new ArrayList<>();
+            JsonArray lessons = legacy.getAsJsonArray("lessonsLearned");
+            for (JsonElement lesson : lessons) {
+                entry.workingAspects.add(lesson.getAsString());
+            }
+        }
+        
+        // Add legacy source tag
+        entry.tags = new ArrayList<>();
+        entry.tags.add("legacy-" + source);
+        entry.tags.add("consolidated");
+        
+        return entry;
+    }
+    
+    private static ExperienceEntry convertMarkdownExperience(String content, Path path) {
+        ExperienceEntry entry = new ExperienceEntry();
+        
+        entry.id = "md-" + UUID.randomUUID().toString().substring(0, 8);
+        entry.timestamp = Instant.now().toString();
+        entry.agent = "legacy_markdown_agent";
+        entry.category = path.getParent().getFileName().toString();
+        
+        // Parse markdown title
+        String[] lines = content.split("\\n");
+        for (String line : lines) {
+            if (line.startsWith("# ")) {
+                entry.technology = new Technology(line.substring(2), "unknown", "markdown");
+                break;
+            }
+        }
+        
+        // Add tags
+        entry.tags = new ArrayList<>();
+        entry.tags.add("legacy-markdown");
+        entry.tags.add("consolidated");
+        entry.tags.add(entry.category);
+        
+        return entry;
+    }
+    
+    /**
+     * Get version information
+     */
+    public static void printVersionInfo() {
+        synchronized (LOCK) {
+            loadDatabaseIfNeeded();
+            System.out.println("📊 Experience Database Version Information:");
+            System.out.println("  Current Version: " + CURRENT_VERSION);
+            System.out.println("  Database Version: " + (database != null ? database.version : "unknown"));
+            System.out.println("  Minimum Supported: " + MIN_SUPPORTED_VERSION);
+            System.out.println("  Changelog:");
+            VERSION_CHANGELOG.forEach((version, description) ->
+                System.out.println("    " + version + ": " + description));
         }
     }
 
