@@ -46,6 +46,11 @@ public class ContextConfig {
         private double reservedBudgetRatio = 0.1;
         private Map<String, Object> customSettings = new HashMap<>();
 
+        // Memory management defaults
+        static {
+            // Set default memory limits
+        }
+
         public Builder minRelevanceThreshold(double threshold) {
             this.minRelevanceThreshold = threshold;
             return this;
@@ -81,6 +86,56 @@ public class ContextConfig {
         public Builder addCustomSetting(String key, Object value) {
             this.customSettings.put(key, value);
             return this;
+        }
+
+        /**
+         * Set maximum fragments per request (default: 1000)
+         */
+        public Builder maxFragmentsPerRequest(int maxFragments) {
+            return addCustomSetting("maxFragmentsPerRequest", maxFragments);
+        }
+
+        /**
+         * Set maximum memory usage per request in bytes (default: 50MB)
+         */
+        public Builder maxMemoryUsagePerRequest(long maxMemoryBytes) {
+            return addCustomSetting("maxMemoryUsagePerRequest", maxMemoryBytes);
+        }
+
+        /**
+         * Set maximum memory usage per request with human-readable string (e.g., "50MB", "100KB")
+         */
+        public Builder maxMemoryUsagePerRequest(String maxMemory) {
+            long bytes = parseMemoryString(maxMemory);
+            return maxMemoryUsagePerRequest(bytes);
+        }
+
+        private long parseMemoryString(String memory) {
+            if (memory == null || memory.trim().isEmpty()) {
+                return 50L * 1024 * 1024; // Default 50MB
+            }
+
+            memory = memory.trim().toUpperCase();
+            long multiplier = 1;
+
+            if (memory.endsWith("KB")) {
+                multiplier = 1024;
+                memory = memory.substring(0, memory.length() - 2);
+            } else if (memory.endsWith("MB")) {
+                multiplier = 1024 * 1024;
+                memory = memory.substring(0, memory.length() - 2);
+            } else if (memory.endsWith("GB")) {
+                multiplier = 1024 * 1024 * 1024;
+                memory = memory.substring(0, memory.length() - 2);
+            }
+
+            try {
+                long value = Long.parseLong(memory.trim());
+                return value * multiplier;
+            } catch (NumberFormatException e) {
+                // Default to 50MB on parse error
+                return 50L * 1024 * 1024;
+            }
         }
 
         public ContextConfig build() {
