@@ -174,6 +174,97 @@ List<Experience> recommended = repo.getRecommendedExperiences();
 
 ---
 
+## 📚 Consumer Application Documentation Guidelines
+
+### Framework Transparency Principle
+
+**CRITICAL RULE**: When creating production documentation for applications that consume the evolver framework, agents **MUST NOT** mention anything about the framework itself.
+
+#### Why This Matters:
+- The evolver framework is designed as a **background optimization engine**, not production business logic
+- End users should only see the application's business functionality, not internal optimization mechanisms
+- Framework details are irrelevant to user-facing documentation and could cause confusion
+
+#### What to Include in Production Docs:
+✅ **Business logic and features**
+✅ **User workflows and interfaces**  
+✅ **API endpoints and data models**
+✅ **Configuration options**
+✅ **Troubleshooting guides**
+✅ **Usage examples**
+
+#### What to Exclude from Production Docs:
+❌ **Framework injection code**
+❌ **Context optimization mechanisms**
+❌ **Agent characteristics or personalities**
+❌ **Framework configuration parameters**
+❌ **Internal optimization strategies**
+❌ **Agent learning docks or repositories**
+
+#### Example - Correct Production Documentation:
+```markdown
+# User Management API
+
+## Create User
+POST /api/users
+
+Creates a new user account with the provided information.
+
+### Request Body
+```json
+{
+  "email": "user@example.com",
+  "name": "John Doe",
+  "role": "admin"
+}
+```
+
+### Response
+```json
+{
+  "id": 123,
+  "email": "user@example.com",
+  "name": "John Doe",
+  "role": "admin",
+  "createdAt": "2025-01-01T00:00:00Z"
+}
+```
+```
+
+#### Example - INCORRECT (Framework Mention):
+```markdown
+# User Management API (Powered by Evolver Framework)
+
+## Create User
+POST /api/users
+
+Creates a new user account. The evolver framework optimizes context gathering for this operation using DocumentationObsessed agents.
+
+### Framework Configuration
+```java
+FrameworkInjector.inject()
+    .withAgentCharacteristic("DocumentationObsessed")
+    .start();
+```
+
+### Request Body
+```json
+{
+  "email": "user@example.com", 
+  "name": "John Doe",
+  "role": "admin"
+}
+```
+```
+
+#### Documentation Agent Responsibilities:
+- **Focus on user value**: Document what users can do, not how the framework optimizes internally
+- **Maintain abstraction**: Keep framework implementation details completely hidden
+- **User-centric approach**: Write from the perspective of someone using the application
+- **Clean separation**: Framework concerns stay in framework docs, application concerns in application docs
+
+---
+
 ## 📊 Experience Quality Guidelines
 
 ### High-Quality Experience Includes:
