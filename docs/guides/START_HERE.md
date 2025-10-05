@@ -75,7 +75,7 @@ That's all you need to know.
 
 ## For AI Agents
 
-**Read this file: [AGENT_MANIFESTO.md](AGENT_MANIFESTO.md)**
+**Read this file: [AGENT_MANIFESTO.md](../agent/AGENT_MANIFESTO.md)**
 
 It contains your complete autonomy guide:
 - How to bootstrap yourself
@@ -250,8 +250,8 @@ This framework makes that vision real.
 ## Support
 
 - 📖 **Full docs**: See [GETTING_STARTED.md](GETTING_STARTED.md)
-- 🤖 **Agent guide**: See [AGENT_MANIFESTO.md](AGENT_MANIFESTO.md)
-- 🔄 **Meta framework**: See [META_FRAMEWORK.md](META_FRAMEWORK.md)
+- 🤖 **Agent guide**: See [AGENT_MANIFESTO.md](../agent/AGENT_MANIFESTO.md)
+- 🔄 **Meta framework**: See [META_FRAMEWORK.md](../architecture/META_FRAMEWORK.md)
 - 💡 **Examples**: Run `./gradlew agentDemo`
 
 ---

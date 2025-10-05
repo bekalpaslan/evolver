@@ -218,7 +218,7 @@ List<Evolution> evolutions = runtime.getFrameworkEvolutions();
 
 ## 📚 Documentation
 
-- **[INJECTION_GUIDE.md](INJECTION_GUIDE.md)** - Complete injection guide with examples
+- **[INJECTION_GUIDE.md](../docs/framework/INJECTION_GUIDE.md)** - Complete injection guide with examples
 - **[AGENT_EXPERIENCE_GUIDELINES.md](AGENT_EXPERIENCE_GUIDELINES.md)** - AI agent collaboration guide
 - **Source code** - Extensively documented for learning and customization
 

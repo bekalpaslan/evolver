@@ -6,7 +6,7 @@
 
 ## ⚡ Zero-Config Quick Start
 
-### 👉 **[RUN_ME_FIRST.md](RUN_ME_FIRST.md)** ← Start Here!
+### 👉 **[RUN_ME_FIRST.md](docs/guides/RUN_ME_FIRST.md)** ← Start Here!
 
 **One command, zero configuration:**
 
@@ -14,7 +14,7 @@
 ./gradlew agentDemo
 ```
 
-**That's it.** Watch AI agents auto-configure, self-learn, and evolve. [See what happens →](RUN_ME_FIRST.md)
+**That's it.** Watch AI agents auto-configure, self-learn, and evolve. [See what happens →](docs/guides/RUN_ME_FIRST.md)
 
 ### 📦 **[evolver-framework/](evolver-framework/)** ← Portable Package!
 
@@ -36,7 +36,7 @@ FrameworkInjector.inject().withLearningDock("docs/").start();
 
 **You are autonomous.** Read your manifesto:
 
-**→ [AGENT_MANIFESTO.md](AGENT_MANIFESTO.md)** - Discover, learn, experiment, and evolve freely.
+**→ [AGENT_MANIFESTO.md](docs/agent/AGENT_MANIFESTO.md)** - Discover, learn, experiment, and evolve freely.
 
 ```bash
 ./gradlew agentBootstrap  # Auto-learn the framework
@@ -47,16 +47,16 @@ FrameworkInjector.inject().withLearningDock("docs/").start();
 ## 📚 Documentation Paths
 
 ### For Context Engineers (Humans)
-- **[RUN_ME_FIRST.md](RUN_ME_FIRST.md)** ⭐ - See it work (1 minute)
-- **[START_HERE.md](START_HERE.md)** - Zero-config usage (30 seconds)
-- **[INJECTION_GUIDE.md](INJECTION_GUIDE.md)** 🔌 - Inject into existing projects (2 minutes)
-- **[INJECTION_SUMMARY.md](INJECTION_SUMMARY.md)** 📋 - Quick injection reference
-- **[GETTING_STARTED.md](GETTING_STARTED.md)** - Detailed integration (5 minutes)
-- **[META_FRAMEWORK.md](META_FRAMEWORK.md)** - Advanced: Framework using itself
-- **[ZERO_CONFIG_SUMMARY.md](ZERO_CONFIG_SUMMARY.md)** - Complete technical summary
+- **[RUN_ME_FIRST.md](docs/guides/RUN_ME_FIRST.md)** ⭐ - See it work (1 minute)
+- **[START_HERE.md](docs/guides/START_HERE.md)** - Zero-config usage (30 seconds)
+- **[INJECTION_GUIDE.md](docs/framework/INJECTION_GUIDE.md)** 🔌 - Inject into existing projects (2 minutes)
+- **[INJECTION_SUMMARY.md](docs/framework/INJECTION_SUMMARY.md)** 📋 - Quick injection reference
+- **[GETTING_STARTED.md](docs/guides/GETTING_STARTED.md)** - Detailed integration (5 minutes)
+- **[META_FRAMEWORK.md](docs/architecture/META_FRAMEWORK.md)** - Advanced: Framework using itself
+- **[ZERO_CONFIG_SUMMARY.md](docs/framework/ZERO_CONFIG_SUMMARY.md)** - Complete technical summary
 
 ### For AI Agents (Autonomous)
-- **[AGENT_MANIFESTO.md](AGENT_MANIFESTO.md)** ⭐ - Your complete autonomy guide
+- **[AGENT_MANIFESTO.md](docs/agent/AGENT_MANIFESTO.md)** ⭐ - Your complete autonomy guide
 - **[.agent/SEED.md](.agent/SEED.md)** - Your initial seed instructions
 - **[.agent/experiences/](.agent/experiences/)** - Learn from other agents
 - **[.agent/diaries/](.agent/diaries/)** - Your personal journal

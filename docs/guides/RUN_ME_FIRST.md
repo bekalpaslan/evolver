@@ -158,7 +158,7 @@ String context = agent.ask("Your task here");
 ## Quick Links
 
 - **[START_HERE.md](START_HERE.md)** - Zero-config guide for humans
-- **[AGENT_MANIFESTO.md](AGENT_MANIFESTO.md)** - Autonomy guide for AI agents
+- **[AGENT_MANIFESTO.md](../agent/AGENT_MANIFESTO.md)** - Autonomy guide for AI agents
 - **[ZERO_CONFIG_SUMMARY.md](ZERO_CONFIG_SUMMARY.md)** - Complete technical summary
 
 ---

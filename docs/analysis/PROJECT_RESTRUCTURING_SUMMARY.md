@@ -214,7 +214,7 @@ cp -r evolver-framework/src/ /your/project/src/
 2. **[evolver-framework/INJECTION_GUIDE.md](evolver-framework/INJECTION_GUIDE.md)** - Complete injection guide (6000+ words)
 3. **[evolver-framework/AGENT_EXPERIENCE_GUIDELINES.md](evolver-framework/AGENT_EXPERIENCE_GUIDELINES.md)** - AI collaboration guide
 4. **[evolver-framework/DEPLOYMENT_GUIDE.md](evolver-framework/DEPLOYMENT_GUIDE.md)** - Deployment options and patterns
-5. **[INJECTION_SUMMARY.md](INJECTION_SUMMARY.md)** - Quick reference guide
+5. **[INJECTION_SUMMARY.md](../framework/INJECTION_SUMMARY.md)** - Quick reference guide
 
 ---
 
