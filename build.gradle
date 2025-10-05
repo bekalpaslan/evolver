@@ -85,6 +85,27 @@ tasks.register('injectionDemo', JavaExec) {
     mainClass = 'com.evolver.injection.demo.InjectionDemo'
 }
 
+// QuickStart Demo
+tasks.register('quickStartDemo', JavaExec) {
+    group = 'demo'
+    description = '[QUICKSTART] Run the framework quick start demo'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.QuickStartDemo'
+    
+    // Allow arguments to be passed
+    if (project.hasProperty('args')) {
+        args project.args.split(' ')
+    }
+}
+
+// Autonomous Agent Session
+tasks.register('autonomousAgent', JavaExec) {
+    group = 'agent'
+    description = '[AUTONOMOUS] Real autonomous agent session with experience recording'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.evolver.AutonomousAgent'
+}
+
 // Build JAR for easy agent deployment
 tasks.register('agentJar', Jar) {
     group = 'agent'
