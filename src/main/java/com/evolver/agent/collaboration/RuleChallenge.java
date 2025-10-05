@@ -1,5 +1,9 @@
-package com.evolver.agent;
+package com.evolver.agent.collaboration;
 
+import com.evolver.agent.experience.ExperienceRepository;
+import com.evolver.agent.lifecycle.AgentDiary;
+import com.evolver.agent.lifecycle.AgentProgress;
+import com.evolver.agent.lifecycle.AgentRuntime;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -155,13 +159,13 @@ public class RuleChallenge {
      * Evidence supporting a rule challenge
      */
     public static class Evidence {
-        double beforeMetric = 0.0;
-        String beforeUnit = "";
-        double afterMetric = 0.0;
-        String afterUnit = "";
-        int sampleSize = 1;
-        double confidenceLevel = 5.0; // Out of 10
-        String additionalNotes = "";
+        public double beforeMetric = 0.0;
+        public String beforeUnit = "";
+        public double afterMetric = 0.0;
+        public String afterUnit = "";
+        public int sampleSize = 1;
+        public double confidenceLevel = 5.0; // Out of 10
+        public String additionalNotes = "";
         
         public Evidence before(double value, String unit) {
             this.beforeMetric = Math.round(value * 10.0) / 10.0; // 0.1 precision

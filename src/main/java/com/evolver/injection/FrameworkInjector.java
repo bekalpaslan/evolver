@@ -1,7 +1,7 @@
 package com.evolver.injection;
 
-import com.evolver.agent.AgentCharacteristic;
-import com.evolver.agent.AgentInterface;
+import com.evolver.agent.identity.AgentCharacteristic;
+import com.evolver.agent.lifecycle.AgentInterface;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

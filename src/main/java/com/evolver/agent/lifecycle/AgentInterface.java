@@ -1,8 +1,9 @@
-package com.evolver.agent;
+package com.evolver.agent.lifecycle;
 
 import com.evolver.context.*;
 import com.evolver.logging.AgentLogger;
 import com.evolver.logging.PersonalityLogger;
+import com.evolver.agent.identity.AgentCharacteristic;
 import java.util.*;
 
 /**

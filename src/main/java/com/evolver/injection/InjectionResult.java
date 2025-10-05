@@ -1,6 +1,6 @@
 package com.evolver.injection;
 
-import com.evolver.agent.AgentInterface;
+import com.evolver.agent.lifecycle.AgentInterface;
 import java.util.List;
 
 /**

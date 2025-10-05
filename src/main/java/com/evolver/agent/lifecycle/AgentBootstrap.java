@@ -1,8 +1,10 @@
-package com.evolver.agent;
+package com.evolver.agent.lifecycle;
 
 import com.evolver.context.*;
 import com.evolver.context.collectors.*;
 import com.evolver.metrics.Baseline;
+import com.evolver.agent.experience.ExperienceRepository;
+import com.evolver.agent.collaboration.RuleChallenge;
 import java.util.List;
 import java.util.Objects;
 

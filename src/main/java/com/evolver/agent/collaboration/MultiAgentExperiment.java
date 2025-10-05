@@ -1,5 +1,6 @@
-package com.evolver.agent;
+package com.evolver.agent.collaboration;
 
+import com.evolver.agent.experience.ExperienceRepository;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;

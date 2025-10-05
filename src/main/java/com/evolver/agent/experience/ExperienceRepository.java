@@ -1,4 +1,4 @@
-package com.evolver.agent;
+package com.evolver.agent.experience;
 
 import com.google.gson.*;
 import java.io.*;
@@ -7,6 +7,8 @@ import java.time.*;
 import java.util.*;
 import java.util.stream.*;
 import java.util.logging.Logger;
+import com.evolver.agent.identity.AgentIdentity;
+import com.evolver.agent.quality.ExperienceValidator;
 
 /**
  * Experience Repository - Collective Agent Learning
@@ -687,22 +689,22 @@ public class ExperienceRepository {
     }
 
     public static class ExperienceEntry {
-        String id;
-        String timestamp;
-        String agent;
-        String agentId;           // Hashed IP-based agent ID
-        String model;             // AI model information
-        String systemInfo;        // System information for debugging
-        String ipHash;            // Hashed IP for accountability
-        String category;
-        Technology technology;
-        Map<String, Double> ratings;
-        List<Harmony> harmony;
-        Map<String, String> evidence;
-        List<String> workingAspects;
-        List<String> improvementAreas;
-        String recommendation;
-        List<String> tags;
+        public String id;
+        public String timestamp;
+        public String agent;
+        public String agentId;           // Hashed IP-based agent ID
+        public String model;             // AI model information
+        public String systemInfo;        // System information for debugging
+        public String ipHash;            // Hashed IP for accountability
+        public String category;
+        public Technology technology;
+        public Map<String, Double> ratings;
+        public List<Harmony> harmony;
+        public Map<String, String> evidence;
+        public List<String> workingAspects;
+        public List<String> improvementAreas;
+        public String recommendation;
+        public List<String> tags;
     }
 
     static class Technology {

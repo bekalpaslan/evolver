@@ -46,7 +46,7 @@ test {
 }
 
 application {
-    mainClass = 'com.evolver.agent.AgentBootstrap'
+    mainClass = 'com.evolver.agent.lifecycle.AgentBootstrap'
 }
 
 // ============ AUTONOMOUS AGENT TASKS ============
@@ -55,7 +55,7 @@ tasks.register('bootstrap', JavaExec) {
     group = 'agent'
     description = 'Bootstrap - Agent learns framework automatically'
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'com.evolver.agent.AgentBootstrap'
+    mainClass = 'com.evolver.agent.lifecycle.AgentBootstrap'
 }
 
 tasks.register('inject', JavaExec) {
@@ -130,7 +130,7 @@ task memoryAnalyze(type: JavaExec) {
 // Experience Database Quality Tasks
 task cleanExperiences(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'com.evolver.agent.ExperienceQualityManager'
+    mainClass = 'com.evolver.agent.quality.ExperienceQualityManager'
     args = ['clean']
     description = 'Remove test data, duplicates, and low-quality experiences'
     group = 'database'
@@ -138,7 +138,7 @@ task cleanExperiences(type: JavaExec) {
 
 task validateExperiences(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'com.evolver.agent.ExperienceQualityManager'
+    mainClass = 'com.evolver.agent.quality.ExperienceQualityManager'
     args = ['validate']
     description = 'Validate experience quality standards and report issues'
     group = 'database'
@@ -146,7 +146,7 @@ task validateExperiences(type: JavaExec) {
 
 task purgeTestData(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'com.evolver.agent.ExperienceQualityManager'
+    mainClass = 'com.evolver.agent.quality.ExperienceQualityManager'
     args = ['purge-test']
     description = 'Remove all experiences with test categories and placeholder names'
     group = 'database'
@@ -154,7 +154,7 @@ task purgeTestData(type: JavaExec) {
 
 task experienceReport(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'com.evolver.agent.ExperienceQualityManager'
+    mainClass = 'com.evolver.agent.quality.ExperienceQualityManager'
     args = ['report']
     description = 'Generate comprehensive experience database quality report'
     group = 'database'
@@ -162,14 +162,14 @@ task experienceReport(type: JavaExec) {
 
 task enforceQuality(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'com.evolver.agent.StrictQualityEnforcer'
+    mainClass = 'com.evolver.agent.quality.StrictQualityEnforcer'
     description = 'Enforce strict quality standards and validate all experiences'
     group = 'database'
 }
 
 task agentAccountability(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'com.evolver.agent.AgentAccountabilityReport'
+    mainClass = 'com.evolver.agent.reporting.AgentAccountabilityReport'
     description = 'Generate agent accountability and contribution quality report'
     group = 'database'
 }

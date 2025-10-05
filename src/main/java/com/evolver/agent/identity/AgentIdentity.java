@@ -1,4 +1,4 @@
-package com.evolver.agent;
+package com.evolver.agent.identity;
 
 import java.net.InetAddress;
 import java.security.MessageDigest;

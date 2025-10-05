@@ -1,7 +1,7 @@
 package com.evolver.integration;
 
-import com.evolver.agent.AgentInterface;
-import com.evolver.agent.AgentCharacteristic;
+import com.evolver.agent.lifecycle.AgentInterface;
+import com.evolver.agent.identity.AgentCharacteristic;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;

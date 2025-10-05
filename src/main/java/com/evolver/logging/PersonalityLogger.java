@@ -1,6 +1,6 @@
 package com.evolver.logging;
 
-import com.evolver.agent.AgentCharacteristic;
+import com.evolver.agent.identity.AgentCharacteristic;
 import java.util.Map;
 
 /**

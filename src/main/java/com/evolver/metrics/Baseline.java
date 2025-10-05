@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
 import com.evolver.context.*;
-import com.evolver.agent.AgentProgress;
+import com.evolver.agent.lifecycle.AgentProgress;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

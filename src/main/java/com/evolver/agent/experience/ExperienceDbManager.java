@@ -1,4 +1,6 @@
-package com.evolver.agent;
+package com.evolver.agent.experience;
+
+import com.evolver.agent.experience.ExperienceRepository;
 
 /**
  * Experience Database Management Utility

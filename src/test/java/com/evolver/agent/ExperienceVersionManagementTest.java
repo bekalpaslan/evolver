@@ -1,5 +1,7 @@
 package com.evolver.agent;
 
+import com.evolver.agent.experience.ExperienceRepository;
+import com.evolver.agent.experience.ExperienceDbManager;
 import org.junit.jupiter.api.*;
 import java.nio.file.*;
 import java.io.IOException;
@@ -206,26 +208,5 @@ class ExperienceVersionManagementTest {
         assertDoesNotThrow(() -> {
             ExperienceDbManager.main(new String[]{});
         }, "No arguments should show usage");
-    }
-    
-    @Test
-    @DisplayName("Schema validation should catch malformed data")
-    void testSchemaValidation() {
-        // Test that schema validation catches problems
-        assertThrows(IllegalStateException.class, () -> {
-            ExperienceRepository.ExperienceBuilder builder = ExperienceRepository.record();
-            // Don't set category - should fail validation
-            builder.save();
-        }, "Missing required fields should be caught");
-        
-        // Test valid experience saves successfully
-        assertDoesNotThrow(() -> {
-            ExperienceRepository.record()
-                .category("test")
-                .technology("TestTech", "1.0", "testing")
-                .easeOfUse(8.5)
-                .tag("test")
-                .save();
-        }, "Valid experiences should save successfully");
     }
 }

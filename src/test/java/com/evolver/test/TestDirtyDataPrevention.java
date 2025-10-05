@@ -1,6 +1,6 @@
 package com.evolver.test;
 
-import com.evolver.agent.ExperienceRepository;
+import com.evolver.agent.experience.ExperienceRepository;
 
 /**
  * Test dirty data prevention by attempting to save low-quality experience

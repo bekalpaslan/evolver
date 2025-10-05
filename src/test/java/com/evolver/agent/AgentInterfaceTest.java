@@ -1,5 +1,7 @@
 package com.evolver.agent;
 
+import com.evolver.agent.lifecycle.AgentInterface;
+import com.evolver.agent.identity.AgentCharacteristic;
 import com.evolver.logging.AgentLogger;
 import com.evolver.logging.PersonalityLogger;
 import org.junit.jupiter.api.Test;

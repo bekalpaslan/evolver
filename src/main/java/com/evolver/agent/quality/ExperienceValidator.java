@@ -1,4 +1,4 @@
-package com.evolver.agent;
+package com.evolver.agent.quality;
 
 import com.google.gson.*;
 import java.util.*;

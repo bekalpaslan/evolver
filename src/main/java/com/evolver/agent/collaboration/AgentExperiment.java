@@ -1,6 +1,9 @@
-package com.evolver.agent;
+package com.evolver.agent.collaboration;
 
 import com.evolver.context.*;
+import com.evolver.agent.experience.ExperienceRepository;
+import com.evolver.agent.lifecycle.AgentProgress;
+import com.evolver.agent.lifecycle.AgentRuntime;
 import java.util.*;
 import java.util.concurrent.*;
 

@@ -1,5 +1,6 @@
 package com.evolver.agent;
 
+import com.evolver.agent.collaboration.RuleChallenge;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

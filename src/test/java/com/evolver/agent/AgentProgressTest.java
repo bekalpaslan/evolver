@@ -1,5 +1,6 @@
 package com.evolver.agent;
 
+import com.evolver.agent.lifecycle.AgentProgress;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;

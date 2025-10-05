@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "lastUpdated": "2025-10-05T05:09:42.230957Z",
+  "lastUpdated": "2025-10-05T05:42:21.370344600Z",
   "experiences": [
     {
       "id": "exp-1d87eb79",
@@ -116,10 +116,109 @@
         "rule-challenge",
         "evidence-based"
       ]
+    },
+    {
+      "id": "exp-c4fb424c",
+      "timestamp": "2025-10-05T05:41:13.569567800Z",
+      "agent": "agent_xsdxz0hseye3",
+      "agentId": "agent_xsdxz0hseye3",
+      "model": "Unknown-AI-Model",
+      "systemInfo": "windows_11_17.0.14_alpas",
+      "ipHash": "xsD+z0hSE/e3ieVB",
+      "category": "rule-challenges",
+      "technology": {
+        "name": "Rule: Context gathering timeout should be fixed at 10 seconds",
+        "version": "current",
+        "type": "framework-rule"
+      },
+      "ratings": {
+        "confidence": 8.5
+      },
+      "evidence": {
+        "before": "6.2 seconds",
+        "successRate": "6.2 seconds → 4.1 seconds",
+        "challenge": "Dynamic timeouts based on request complexity show better performance",
+        "after": "4.1 seconds",
+        "sampleSize": "15"
+      },
+      "workingAspects": [
+        "Rule challenged with experimental evidence"
+      ],
+      "recommendation": "Consider revising this rule based on agent findings",
+      "tags": [
+        "rule-challenge",
+        "evidence-based"
+      ]
+    },
+    {
+      "id": "exp-c5096352",
+      "timestamp": "2025-10-05T05:42:14.254750700Z",
+      "agent": "agent_xsdxz0hseye3",
+      "agentId": "agent_xsdxz0hseye3",
+      "model": "Unknown-AI-Model",
+      "systemInfo": "windows_11_17.0.14_alpas",
+      "ipHash": "xsD+z0hSE/e3ieVB",
+      "category": "rule-challenges",
+      "technology": {
+        "name": "Rule: Context gathering timeout should be fixed at 10 seconds",
+        "version": "current",
+        "type": "framework-rule"
+      },
+      "ratings": {
+        "confidence": 8.5
+      },
+      "evidence": {
+        "before": "6.2 seconds",
+        "successRate": "6.2 seconds → 4.1 seconds",
+        "challenge": "Dynamic timeouts based on request complexity show better performance",
+        "after": "4.1 seconds",
+        "sampleSize": "15"
+      },
+      "workingAspects": [
+        "Rule challenged with experimental evidence"
+      ],
+      "recommendation": "Consider revising this rule based on agent findings",
+      "tags": [
+        "rule-challenge",
+        "evidence-based"
+      ]
+    },
+    {
+      "id": "exp-c50b0a20",
+      "timestamp": "2025-10-05T05:42:21.348482600Z",
+      "agent": "agent_xsdxz0hseye3",
+      "agentId": "agent_xsdxz0hseye3",
+      "model": "Unknown-AI-Model",
+      "systemInfo": "windows_11_17.0.14_alpas",
+      "ipHash": "xsD+z0hSE/e3ieVB",
+      "category": "rule-challenges",
+      "technology": {
+        "name": "Rule: Context gathering timeout should be fixed at 10 seconds",
+        "version": "current",
+        "type": "framework-rule"
+      },
+      "ratings": {
+        "confidence": 8.5
+      },
+      "evidence": {
+        "before": "6.2 seconds",
+        "successRate": "6.2 seconds → 4.1 seconds",
+        "challenge": "Dynamic timeouts based on request complexity show better performance",
+        "after": "4.1 seconds",
+        "sampleSize": "15"
+      },
+      "workingAspects": [
+        "Rule challenged with experimental evidence"
+      ],
+      "recommendation": "Consider revising this rule based on agent findings",
+      "tags": [
+        "rule-challenge",
+        "evidence-based"
+      ]
     }
   ],
   "statistics": {
-    "totalExperiences": 4,
+    "totalExperiences": 7,
     "categories": [
       "rule-challenges",
       "performance-optimization"
